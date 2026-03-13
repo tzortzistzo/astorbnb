@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ASTOR BNB</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:"Space Grotesk",sans-serif;
+background:#0b0b0b;
+color:#e8e8e8;
+overflow:hidden;
+
+background-image:
+linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size:40px 40px;
+}
+
+.rail{
+position:fixed;
+left:60px;
+top:0;
+height:100vh;
+width:80px;
+pointer-events:none;
+}
+
+.rail-line{
+position:absolute;
+left:30px;
+top:0;
+width:1px;
+height:100vh;
+background:#333;
+}
+
+.section-number{
+position:absolute;
+bottom:60px;
+left:42px;
+font-size:110px;
+font-weight:600;
+color:#fff;
+opacity:.14;
+letter-spacing:6px;
+}
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:22px 80px;
+background:rgba(0,0,0,.6);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{letter-spacing:4px;font-weight:600;}
+
+nav ul{display:flex;gap:40px;list-style:none;}
+
+nav li{cursor:pointer;color:white;opacity:.9;transition:.3s;}
+
+nav li.active{color:#6d6d6d;}
+
+.section{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding-left:240px;
+padding-right:10%;
+opacity:0;
+pointer-events:none;
+transition:opacity 1s ease;
+}
+
+.section.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.hero h1{
+font-size:92px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:22px;
+max-width:520px;
+opacity:.75;
+}
+
+.about-text{
+max-width:720px;
+line-height:1.9;
+margin-top:20px;
+opacity:.85;
+}
+
+.homes-scroll{
+max-height:60vh;
+overflow-y:auto;
+padding-right:20px;
+margin-top:40px;
+}
+
+.homes-container{
+display:flex;
+gap:100px;
+max-width:900px;
+}
+
+.homes-column{
+display:flex;
+flex-direction:column;
+gap:24px;
+flex:1;
+}
+
+.home-card{
+display:flex;
+align-items:center;
+gap:14px;
+border-bottom:1px solid #222;
+padding-bottom:10px;
+}
+
+.home-number{
+font-size:12px;
+opacity:.35;
+min-width:24px;
+}
+
+.home-name{
+font-size:18px;
+white-space:nowrap;
+}
+
+.home-separator{
+flex-grow:1;
+height:1px;
+background:#222;
+}
+
+.home-link{
+font-size:13px;
+text-decoration:none;
+color:#aaa;
+transition:.25s;
+}
+
+.home-link:hover{
+color:white;
+}
+
+#map{
+height:450px;
+margin-top:40px;
+border:1px solid #333;
+}
+
+.white-pin{
+width:12px;
+height:12px;
+background:white;
+border-radius:50%;
+border:2px solid black;
+}
+
+.contact-box{
+max-width:500px;
+margin-top:20px;
+}
+
+.contact-box input,
+.contact-box textarea{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#111;
+border:1px solid #333;
+color:white;
+font-family:"Space Grotesk";
+}
+
+.contact-box button{
+padding:12px 18px;
+background:white;
+border:none;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="rail">
+<div class="rail-line"></div>
+<div class="section-number" id="sectionNumber">01</div>
+</div>
+
+<nav>
+
+<div class="logo">ASTOR BNB</div>
+
+<ul id="menu">
+<li class="active">Home</li>
+<li>About</li>
+<li>Homes</li>
+<li>Locations</li>
+<li>Contact</li>
+</ul>
+
+</nav>
+
+<section class="section hero active">
+<h1>ASTOR BNB</h1>
+<p>We craft thoughtfully designed spaces that create memorable stays.</p>
+</section>
+
+<section class="section">
+<h2>About</h2>
+<div class="about-text">
+<p>
+Astor BNB is a family-run hospitality project rooted in Thessaloniki. Our journey in tourism began in 1980 through our parent company, ASTOR TRAVEL.
+</p>
+<p>
+We acquire apartments and transform them through thoughtful renovation, creating welcoming spaces filled with dedication and care.
+</p>
+<p>
+ASTOR BNB proudly operates as a sister company of ASTOR TRAVEL.
+</p>
+</div>
+</section>
+
+<section class="section">
+<h2>Homes</h2>
+<div class="homes-scroll">
+<div class="homes-container">
+
+<div class="homes-column">
+<div class="home-card"><span class="home-number">01</span><span class="home-name">Sir Dip's Place</span></div>
+<div class="home-card"><span class="home-number">02</span><span class="home-name">Sir Paco's Place</span></div>
+<div class="home-card"><span class="home-number">03</span><span class="home-name">Polymnia</span></div>
+<div class="home-card"><span class="home-number">04</span><span class="home-name">Nostalgia</span></div>
+<div class="home-card"><span class="home-number">05</span><span class="home-name">Tzortzis's Home</span></div>
+<div class="home-card"><span class="home-number">06</span><span class="home-name">Demi's Home</span></div>
+<div class="home-card"><span class="home-number">07</span><span class="home-name">ASTOR Summer House</span></div>
+<div class="home-card"><span class="home-number">08</span><span class="home-name">Eunoia</span></div>
+<div class="home-card"><span class="home-number">09</span><span class="home-name">Thimyses</span></div>
+</div>
+
+<div class="homes-column">
+<div class="home-card"><span class="home-number">10</span><span class="home-name">Sofokleous</span></div>
+<div class="home-card"><span class="home-number">11</span><span class="home-name">Poliorkitou</span></div>
+<div class="home-card"><span class="home-number">12</span><span class="home-name">Akropoleos</span></div>
+<div class="home-card"><span class="home-number">13</span><span class="home-name">J&A Home</span></div>
+<div class="home-card"><span class="home-number">14</span><span class="home-name">ASTOR Boutique Egnatia (A)</span></div>
+<div class="home-card"><span class="home-number">15</span><span class="home-name">ASTOR Boutique Egnatia (B)</span></div>
+<div class="home-card"><span class="home-number">16</span><span class="home-name">ASTOR Boutique Egnatia (C)</span></div>
+<div class="home-card"><span class="home-number">17</span><span class="home-name">ASTOR Boutique Egnatia (D)</span></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section">
+<h2>Locations</h2>
+<div id="map"></div>
+</section>
+
+<section class="section">
+<h2>Contact</h2>
+<div class="contact-box">
+<input placeholder="Your Name">
+<input placeholder="Email">
+<textarea rows="4" placeholder="Message"></textarea>
+<button>Send Message</button>
+</div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+const sections=document.querySelectorAll(".section")
+const menuItems=document.querySelectorAll("#menu li")
+const number=document.getElementById("sectionNumber")
+
+let current=0
+let animating=false
+
+function updateNumber(){
+let n=current+1
+if(n<10)n="0"+n
+number.innerText=n
+}
+
+function goToSection(index){
+
+if(animating) return
+if(index<0 || index>=sections.length) return
+
+animating=true
+
+sections[current].classList.remove("active")
+
+setTimeout(()=>{
+
+sections[index].classList.add("active")
+current=index
+
+menuItems.forEach(i=>i.classList.remove("active"))
+menuItems[current].classList.add("active")
+
+updateNumber()
+
+setTimeout(()=>{animating=false},1000)
+
+},1000)
+
+}
+
+window.addEventListener("wheel",(e)=>{
+if(e.deltaY>0){goToSection(current+1)}
+else{goToSection(current-1)}
+})
+
+menuItems.forEach((item,index)=>{
+item.addEventListener("click",()=>{goToSection(index)})
+})
+
+updateNumber()
+
+setTimeout(()=>{
+
+var map=L.map('map').setView([40.6355,22.9444],14)
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+attribution:'© OpenStreetMap & CARTO',
+subdomains:'abcd',
+maxZoom:20
+}).addTo(map)
+
+var whiteIcon=L.divIcon({
+className:'white-pin',
+iconSize:[12,12]
+})
+
+L.marker([40.6409,22.9475],{icon:whiteIcon}).addTo(map).bindPopup("Στρατηγού Δουμπιώτου 1")
+
+},1200)
+
+</script>
+
+</body>
+</html>
