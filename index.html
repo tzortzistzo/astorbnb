@@ -19,12 +19,9 @@ font-family:"Space Grotesk",sans-serif;
 background:#0b0b0b;
 color:#e8e8e8;
 overflow:hidden;
-
-background-image:
-linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-background-size:40px 40px;
 }
+
+/* LEFT RAIL */
 
 .rail{
 position:fixed;
@@ -33,6 +30,7 @@ top:0;
 height:100vh;
 width:80px;
 pointer-events:none;
+z-index:10;
 }
 
 .rail-line{
@@ -50,10 +48,10 @@ bottom:60px;
 left:42px;
 font-size:110px;
 font-weight:600;
-color:#fff;
 opacity:.14;
-letter-spacing:6px;
 }
+
+/* NAV */
 
 nav{
 position:fixed;
@@ -70,11 +68,58 @@ z-index:1000;
 
 .logo{letter-spacing:4px;font-weight:600;}
 
-nav ul{display:flex;gap:40px;list-style:none;}
+nav ul{
+display:flex;
+gap:40px;
+list-style:none;
+}
 
-nav li{cursor:pointer;color:white;opacity:.9;transition:.3s;}
+nav li{
+cursor:pointer;
+opacity:.9;
+}
 
-nav li.active{color:#6d6d6d;}
+nav li.active{
+color:#777;
+}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+}
+
+.hamburger div{
+width:26px;
+height:2px;
+background:white;
+}
+
+/* MOBILE MENU */
+
+.mobile-menu{
+position:fixed;
+top:0;
+right:-100%;
+width:70%;
+height:100vh;
+background:#111;
+display:flex;
+flex-direction:column;
+padding:100px 40px;
+gap:30px;
+transition:.4s;
+z-index:999;
+}
+
+.mobile-menu.open{
+right:0;
+}
+
+/* SECTIONS */
 
 .section{
 position:absolute;
@@ -89,7 +134,7 @@ padding-left:240px;
 padding-right:10%;
 opacity:0;
 pointer-events:none;
-transition:opacity 1s ease;
+transition:opacity .8s;
 }
 
 .section.active{
@@ -98,61 +143,46 @@ pointer-events:auto;
 }
 
 .hero h1{
-font-size:92px;
+font-size:90px;
 margin-bottom:20px;
 }
 
-.hero p{
-font-size:22px;
-max-width:520px;
-opacity:.75;
-}
+/* ABOUT */
 
 .about-text{
-max-width:720px;
+max-width:700px;
 line-height:1.9;
-margin-top:20px;
-opacity:.85;
 }
+
+/* HOMES */
 
 .homes-scroll{
 max-height:60vh;
 overflow-y:auto;
-padding-right:20px;
-margin-top:40px;
+margin-top:30px;
 }
 
 .homes-container{
 display:flex;
-gap:100px;
-max-width:900px;
+gap:80px;
 }
 
 .homes-column{
 display:flex;
 flex-direction:column;
-gap:24px;
+gap:20px;
 flex:1;
 }
 
 .home-card{
 display:flex;
 align-items:center;
-gap:14px;
+gap:12px;
 border-bottom:1px solid #222;
 padding-bottom:10px;
 }
 
-.home-number{
-font-size:12px;
-opacity:.35;
-min-width:24px;
-}
-
-.home-name{
-font-size:18px;
-white-space:nowrap;
-}
+.home-number{opacity:.4;}
 
 .home-separator{
 flex-grow:1;
@@ -161,19 +191,18 @@ background:#222;
 }
 
 .home-link{
-font-size:13px;
-text-decoration:none;
 color:#aaa;
-transition:.25s;
+text-decoration:none;
+font-size:13px;
 }
 
-.home-link:hover{
-color:white;
-}
+.home-link:hover{color:white}
+
+/* MAP */
 
 #map{
-height:450px;
-margin-top:40px;
+height:420px;
+margin-top:30px;
 border:1px solid #333;
 }
 
@@ -185,8 +214,10 @@ border-radius:50%;
 border:2px solid black;
 }
 
+/* CONTACT */
+
 .contact-box{
-max-width:500px;
+max-width:400px;
 margin-top:20px;
 }
 
@@ -198,7 +229,6 @@ margin-bottom:10px;
 background:#111;
 border:1px solid #333;
 color:white;
-font-family:"Space Grotesk";
 }
 
 .contact-box button{
@@ -206,6 +236,30 @@ padding:12px 18px;
 background:white;
 border:none;
 cursor:pointer;
+}
+
+/* MOBILE */
+
+@media (max-width:900px){
+
+body{overflow:auto}
+
+.section{
+position:relative;
+height:auto;
+opacity:1;
+pointer-events:auto;
+padding:120px 8%;
+}
+
+nav ul{display:none}
+
+.hamburger{display:flex}
+
+.rail{display:none}
+
+.homes-container{flex-direction:column}
+
 }
 
 </style>
@@ -230,7 +284,21 @@ cursor:pointer;
 <li>Contact</li>
 </ul>
 
+<div class="hamburger" id="hamburger">
+<div></div>
+<div></div>
+<div></div>
+</div>
+
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+<div>Home</div>
+<div>About</div>
+<div>Homes</div>
+<div>Locations</div>
+<div>Contact</div>
+</div>
 
 <section class="section hero active">
 
@@ -246,15 +314,15 @@ cursor:pointer;
 <div class="about-text">
 
 <p>
-Astor BNB is a family-run hospitality project rooted in Thessaloniki. Our journey in tourism began in 1980 through our parent company, ASTOR TRAVEL. For decades we have welcomed travelers from around the world, always guided by the belief that authentic hospitality begins with care and attention to detail.
+Astor BNB is a family-run hospitality project rooted in Thessaloniki. Our journey in tourism began in 1980 through ASTOR TRAVEL.
 </p>
 
 <p>
-We carefully acquire apartments and transform them through thoughtful renovation. Every home is redesigned with patience, dedication, and a genuine love for creating welcoming spaces. Each property carries its own subtle touch inspired by moments, places, and experiences from life.
+We carefully acquire apartments and transform them through thoughtful renovation, creating welcoming spaces filled with dedication and love.
 </p>
 
 <p>
-When guests stay with us, they are not simply visiting a place to sleep — they are discovering a space shaped by stories, memories, and a passion for hospitality.
+Each home carries a unique touch inspired by experiences from life and invites guests to discover them.
 </p>
 
 <p>
@@ -275,28 +343,43 @@ ASTOR BNB proudly operates as a sister company of ASTOR TRAVEL.
 
 <div class="homes-column">
 
-<div class="home-card"><span class="home-number">01</span><span class="home-name">Sir Dip's Place</span></div>
-<div class="home-card"><span class="home-number">02</span><span class="home-name">Sir Paco's Place</span></div>
-<div class="home-card"><span class="home-number">03</span><span class="home-name">Polymnia</span></div>
-<div class="home-card"><span class="home-number">04</span><span class="home-name">Nostalgia</span></div>
-<div class="home-card"><span class="home-number">05</span><span class="home-name">Tzortzis's Home</span></div>
-<div class="home-card"><span class="home-number">06</span><span class="home-name">Demi's Home</span></div>
-<div class="home-card"><span class="home-number">07</span><span class="home-name">ASTOR Summer House</span></div>
-<div class="home-card"><span class="home-number">08</span><span class="home-name">Eunoia</span></div>
-<div class="home-card"><span class="home-number">09</span><span class="home-name">Thimyses</span></div>
+<div class="home-card"><span class="home-number">01</span>Sir Dip's Place<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/1226788389256832640" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">02</span>Sir Paco's Place<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/1226060166288656930" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">03</span>Polymnia<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/569412065052467206" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">04</span>Nostalgia<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/570191984863127237" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">05</span>Tzortzis's Home<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/39220220" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">06</span>Demi's Home<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/39206525" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">07</span>ASTOR Summer House<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/32984281" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">08</span>Eunoia<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/1311403885145893744" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">09</span>Thimyses<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/1311378532743569141" target="_blank">Airbnb</a></div>
 
 </div>
 
 <div class="homes-column">
 
-<div class="home-card"><span class="home-number">10</span><span class="home-name">Sofokleous</span></div>
-<div class="home-card"><span class="home-number">11</span><span class="home-name">Poliorkitou</span></div>
-<div class="home-card"><span class="home-number">12</span><span class="home-name">Akropoleos</span></div>
-<div class="home-card"><span class="home-number">13</span><span class="home-name">J&A Home</span></div>
-<div class="home-card"><span class="home-number">14</span><span class="home-name">ASTOR Boutique Egnatia (A)</span></div>
-<div class="home-card"><span class="home-number">15</span><span class="home-name">ASTOR Boutique Egnatia (B)</span></div>
-<div class="home-card"><span class="home-number">16</span><span class="home-name">ASTOR Boutique Egnatia (C)</span></div>
-<div class="home-card"><span class="home-number">17</span><span class="home-name">ASTOR Boutique Egnatia (D)</span></div>
+<div class="home-card"><span class="home-number">10</span>Sofokleous<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/35709594" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">11</span>Poliorkitou<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/37857422" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">12</span>Akropoleos<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/35071057" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">13</span>J&A Home<div class="home-separator"></div><a class="home-link" href="https://www.airbnb.gr/rooms/42330015" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">14</span>ASTOR Boutique Egnatia (A)<div class="home-separator"></div><a class="home-link" href="#" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">15</span>ASTOR Boutique Egnatia (B)<div class="home-separator"></div><a class="home-link" href="#" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">16</span>ASTOR Boutique Egnatia (C)<div class="home-separator"></div><a class="home-link" href="#" target="_blank">Airbnb</a></div>
+
+<div class="home-card"><span class="home-number">17</span>ASTOR Boutique Egnatia (D)<div class="home-separator"></div><a class="home-link" href="#" target="_blank">Airbnb</a></div>
 
 </div>
 
@@ -320,10 +403,9 @@ ASTOR BNB proudly operates as a sister company of ASTOR TRAVEL.
 
 <div class="contact-box">
 
-<input placeholder="Your Name">
+<input placeholder="Name">
 <input placeholder="Email">
 <textarea rows="4" placeholder="Message"></textarea>
-
 <button>Send Message</button>
 
 </div>
@@ -333,6 +415,17 @@ ASTOR BNB proudly operates as a sister company of ASTOR TRAVEL.
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
+
+/* HAMBURGER */
+
+const hamburger=document.getElementById("hamburger")
+const mobileMenu=document.getElementById("mobileMenu")
+
+hamburger.onclick=()=>mobileMenu.classList.toggle("open")
+
+/* DESKTOP SECTION NAV */
+
+if(window.innerWidth>900){
 
 const sections=document.querySelectorAll(".section")
 const menuItems=document.querySelectorAll("#menu li")
@@ -349,8 +442,8 @@ number.innerText=n
 
 function goToSection(index){
 
-if(animating) return
-if(index<0 || index>=sections.length) return
+if(animating)return
+if(index<0||index>=sections.length)return
 
 animating=true
 
@@ -366,22 +459,26 @@ menuItems[current].classList.add("active")
 
 updateNumber()
 
-setTimeout(()=>{animating=false},1000)
+setTimeout(()=>animating=false,800)
 
-},1000)
+},800)
 
 }
 
 window.addEventListener("wheel",(e)=>{
-if(e.deltaY>0){goToSection(current+1)}
-else{goToSection(current-1)}
+if(e.deltaY>0)goToSection(current+1)
+else goToSection(current-1)
 })
 
 menuItems.forEach((item,index)=>{
-item.addEventListener("click",()=>{goToSection(index)})
+item.onclick=()=>goToSection(index)
 })
 
 updateNumber()
+
+}
+
+/* MAP */
 
 setTimeout(()=>{
 
@@ -389,8 +486,7 @@ var map=L.map('map').setView([40.6355,22.9444],14)
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
 attribution:'© OpenStreetMap & CARTO',
-subdomains:'abcd',
-maxZoom:20
+subdomains:'abcd'
 }).addTo(map)
 
 var whiteIcon=L.divIcon({
