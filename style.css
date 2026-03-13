@@ -3,7 +3,6 @@ font-family:'Space Grotesk',sans-serif;
 background:#0b0b0b;
 color:white;
 margin:0;
-overflow:hidden;
 }
 
 nav{
@@ -19,13 +18,10 @@ padding:0 40px;
 z-index:5000;
 }
 
-.logo{letter-spacing:3px}
-
 nav ul{display:flex;gap:30px;list-style:none}
-
 nav li{cursor:pointer}
 
-.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
+.hamburger{display:none;flex-direction:column;gap:4px}
 .hamburger div{width:25px;height:2px;background:white}
 
 .mobile-menu{
@@ -42,41 +38,21 @@ font-size:28px;
 }
 
 .mobile-menu.open{transform:translateY(0)}
-
-.mobile-close{position:absolute;top:30px;right:40px;font-size:40px;cursor:pointer}
+.mobile-close{position:absolute;top:30px;right:40px;font-size:40px}
 
 .section{
-position:absolute;
-top:70px;
-height:calc(100vh - 70px);
-width:100%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding-left:200px;
-opacity:0;
-transition:.6s;
+min-height:100vh;
+padding:120px 10%;
 }
 
-.section.active{opacity:1}
-
-.hero h1{font-size:80px}
-
-.about-text{max-width:600px}
+.hero h1{font-size:60px}
 
 .homes{display:flex;flex-direction:column;gap:10px;margin-top:20px}
-
 .home a{color:#aaa;margin-left:10px}
 
 #map{height:400px;margin-top:20px}
 
-.rail{position:fixed;left:40px;top:70px;height:calc(100vh - 70px)}
-.rail-line{width:1px;height:100%;background:#333}
-.section-number{position:absolute;bottom:20px;left:20px;font-size:80px;opacity:.2}
-
 @media(max-width:900px){
 nav ul{display:none}
 .hamburger{display:flex}
-.section{padding-left:90px}
-.section-number{font-size:50px}
 }
