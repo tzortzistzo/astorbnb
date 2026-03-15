@@ -1,92 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ASTOR BNB</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <nav>
+
 <div class="logo">ASTOR BNB</div>
 
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
 <ul id="menu">
-<li class="active">Home</li>
-<li>About</li>
-<li>Homes</li>
-<li>Locations</li>
-<li>Contact</li>
+<li data-section="home">Home</li>
+<li data-section="about">About</li>
+<li data-section="homes">Homes</li>
+<li data-section="locations">Locations</li>
+<li data-section="contact">Contact</li>
 </ul>
 
-<div class="hamburger" id="hamburger">
-<div></div><div></div><div></div>
-</div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
-<div class="mobile-close" id="mobileClose">✕</div>
-<div class="mobile-item" data-index="0">Home</div>
-<div class="mobile-item" data-index="1">About</div>
-<div class="mobile-item" data-index="2">Homes</div>
-<div class="mobile-item" data-index="3">Locations</div>
-<div class="mobile-item" data-index="4">Contact</div>
-</div>
+<section id="home" class="section hero">
 
-<section class="section hero active">
 <h1>ASTOR BNB</h1>
-<p>We craft thoughtfully designed spaces that create memorable stays.</p>
-</section>
 
-<section class="section">
-<h2>About</h2>
-<p class="about-text">
-Astor BNB is a family-run hospitality project rooted in Thessaloniki. Our journey in tourism began in 1980 through ASTOR TRAVEL.
-We carefully acquire apartments and renovate them with dedication and love, creating welcoming spaces for visitors.
-ASTOR BNB proudly operates as a sister company of ASTOR TRAVEL.
+<p>
+We craft thoughtfully designed spaces that create memorable stays.
 </p>
+
 </section>
 
-<section class="section">
+<section id="about" class="section">
+
+<h2>About</h2>
+
+<p>
+Astor BNB is a curated collection of design-driven short-term rentals.
+Each property is thoughtfully crafted creating spaces that feel intentional,
+minimal and welcoming.
+</p>
+
+</section>
+
+<section id="homes" class="section">
+
 <h2>Homes</h2>
 
-<div class="homes">
+<div class="homes-container">
 
-<div class="home">Sir Dip's Place <a target="_blank" href="https://www.airbnb.gr/rooms/1226788389256832640">Airbnb</a></div>
-<div class="home">Sir Paco's Place <a target="_blank" href="https://www.airbnb.gr/rooms/1226060166288656930">Airbnb</a></div>
-<div class="home">Polymnia <a target="_blank" href="https://www.airbnb.gr/rooms/569412065052467206">Airbnb</a></div>
-<div class="home">Nostalgia <a target="_blank" href="https://www.airbnb.gr/rooms/570191984863127237">Airbnb</a></div>
-<div class="home">Tzortzis's Home <a target="_blank" href="https://www.airbnb.gr/rooms/39220220">Airbnb</a></div>
-<div class="home">Demi's Home <a target="_blank" href="https://www.airbnb.gr/rooms/39206525">Airbnb</a></div>
-<div class="home">ASTOR Summer House <a target="_blank" href="https://www.airbnb.gr/rooms/32984281">Airbnb</a></div>
-<div class="home">Eunoia <a target="_blank" href="https://www.airbnb.gr/rooms/1311403885145893744">Airbnb</a></div>
-<div class="home">Thimyses <a target="_blank" href="https://www.airbnb.gr/rooms/1311378532743569141">Airbnb</a></div>
-<div class="home">Sofokleous <a target="_blank" href="https://www.airbnb.gr/rooms/35709594">Airbnb</a></div>
-<div class="home">Poliorkitou <a target="_blank" href="https://www.airbnb.gr/rooms/37857422">Airbnb</a></div>
-<div class="home">Akropoleos <a target="_blank" href="https://www.airbnb.gr/rooms/35071057">Airbnb</a></div>
-<div class="home">J&A Home <a target="_blank" href="https://www.airbnb.gr/rooms/42330015">Airbnb</a></div>
-<div class="home">ASTOR Boutique Egnatia (A)</div>
-<div class="home">ASTOR Boutique Egnatia (B)</div>
-<div class="home">ASTOR Boutique Egnatia (C)</div>
-<div class="home">ASTOR Boutique Egnatia (D)</div>
+<!-- σπίτι -->
+<div class="home-card">
+<span>Sir Dip's Place</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/1226788389256832640">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>Sir Paco's Place</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/1226060166288656930">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>Polymnia</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/569412065052467206">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>Nostalgia</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/570191984863127237">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>Tzortzis's Home</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/39220220">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>Demi's Home</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/39206525">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>ASTOR Summer House</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/32984281">Airbnb</a>
+</div>
+
+<div class="home-card">
+<span>Eunoia</span>
+<a target="_blank" href="https://www.airbnb.gr/rooms/1311403885145893744">Airbnb</a>
+</div>
 
 </div>
+
 </section>
 
-<section class="section">
+<section id="locations" class="section">
+
 <h2>Locations</h2>
+
 <div id="map"></div>
+
 </section>
 
-<section class="section">
+<section id="contact" class="section">
+
 <h2>Contact</h2>
-<input placeholder="Name">
-<input placeholder="Email">
-<textarea placeholder="Message"></textarea>
+
+<div class="contact">
+
+<input type="text" placeholder="Name">
+<input type="email" placeholder="Email">
+<textarea rows="5" placeholder="Message"></textarea>
+
+<button>Send Message</button>
+
+</div>
+
 </section>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
