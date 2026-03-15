@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -9,14 +8,306 @@
 <title>ASTOR BNB</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
-<link rel="stylesheet" href="style.css">
+<style>
 
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:"Space Grotesk",sans-serif;
+background:#0b0b0b;
+color:#e8e8e8;
+overflow:hidden;
+
+background-image:
+linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+
+background-size:40px 40px;
+}
+
+/* LEFT RAIL */
+
+.rail{
+position:fixed;
+left:60px;
+top:0;
+height:100vh;
+width:80px;
+pointer-events:none;
+}
+
+.rail-line{
+position:absolute;
+left:30px;
+top:0;
+width:1px;
+height:100vh;
+background:#222;
+}
+
+.section-number{
+position:absolute;
+bottom:60px;
+left:42px;
+font-size:110px;
+font-weight:600;
+color:#fff;
+opacity:.14;
+letter-spacing:6px;
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:22px 80px;
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{letter-spacing:4px;font-weight:600;}
+
+nav ul{display:flex;gap:40px;list-style:none;}
+
+nav li{cursor:pointer;color:white;opacity:.9;transition:.3s;}
+
+nav li.active{color:#6d6d6d;}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+}
+
+.hamburger span{
+width:26px;
+height:2px;
+background:white;
+display:block;
+}
+
+/* SECTIONS */
+
+.section{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+
+padding-left:240px;
+padding-right:10%;
+
+opacity:0;
+pointer-events:none;
+
+transition:opacity 1s ease;
+}
+
+.section.active{
+opacity:1;
+pointer-events:auto;
+}
+
+/* HERO */
+
+.hero h1{
+font-size:92px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:22px;
+max-width:520px;
+opacity:.75;
+}
+
+.scroll-indicator{
+position:absolute;
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+font-size:12px;
+letter-spacing:3px;
+opacity:.5;
+}
+
+/* ABOUT */
+
+.about p{
+max-width:650px;
+line-height:1.8;
+font-size:18px;
+opacity:.8;
+}
+
+/* HOMES */
+
+.homes-container{
+display:flex;
+gap:100px;
+margin-top:60px;
+max-width:900px;
+}
+
+.homes-column{
+display:flex;
+flex-direction:column;
+gap:28px;
+flex:1;
+}
+
+.home-card{
+display:flex;
+align-items:center;
+gap:14px;
+border-bottom:1px solid #222;
+padding-bottom:10px;
+}
+
+.home-number{
+font-size:12px;
+opacity:.35;
+min-width:24px;
+}
+
+.home-name{
+font-size:18px;
+white-space:nowrap;
+}
+
+.home-separator{
+flex-grow:1;
+height:1px;
+background:#222;
+}
+
+.home-link{
+font-size:13px;
+text-decoration:none;
+color:#aaa;
+transition:.25s;
+}
+
+.home-link:hover{
+color:white;
+}
+
+/* MAP */
+
+#map{
+height:420px;
+margin-top:40px;
+border:1px solid #222;
+}
+
+/* CONTACT */
+
+.contact{
+max-width:500px;
+margin-top:40px;
+}
+
+input,textarea{
+width:100%;
+padding:14px;
+margin-bottom:16px;
+background:#141414;
+border:1px solid #222;
+color:white;
+font-family:"Space Grotesk";
+}
+
+button{
+background:white;
+color:black;
+border:none;
+padding:14px 30px;
+cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+body{
+overflow:auto;
+}
+
+.section{
+position:relative;
+height:auto;
+padding:120px 30px;
+opacity:1;
+pointer-events:auto;
+}
+
+.rail{
+display:none;
+}
+
+nav{
+padding:20px 30px;
+}
+
+nav ul{
+position:absolute;
+top:70px;
+right:0;
+background:#0b0b0b;
+flex-direction:column;
+width:220px;
+padding:20px;
+display:none;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.hamburger{
+display:flex;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.homes-container{
+flex-direction:column;
+gap:40px;
+}
+
+.home-name{
+white-space:normal;
+}
+
+}
+
+</style>
 </head>
 
 <body>
+
+<div class="rail">
+<div class="rail-line"></div>
+<div class="section-number" id="sectionNumber">01</div>
+</div>
 
 <nav>
 
@@ -29,18 +320,18 @@
 </div>
 
 <ul id="menu">
-
-<li data-section="home">Home</li>
-<li data-section="about">About</li>
-<li data-section="homes">Homes</li>
-<li data-section="locations">Locations</li>
-<li data-section="contact">Contact</li>
-
+<li class="active">Home</li>
+<li>About</li>
+<li>Homes</li>
+<li>Locations</li>
+<li>Contact</li>
 </ul>
 
 </nav>
 
-<section id="home" class="section hero">
+<!-- HERO -->
+
+<section class="section hero active">
 
 <h1>ASTOR BNB</h1>
 
@@ -48,9 +339,13 @@
 We craft thoughtfully designed spaces that create memorable stays.
 </p>
 
+<div class="scroll-indicator">SCROLL ↓</div>
+
 </section>
 
-<section id="about" class="section">
+<!-- ABOUT -->
+
+<section class="section about">
 
 <h2>About</h2>
 
@@ -62,102 +357,29 @@ minimal and welcoming.
 
 </section>
 
-<section id="homes" class="section">
+<!-- HOMES -->
+
+<section class="section">
 
 <h2>Homes</h2>
 
 <div class="homes-container">
 
-<div class="home-card">
-<span>Sir Dip's Place</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/1226788389256832640">Airbnb</a>
-</div>
+<div class="homes-column">
 
-<div class="home-card">
-<span>Sir Paco's Place</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/1226060166288656930">Airbnb</a>
-</div>
+<div class="home-card"><span class="home-number">01</span><span class="home-name">Sir Dip's Place</span><div class="home-separator"></div><a class="home-link" target="_blank" href="#">Airbnb</a></div>
 
-<div class="home-card">
-<span>Polymnia</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/569412065052467206">Airbnb</a>
-</div>
+<div class="home-card"><span class="home-number">02</span><span class="home-name">Sir Paco's Place</span><div class="home-separator"></div><a class="home-link" target="_blank" href="#">Airbnb</a></div>
 
-<div class="home-card">
-<span>Nostalgia</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/570191984863127237">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Tzortzis's Home</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/39220220">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Demi's Home</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/39206525">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>ASTOR Summer House</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/32984281">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Eunoia</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/1311403885145893744">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Thimyses</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/1311378532743569141">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Sofokleous</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/35709594">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Poliorkitou</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/37857422">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>Akropoleos</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/35071057">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>J&A Home</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/42330015">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>ASTOR Boutique Egnatia (A)</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/569412065052467206">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>ASTOR Boutique Egnatia (B)</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/45247518">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>ASTOR Boutique Egnatia (C)</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/45228027">Airbnb</a>
-</div>
-
-<div class="home-card">
-<span>ASTOR Boutique Egnatia (D)</span>
-<a target="_blank" href="https://www.airbnb.gr/rooms/45216262">Airbnb</a>
 </div>
 
 </div>
 
 </section>
 
-<section id="locations" class="section">
+<!-- LOCATIONS -->
+
+<section class="section">
 
 <h2>Locations</h2>
 
@@ -165,16 +387,16 @@ minimal and welcoming.
 
 </section>
 
-<section id="contact" class="section">
+<!-- CONTACT -->
+
+<section class="section">
 
 <h2>Contact</h2>
 
 <div class="contact">
 
 <input type="text" placeholder="Name">
-
 <input type="email" placeholder="Email">
-
 <textarea rows="5" placeholder="Message"></textarea>
 
 <button>Send Message</button>
@@ -185,8 +407,22 @@ minimal and welcoming.
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<script src="script.js"></script>
+<script>
+
+const hamburger=document.getElementById("hamburger")
+const menu=document.getElementById("menu")
+
+hamburger.addEventListener("click",()=>{
+menu.classList.toggle("show")
+})
+
+var map=L.map('map').setView([40.6401,22.9444],13)
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+attribution:'© OpenStreetMap'
+}).addTo(map)
+
+</script>
 
 </body>
-
 </html>
