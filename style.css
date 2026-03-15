@@ -59,29 +59,13 @@ backdrop-filter:blur(10px);
 z-index:1000;
 }
 
-.logo{
-letter-spacing:4px;
-font-weight:600;
-}
+.logo{letter-spacing:4px;font-weight:600;}
 
-nav ul{
-display:flex;
-gap:40px;
-list-style:none;
-}
+nav ul{display:flex;gap:40px;list-style:none;}
 
-nav li{
-cursor:pointer;
-color:white;
-opacity:.9;
-transition:.3s;
-}
+nav li{cursor:pointer;color:white;opacity:.9;}
 
-nav li.active{
-color:#6d6d6d;
-}
-
-/* HAMBURGER */
+nav li.active{color:#6d6d6d;}
 
 .hamburger{
 display:none;
@@ -114,7 +98,8 @@ padding-right:10%;
 
 opacity:0;
 pointer-events:none;
-transition:opacity 1s ease;
+
+transition:opacity .9s ease;
 }
 
 .section.active{
@@ -147,7 +132,7 @@ max-width:900px;
 .homes-column{
 display:flex;
 flex-direction:column;
-gap:28px;
+gap:24px;
 flex:1;
 }
 
@@ -223,22 +208,6 @@ cursor:pointer;
 
 @media(max-width:900px){
 
-body{
-overflow:auto;
-}
-
-.section{
-position:relative;
-height:auto;
-padding:120px 30px;
-opacity:1;
-pointer-events:auto;
-}
-
-.rail{
-display:none;
-}
-
 nav{
 padding:20px 30px;
 }
@@ -262,13 +231,17 @@ display:flex;
 display:flex;
 }
 
+.section{
+padding-left:40px;
+padding-right:40px;
+}
+
 .hero h1{
 font-size:42px;
 }
 
 .homes-container{
-flex-direction:column;
-gap:40px;
+gap:30px;
 }
 
 .home-name{
