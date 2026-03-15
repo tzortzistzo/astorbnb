@@ -5,43 +5,7 @@ font-family:"Space Grotesk",sans-serif;
 background:#0b0b0b;
 color:#e8e8e8;
 overflow:hidden;
-
-background-image:
-linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-
 background-size:40px 40px;
-}
-
-/* RAIL */
-
-.rail{
-position:fixed;
-left:60px;
-top:0;
-height:100vh;
-width:80px;
-pointer-events:none;
-}
-
-.rail-line{
-position:absolute;
-left:30px;
-top:0;
-width:1px;
-height:100vh;
-background:#222;
-}
-
-.section-number{
-position:absolute;
-bottom:60px;
-left:42px;
-font-size:110px;
-font-weight:600;
-color:#fff;
-opacity:.14;
-letter-spacing:6px;
 }
 
 /* NAV */
@@ -55,17 +19,18 @@ justify-content:space-between;
 align-items:center;
 padding:22px 80px;
 background:rgba(0,0,0,.55);
-backdrop-filter:blur(10px);
 z-index:1000;
 }
 
-.logo{letter-spacing:4px;font-weight:600;}
+nav ul{
+display:flex;
+gap:40px;
+list-style:none;
+}
 
-nav ul{display:flex;gap:40px;list-style:none;}
-
-nav li{cursor:pointer;color:white;opacity:.9;}
-
-nav li.active{color:#6d6d6d;}
+nav li{
+cursor:pointer;
+}
 
 .hamburger{
 display:none;
@@ -88,18 +53,14 @@ top:0;
 left:0;
 width:100%;
 height:100vh;
-
 display:flex;
 flex-direction:column;
 justify-content:center;
-
 padding-left:240px;
 padding-right:10%;
-
 opacity:0;
 pointer-events:none;
-
-transition:opacity .9s ease;
+transition:opacity .9s;
 }
 
 .section.active{
@@ -107,52 +68,27 @@ opacity:1;
 pointer-events:auto;
 }
 
-/* HERO */
-
-.hero h1{
-font-size:92px;
-margin-bottom:20px;
-}
-
-.hero p{
-font-size:22px;
-max-width:520px;
-opacity:.75;
-}
-
 /* HOMES */
 
-.homes-container{
-display:flex;
-gap:100px;
-margin-top:60px;
-max-width:900px;
+.homes-scroll{
+height:60vh;
+overflow-y:auto;
+margin-top:40px;
 }
 
-.homes-column{
-display:flex;
-flex-direction:column;
-gap:24px;
-flex:1;
+.homes-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+max-width:800px;
 }
 
 .home-card{
 display:flex;
 align-items:center;
-gap:14px;
+gap:10px;
 border-bottom:1px solid #222;
 padding-bottom:10px;
-}
-
-.home-number{
-font-size:12px;
-opacity:.35;
-min-width:24px;
-}
-
-.home-name{
-font-size:18px;
-white-space:nowrap;
 }
 
 .home-separator{
@@ -162,13 +98,8 @@ background:#222;
 }
 
 .home-link{
-font-size:13px;
-text-decoration:none;
 color:#aaa;
-}
-
-.home-link:hover{
-color:white;
+text-decoration:none;
 }
 
 /* MAP */
@@ -176,32 +107,6 @@ color:white;
 #map{
 height:420px;
 margin-top:40px;
-border:1px solid #222;
-}
-
-/* CONTACT */
-
-.contact{
-max-width:500px;
-margin-top:40px;
-}
-
-input,textarea{
-width:100%;
-padding:14px;
-margin-bottom:16px;
-background:#141414;
-border:1px solid #222;
-color:white;
-font-family:"Space Grotesk";
-}
-
-button{
-background:white;
-color:black;
-border:none;
-padding:14px 30px;
-cursor:pointer;
 }
 
 /* MOBILE */
@@ -216,9 +121,8 @@ nav ul{
 position:absolute;
 top:70px;
 right:0;
-background:#0b0b0b;
 flex-direction:column;
-width:220px;
+background:#0b0b0b;
 padding:20px;
 display:none;
 }
@@ -236,16 +140,8 @@ padding-left:40px;
 padding-right:40px;
 }
 
-.hero h1{
-font-size:42px;
-}
-
-.homes-container{
-gap:30px;
-}
-
-.home-name{
-white-space:normal;
+.homes-grid{
+grid-template-columns:1fr;
 }
 
 }
