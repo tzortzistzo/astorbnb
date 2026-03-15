@@ -8,14 +8,18 @@ let current=0
 let animating=false
 
 function updateMenu(){
+
 menuItems.forEach(item=>item.classList.remove("active"))
 menuItems[current].classList.add("active")
+
 }
 
 function updateNumber(){
+
 let n=current+1
 if(n<10)n="0"+n
 number.innerText=n
+
 }
 
 function goToSection(index){
@@ -41,32 +45,60 @@ setTimeout(()=>{animating=false},900)
 
 }
 
+/* wheel navigation */
+
 window.addEventListener("wheel",(e)=>{
 
-if(window.innerWidth<900) return
+if(animating) return
 
-if(e.deltaY>0) goToSection(current+1)
-else goToSection(current-1)
+if(e.deltaY>0){
+goToSection(current+1)
+}else{
+goToSection(current-1)
+}
 
 })
+
+/* touch navigation */
+
+let touchStart=0
+
+window.addEventListener("touchstart",(e)=>{
+touchStart=e.touches[0].clientY
+})
+
+window.addEventListener("touchend",(e)=>{
+
+let touchEnd=e.changedTouches[0].clientY
+
+if(Math.abs(touchStart-touchEnd)<50) return
+
+if(touchStart>touchEnd){
+goToSection(current+1)
+}else{
+goToSection(current-1)
+}
+
+})
+
+/* menu click */
 
 menuItems.forEach((item,index)=>{
 item.addEventListener("click",()=>{
 
-if(window.innerWidth<900){
 menu.classList.remove("open")
-sections[index].scrollIntoView({behavior:"smooth"})
-return
-}
-
 goToSection(index)
 
 })
 })
 
+/* hamburger */
+
 hamburger.addEventListener("click",()=>{
 menu.classList.toggle("open")
 })
+
+/* map */
 
 var map=L.map('map').setView([40.6401,22.9444],13)
 
