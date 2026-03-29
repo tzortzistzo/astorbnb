@@ -139,56 +139,77 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
    NO CSS variables, all hardcoded
 ════════════════════════════════ */
 @media(max-width:768px){
+  html,body{overflow:hidden}
+  .page{overflow-x:hidden}
   .nav-links{display:none}
   .hamburger{display:flex}
   .scroll-dots{display:none}
   .hero-year{display:none}
 
-  /* HOME mobile — text above, illustration below */
+  /* HOME */
   #page-home{align-items:flex-start}
   .hero-wrap{justify-content:flex-start;padding-top:calc(var(--nav-h) + 5vh);padding-bottom:32px;align-items:center}
-  .hero-illustration{position:relative!important;bottom:auto!important;left:auto!important;transform:none!important;width:min(320px,82vw);margin-top:24px;order:99}
+  .hero-illustration{position:relative!important;bottom:auto!important;left:auto!important;transform:none!important;width:min(300px,80vw);margin-top:24px}
 
-  /* ABOUT mobile — single column, no illustration */
+  /* ABOUT */
   #page-about{display:block}
-  .about-wrap{display:flex!important;flex-direction:column!important;grid-template-columns:unset!important;min-height:0!important;height:auto!important;justify-content:flex-start;padding:90px 28px 48px 28px!important}
+  .about-wrap{
+    display:flex;flex-direction:column;
+    grid-template-columns:none;
+    min-height:auto;
+    padding:90px 24px 48px;
+    gap:0;
+    max-width:100%;
+  }
+  .about-content{width:100%;max-width:100%}
   .about-bg-num,.about-illustration{display:none!important}
-  .about-content,.contact-content{padding:0!important;margin:0!important;width:100%!important}
-  .section-badge{margin-bottom:16px;padding-left:0;margin-left:0}
-  .about-headline{font-size:26px!important;line-height:1.25;margin-bottom:16px;max-width:100%}
-  .about-body{font-size:13px!important;line-height:1.75;margin-bottom:10px;max-width:100%}
-  .about-divider{margin:16px 0}
-  .about-sister{font-size:13px!important;max-width:100%}
-  .about-stats{gap:8px;margin-top:20px}
-  .stat{padding:10px 14px;flex:1;min-width:70px}
-  .stat-num{font-size:26px}
+  .section-badge{margin-bottom:14px}
+  .about-headline{font-size:24px;margin-bottom:14px;max-width:100%}
+  .about-body{font-size:13px;line-height:1.75;margin-bottom:10px;max-width:100%}
+  .about-divider{margin:14px 0}
+  .about-sister{font-size:13px;max-width:100%}
+  .about-stats{gap:8px;margin-top:18px;flex-wrap:wrap}
+  .stat{padding:10px 12px;flex:1;min-width:60px}
+  .stat-num{font-size:24px}
   .stat-label{font-size:9px}
 
-  /* HOMES mobile */
-  #page-homes{overflow-y:auto}
-  .homes-map-wrap{display:none !important}
+  /* HOMES */
+  #page-homes{overflow-y:auto;overflow-x:hidden}
+  .homes-map-wrap{display:none!important}
 
-  /* CONTACT mobile — show contact info, hide SVG */
+  /* CONTACT */
   #page-contact{display:block}
-  .contact-wrap{display:flex!important;flex-direction:column!important;grid-template-columns:unset!important;min-height:0!important;height:auto!important;justify-content:flex-start;padding:90px 28px 48px 28px!important}
-  .contact-illustration{display:flex!important;flex-direction:column;align-items:center;width:100%!important;margin-top:28px;padding-top:24px;border-top:1px solid rgba(201,185,138,.12)}
-  .contact-illustration>svg{display:none!important}
-  .cinfo{flex-direction:row;flex-wrap:wrap;gap:20px 32px;justify-content:center;width:100%}
-  .cinfo-item{min-width:130px;text-align:center;align-items:center;display:flex;flex-direction:column}
-  .cinfo-value{font-size:14px!important}
+  .contact-wrap{
+    display:flex;flex-direction:column;
+    grid-template-columns:none;
+    min-height:auto;
+    padding:90px 24px 48px;
+    gap:0;
+    max-width:100%;
+  }
+  .contact-content{width:100%;max-width:100%}
+  .contact-title{font-size:24px;max-width:100%;margin-bottom:20px}
   .contact-form{max-width:100%}
-  .contact-title{font-size:26px!important;max-width:100%;margin-bottom:24px}
+  .contact-illustration{
+    display:flex!important;flex-direction:column;align-items:center;
+    width:100%;margin-top:28px;padding-top:24px;
+    border-top:1px solid rgba(201,185,138,.12);
+  }
+  .contact-illustration>svg{display:none!important}
+  .cinfo{flex-direction:row;flex-wrap:wrap;gap:16px 24px;justify-content:center;width:100%}
+  .cinfo-item{min-width:120px;text-align:center;align-items:center;display:flex;flex-direction:column}
+  .cinfo-value{font-size:14px}
 
-  /* HOMES mobile card grid */
-  .mob-homes{padding:90px 28px 48px 28px}
-  .mob-homes-title{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--fg);margin-bottom:20px}
-  .mob-map{height:200px;position:relative;overflow:hidden;margin:0 -28px 24px -28px}
+  /* HOMES mobile list */
+  .mob-homes{padding:90px 24px 48px}
+  .mob-homes-title{font-size:24px;margin-bottom:16px}
+  .mob-map{height:190px;position:relative;overflow:hidden;margin-bottom:20px}
   .mob-map-inner{width:100%;height:100%}
   .mob-map-fade{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,transparent 22%),linear-gradient(to top,var(--bg) 0%,transparent 22%)}
-  .mob-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-  .mob-row-left{display:flex;align-items:center;gap:9px;min-width:0}
-  .mob-row-num{font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);flex-shrink:0;width:18px}
-  .mob-row-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mob-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .mob-row-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+  .mob-row-num{font-size:10px;color:rgba(201,185,138,.3);flex-shrink:0;width:18px}
+  .mob-row-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .mob-row-link{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 8px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0}
 }
 </style>
