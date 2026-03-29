@@ -50,9 +50,8 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 ════════════════════════════════ */
 #page-home{display:flex;align-items:center;justify-content:center}
 .hero-wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--nav-h) clamp(28px,7vw,100px) 40px;position:relative}
-.hero-ring{position:absolute;width:min(65vmin,480px);height:min(65vmin,480px);border-radius:50%;border:1px solid rgba(201,185,138,.1);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ringPulse 6s ease-in-out infinite}
-.hero-ring::before{content:'';position:absolute;inset:20px;border-radius:50%;border:1px solid rgba(201,185,138,.05)}
-@keyframes ringPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.02)}}
+.hero-illustration{position:absolute;bottom:clamp(60px,12vh,120px);left:50%;transform:translateX(-50%);width:min(440px,88vw);pointer-events:none;opacity:.7}
+.hero-svg{width:100%;height:auto}
 .hero-eyebrow{font-size:10px;font-weight:300;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
 .hero-title{font-family:var(--serif);font-size:clamp(64px,14vw,160px);font-weight:300;line-height:.88;letter-spacing:-.01em;color:var(--fg)}
 .hero-title em{font-style:italic;color:var(--gold)}
@@ -212,8 +211,38 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 <!-- ══ HOME ══ -->
 <div class="page active" id="page-home">
   <div class="hero-wrap">
-    <div class="hero-ring"></div>
-    <div class="hero-eyebrow">Thessaloniki · Greece · Since 1980</div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <!-- floor line -->
+        <line x1="20" y1="158" x2="400" y2="158" stroke="rgba(201,185,138,.18)" stroke-width="1"/>
+        <!-- sofa body -->
+        <rect x="80" y="112" width="200" height="46" rx="6" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="none"/>
+        <!-- sofa back -->
+        <rect x="80" y="88" width="200" height="28" rx="5" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="none"/>
+        <!-- sofa left arm -->
+        <rect x="68" y="100" width="18" height="48" rx="4" stroke="rgba(201,185,138,.2)" stroke-width="1" fill="none"/>
+        <!-- sofa right arm -->
+        <rect x="274" y="100" width="18" height="48" rx="4" stroke="rgba(201,185,138,.2)" stroke-width="1" fill="none"/>
+        <!-- sofa cushion divider -->
+        <line x1="180" y1="112" x2="180" y2="158" stroke="rgba(201,185,138,.12)" stroke-width="1"/>
+        <!-- sofa legs -->
+        <line x1="100" y1="158" x2="100" y2="168" stroke="rgba(201,185,138,.2)" stroke-width="1"/>
+        <line x1="260" y1="158" x2="260" y2="168" stroke="rgba(201,185,138,.2)" stroke-width="1"/>
+        <!-- floor lamp pole -->
+        <line x1="336" y1="158" x2="336" y2="52" stroke="rgba(201,185,138,.25)" stroke-width="1"/>
+        <!-- lamp base -->
+        <line x1="316" y1="158" x2="356" y2="158" stroke="rgba(201,185,138,.22)" stroke-width="1.5"/>
+        <!-- lamp shade -->
+        <path d="M316 52 Q336 36 356 52 L348 72 Q336 78 324 72 Z" stroke="rgba(201,185,138,.28)" stroke-width="1" fill="rgba(201,185,138,.04)"/>
+        <!-- lamp glow -->
+        <ellipse cx="336" cy="80" rx="28" ry="18" fill="rgba(201,185,138,.03)"/>
+        <!-- small side table -->
+        <rect x="300" y="138" width="28" height="20" rx="2" stroke="rgba(201,185,138,.15)" stroke-width="1" fill="none"/>
+        <line x1="306" y1="158" x2="306" y2="164" stroke="rgba(201,185,138,.15)" stroke-width="1"/>
+        <line x1="322" y1="158" x2="322" y2="164" stroke="rgba(201,185,138,.15)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="hero-eyebrow">Since 1980</div>
     <h1 class="hero-title">ASTOR<br><em>BNB</em></h1>
     <div class="hero-rule"></div>
     <p class="hero-sub">Minimal hospitality.<br>Thoughtfully restored homes.</p>
@@ -229,7 +258,6 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
     <h2 class="about-headline"><strong>Built on heritage.</strong><br>Crafted with <em>love.</em></h2>
     <p class="about-body">Since 1980, the Astor family has been devoted to a single pursuit: transforming forgotten spaces into <strong>homes worthy of remembrance</strong>. We are not developers — we are craftsmen. Each property we acquire is restored with intention and brought to life with a character entirely its own.</p>
     <p class="about-body">We believe a great stay begins long before a guest arrives — in the <strong>choice of materials</strong>, in the light through a restored window, in the quiet detail that makes a space feel deeply human. Every home in our collection carries a story, and we consider it our duty to tell it well.</p>
-    <p class="about-body"><strong>People remember how a place made them feel.</strong> That understanding guides everything we do — and it's something no renovation checklist has ever taught us. It comes from decades of opening doors, watching guests walk in, and seeing their faces.</p>
     <div class="about-divider"></div>
     <p class="about-sister">Astor BnB is the proud sister company of <strong>Astor Travel Agency</strong> — together, we offer a complete journey from the moment you book to the moment you arrive home.</p>
     <div class="about-stats">
@@ -287,7 +315,7 @@ const homesData=[
   {name:"Thimyses",           url:"https://www.airbnb.gr/rooms/1311378532743569141",coords:[40.641220,22.942598],addr:"Stratigou Doumpiotou 1, 54632"},
   {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.639824,22.949349],addr:"Agiou Nikolaou 22, 54633"},
   {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.639824,22.949349],addr:"Agiou Nikolaou 22, 54633"},
-  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.638457,22.942452],addr:"Thessaloniki"},
+  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.303358,23.090517],addr:"Thessaloniki"},
   {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.639150,22.950256],addr:"Sofokleous 5, 54633"},
   {name:"Poliorkitou",        url:"https://www.airbnb.gr/rooms/37857422",           coords:[40.642109,22.946985],addr:"Dimitriou Poliorkitou 17, 54633"},
   {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.640555,22.953107],addr:"Akropoleos 11, 54634"},
@@ -497,7 +525,7 @@ window.addEventListener('keydown',e=>{
 function initDesktopMap(){
   const el=document.getElementById('map-desktop');if(!el)return;
   el.style.height='100%';
-  const map=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6405,22.9455],14);
+  const map=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6405,22.9455],13);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
   // Inject pulse animation once
