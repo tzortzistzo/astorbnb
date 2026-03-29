@@ -279,23 +279,23 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const homesData=[
-  {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631"},
-  {name:"Sir Paco's Place",   url:"https://www.airbnb.gr/rooms/1226060166288656930",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631"},
-  {name:"Polymnia",           url:"https://www.airbnb.gr/rooms/569412065052467206", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
-  {name:"Nostalgia",          url:"https://www.airbnb.gr/rooms/570191984863127237", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
-  {name:"Eunoia",             url:"https://www.airbnb.gr/rooms/1311403885145893744",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
-  {name:"Thimyses",           url:"https://www.airbnb.gr/rooms/1311378532743569141",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
-  {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633"},
-  {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633"},
-  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.63660,22.94970],addr:"Thessaloniki"},
-  {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.63520,22.94330],addr:"Sofokleous 5, 54633"},
-  {name:"Poliorkitou",        url:"https://www.airbnb.gr/rooms/37857422",           coords:[40.63440,22.94480],addr:"Dimitriou Poliorkitou 17, 54633"},
-  {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.63290,22.94390],addr:"Akropoleos 11, 54634"},
-  {name:"J&A Home",           url:"https://www.airbnb.gr/rooms/42330015",           coords:[40.63380,22.94710],addr:"Varvaki 3, 54633"},
-  {name:"Boutique Egnatia A", url:"https://www.airbnb.gr/rooms/45278929",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
-  {name:"Boutique Egnatia B", url:"https://www.airbnb.gr/rooms/45247518",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
-  {name:"Boutique Egnatia C", url:"https://www.airbnb.gr/rooms/45228027",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
-  {name:"Boutique Egnatia D", url:"https://www.airbnb.gr/rooms/45216262",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
+  {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.638457,22.942452],addr:"Grigoriou Zaliki 4, 54631"},
+  {name:"Sir Paco's Place",   url:"https://www.airbnb.gr/rooms/1226060166288656930",coords:[40.638457,22.942452],addr:"Grigoriou Zaliki 4, 54631"},
+  {name:"Polymnia",           url:"https://www.airbnb.gr/rooms/569412065052467206", coords:[40.641220,22.942598],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Nostalgia",          url:"https://www.airbnb.gr/rooms/570191984863127237", coords:[40.641220,22.942598],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Eunoia",             url:"https://www.airbnb.gr/rooms/1311403885145893744",coords:[40.641220,22.942598],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Thimyses",           url:"https://www.airbnb.gr/rooms/1311378532743569141",coords:[40.641220,22.942598],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.639824,22.949349],addr:"Agiou Nikolaou 22, 54633"},
+  {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.639824,22.949349],addr:"Agiou Nikolaou 22, 54633"},
+  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.638457,22.942452],addr:"Thessaloniki"},
+  {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.639150,22.950256],addr:"Sofokleous 5, 54633"},
+  {name:"Poliorkitou",        url:"https://www.airbnb.gr/rooms/37857422",           coords:[40.642109,22.946985],addr:"Dimitriou Poliorkitou 17, 54633"},
+  {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.640555,22.953107],addr:"Akropoleos 11, 54634"},
+  {name:"J&A Home",           url:"https://www.airbnb.gr/rooms/42330015",           coords:[40.640799,22.947264],addr:"Varvaki 3, 54633"},
+  {name:"Boutique Egnatia A", url:"https://www.airbnb.gr/rooms/45278929",           coords:[40.639701,22.936760],addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia B", url:"https://www.airbnb.gr/rooms/45247518",           coords:[40.639701,22.936760],addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia C", url:"https://www.airbnb.gr/rooms/45228027",           coords:[40.639701,22.936760],addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia D", url:"https://www.airbnb.gr/rooms/45216262",           coords:[40.639701,22.936760],addr:"Egnatia 10, 54626"},
 ];
 
 const isMob=()=>window.innerWidth<=768;
@@ -439,7 +439,7 @@ window.addEventListener('keydown',e=>{
 function initDesktopMap(){
   const el=document.getElementById('map-desktop');if(!el)return;
   el.style.height='100%';
-  const map=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6355,22.9460],14);
+  const map=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6405,22.9455],14);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
   const mkN=()=>L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.35)"></div>',iconSize:[9,9],iconAnchor:[4.5,4.5]});
   const mkA=()=>L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c9b98a;border-radius:50%;border:2px solid #f0ece4;box-shadow:0 0 14px rgba(201,185,138,.9)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
@@ -467,7 +467,7 @@ function initDesktopMap(){
 // ── MOBILE MAP ──
 function initMobileMap(){
   const el=document.getElementById('map-mobile');if(!el)return;
-  window._mmap=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6375,22.9460],14);
+  window._mmap=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6405,22.9455],13);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(window._mmap);
   const mkN=()=>L.divIcon({className:'',html:'<div style="width:8px;height:8px;background:#c9b98a;border-radius:50%;opacity:.75"></div>',iconSize:[8,8],iconAnchor:[4,4]});
   const seen=new Set();
