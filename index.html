@@ -717,4 +717,16 @@ if(contactForm){
       });
       if(res.ok){
         contactForm.reset();
-        btn.style.display='none'
+        btn.style.display='none';
+        msg.style.display='block';
+      } else {
+        btn.textContent='Try again';btn.disabled=false;
+      }
+    } catch(err){
+      btn.textContent='Try again';btn.disabled=false;
+    }
+  });
+}
+</script>
+</body>
+</html>
