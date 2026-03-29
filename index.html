@@ -12,13 +12,12 @@
   --bg:#08080a;--fg:#f0ece4;--muted:#8a8478;--bright:#ccc7bc;
   --gold:#c9b98a;--nav-h:70px;
   --serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;
-  --pad:clamp(28px,7vw,100px);
 }
 html,body{width:100%;height:100%;background:var(--bg);color:var(--fg);font-family:var(--sans);overflow:hidden}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
 
 /* ══ NAV ══ */
-nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);z-index:600;background:rgba(8,8,10,.95);backdrop-filter:blur(10px)}
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(28px,7vw,100px);z-index:600;background:rgba(8,8,10,.95);backdrop-filter:blur(10px)}
 nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(201,185,138,.1)}
 .nav-links{display:flex;gap:32px;list-style:none}
 .nav-links li{font-size:11px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .25s}
@@ -33,11 +32,11 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .mobile-overlay li{list-style:none;font-family:var(--serif);font-size:clamp(28px,9vw,52px);font-weight:300;font-style:italic;color:var(--muted);cursor:pointer;transition:color .2s}
 .mobile-overlay li:hover{color:var(--fg)}
 
-/* ══ PAGE SYSTEM (shared) ══ */
+/* ══ PAGES ══ */
 .page{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .6s ease;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .page.active{opacity:1;pointer-events:all}
 
-/* ══ DOTS (desktop only) ══ */
+/* ══ DOTS ══ */
 .scroll-dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:400}
 .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:background .3s,transform .3s}
 .dot.active{background:var(--gold);transform:scale(1.5)}
@@ -46,11 +45,11 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .section-badge{display:inline-flex;align-items:center;gap:14px;margin-bottom:28px;font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .section-badge::before{content:'';display:block;width:36px;height:1px;background:var(--gold)}
 
-/* ══════════════════════════
+/* ════════════════════════════════
    HOME
-══════════════════════════ */
+════════════════════════════════ */
 #page-home{display:flex;align-items:center;justify-content:center}
-.hero-wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--nav-h) var(--pad) 40px;position:relative}
+.hero-wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--nav-h) clamp(28px,7vw,100px) 40px;position:relative}
 .hero-ring{position:absolute;width:min(65vmin,480px);height:min(65vmin,480px);border-radius:50%;border:1px solid rgba(201,185,138,.1);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ringPulse 6s ease-in-out infinite}
 .hero-ring::before{content:'';position:absolute;inset:20px;border-radius:50%;border:1px solid rgba(201,185,138,.05)}
 @keyframes ringPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.02)}}
@@ -59,13 +58,13 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .hero-title em{font-style:italic;color:var(--gold)}
 .hero-rule{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);margin:28px auto 24px}
 .hero-sub{font-size:clamp(10px,2.5vw,13px);font-weight:200;letter-spacing:.18em;text-transform:uppercase;color:var(--bright);max-width:300px;line-height:2.1}
-.hero-year{position:absolute;bottom:clamp(16px,4vh,36px);right:var(--pad);font-family:var(--serif);font-size:11px;font-weight:300;letter-spacing:.2em;color:var(--muted)}
+.hero-year{position:absolute;bottom:clamp(16px,4vh,36px);right:clamp(28px,7vw,100px);font-family:var(--serif);font-size:11px;font-weight:300;letter-spacing:.2em;color:var(--muted)}
 
-/* ══════════════════════════
-   ABOUT
-══════════════════════════ */
+/* ════════════════════════════════
+   ABOUT — desktop
+════════════════════════════════ */
 #page-about{display:flex;justify-content:center}
-.about-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+40px) var(--pad) 60px;position:relative}
+.about-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+40px) clamp(28px,7vw,100px) 60px;position:relative}
 .about-bg-num{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(120px,22vw,300px);font-weight:300;color:rgba(201,185,138,.03);pointer-events:none;line-height:1;user-select:none}
 .about-headline{font-family:var(--serif);font-size:clamp(26px,4vw,54px);font-weight:300;line-height:1.25;max-width:760px;margin-bottom:24px;color:var(--fg)}
 .about-headline strong{font-weight:600}
@@ -82,18 +81,18 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .stat-num{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--fg);line-height:1}
 .stat-label{font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 
-/* ══════════════════════════
+/* ════════════════════════════════
    HOMES — desktop split
-══════════════════════════ */
+════════════════════════════════ */
 #page-homes{overflow:hidden}
 .homes-map-wrap{width:100%;height:100%;display:grid;grid-template-columns:1fr 1.6fr;padding-top:var(--nav-h)}
-.homes-left{display:flex;flex-direction:column;padding:24px 32px 24px var(--pad);border-right:1px solid rgba(201,185,138,.1);overflow-y:auto;scrollbar-width:none;height:100%}
+.homes-left{display:flex;flex-direction:column;padding:24px 32px 24px clamp(28px,7vw,100px);border-right:1px solid rgba(201,185,138,.1);overflow-y:auto;scrollbar-width:none;height:100%}
 .homes-left::-webkit-scrollbar{display:none}
 .homes-left-header{margin-bottom:12px;flex-shrink:0}
 .homes-left-title{font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);font-weight:300;color:var(--fg);margin-top:4px}
 .homes-list-inner{display:flex;flex-direction:column;flex:1}
 .h-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.055);cursor:pointer;position:relative;flex:1}
-.h-item::before{content:'';position:absolute;left:calc(-1 * var(--pad));width:3px;height:0;background:var(--gold);transition:height .3s;top:50%;transform:translateY(-50%)}
+.h-item::before{content:'';position:absolute;left:calc(-1 * clamp(28px,7vw,100px));width:3px;height:0;background:var(--gold);transition:height .3s;top:50%;transform:translateY(-50%)}
 .h-item:hover::before,.h-item.map-active::before{height:70%}
 .h-item:hover .h-dot,.h-item.map-active .h-dot{background:var(--gold);box-shadow:0 0 8px rgba(201,185,138,.5)}
 .h-item:hover .h-name,.h-item.map-active .h-name{color:var(--gold)}
@@ -105,18 +104,16 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .homes-right{position:relative;overflow:hidden}
 .homes-right::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,transparent 8%),linear-gradient(to left,var(--bg) 0%,transparent 3%),linear-gradient(to bottom,var(--bg) 0%,transparent 5%),linear-gradient(to top,var(--bg) 0%,transparent 4%)}
 #map-desktop{width:100%;height:100%}
-
-/* tooltip */
 .leaflet-tooltip.home-tip{background:rgba(8,8,10,.92);border:1px solid rgba(201,185,138,.3);color:var(--fg);font-family:var(--serif);font-size:14px;font-weight:300;padding:8px 14px;border-radius:0;box-shadow:0 4px 20px rgba(0,0,0,.5);white-space:nowrap}
 .leaflet-tooltip.home-tip::before{display:none}
-.tip-name{color:var(--fg);font-size:15px}
+.tip-name{font-size:15px}
 .tip-addr{color:var(--muted);font-size:11px;font-family:var(--sans);font-weight:300;letter-spacing:.06em;margin-top:3px}
 
-/* ══════════════════════════
-   CONTACT
-══════════════════════════ */
+/* ════════════════════════════════
+   CONTACT — desktop
+════════════════════════════════ */
 #page-contact{display:flex;justify-content:center}
-.contact-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+20px) var(--pad) 48px}
+.contact-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+20px) clamp(28px,7vw,100px) 48px}
 .contact-title{font-family:var(--serif);font-size:clamp(24px,4vw,52px);font-weight:300;color:var(--fg);margin-top:8px;margin-bottom:32px;max-width:480px}
 .contact-form{display:flex;flex-direction:column;max-width:480px}
 .field{border-bottom:1px solid rgba(255,255,255,.1);position:relative}
@@ -128,39 +125,63 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .btn-send{margin-top:28px;align-self:flex-start;background:transparent;border:1px solid rgba(201,185,138,.35);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;padding:13px 36px;cursor:pointer;transition:background .25s,border-color .25s}
 .btn-send:hover{background:rgba(201,185,138,.07);border-color:var(--gold)}
 
-/* ══════════════════════════
-   MOBILE OVERRIDES
-══════════════════════════ */
+/* ════════════════════════════════
+   MOBILE — all overrides
+   NO CSS variables, all hardcoded
+════════════════════════════════ */
 @media(max-width:768px){
-  :root{--pad:22px}
   .nav-links{display:none}
   .hamburger{display:flex}
   .scroll-dots{display:none}
   .hero-year{display:none}
 
-  /* About: scrollable, compact */
-  .about-wrap{padding:calc(var(--nav-h)+24px) 24px 48px;justify-content:flex-start;min-height:unset}
+  /* HOME mobile — fine as is */
+
+  /* ABOUT mobile */
+  #page-about{display:block}
+  .about-wrap{
+    min-height:unset;
+    justify-content:flex-start;
+    padding:90px 28px 52px 28px; /* top=nav-h(70)+20, sides=28px hardcoded */
+  }
   .about-bg-num{display:none}
-  .about-headline{font-size:clamp(22px,7vw,32px);margin-bottom:16px}
-  .about-body{font-size:13px;line-height:1.75;margin-bottom:10px}
+  .section-badge{margin-bottom:16px}
+  .about-headline{font-size:28px;line-height:1.25;margin-bottom:16px;max-width:100%}
+  .about-body{font-size:13px;line-height:1.75;margin-bottom:10px;max-width:100%}
   .about-divider{margin:16px 0}
-  .about-sister{font-size:13px}
+  .about-sister{font-size:13px;max-width:100%}
   .about-stats{gap:8px;margin-top:20px}
   .stat{padding:10px 14px;flex:1;min-width:70px}
   .stat-num{font-size:26px}
   .stat-label{font-size:9px}
-  .section-badge{margin-bottom:16px}
 
-  /* Homes: mobile layout */
+  /* HOMES mobile */
   #page-homes{overflow-y:auto}
-  .homes-map-wrap{display:none}  /* hide desktop layout */
+  .homes-map-wrap{display:none !important}
 
-  /* Contact */
-  .contact-wrap{padding:calc(var(--nav-h)+24px) 24px 48px;justify-content:flex-start;min-height:auto}
+  /* CONTACT mobile */
+  #page-contact{display:block}
+  .contact-wrap{
+    min-height:unset;
+    justify-content:flex-start;
+    padding:90px 28px 52px 28px;
+  }
+  .contact-form{max-width:100%}
+  .contact-title{font-size:28px;max-width:100%;margin-bottom:24px}
 
-  /* homes mobile list */
-  #page-homes{overflow-y:auto}
-  .homes-map-wrap{display:none}
+  /* HOMES mobile card grid */
+  .mob-homes{padding:90px 28px 52px 28px}
+  .mob-homes-title{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--fg);margin-bottom:20px}
+  .mob-map{height:200px;position:relative;overflow:hidden;margin:0 -28px 24px -28px}
+  .mob-map-inner{width:100%;height:100%}
+  .mob-map-fade{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,transparent 22%),linear-gradient(to top,var(--bg) 0%,transparent 22%)}
+  .mob-list{}
+  .mob-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .mob-row-left{display:flex;align-items:center;gap:9px;min-width:0}
+  .mob-row-num{font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);flex-shrink:0;width:18px}
+  .mob-row-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mob-row-link{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 8px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0;transition:color .2s}
+  .mob-row-link:hover{color:var(--gold)}
 }
 </style>
 </head>
@@ -188,7 +209,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
 <div class="scroll-dots" id="scrollDots"></div>
 
-<!-- HOME -->
+<!-- ══ HOME ══ -->
 <div class="page active" id="page-home">
   <div class="hero-wrap">
     <div class="hero-ring"></div>
@@ -200,7 +221,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ══ ABOUT ══ -->
 <div class="page" id="page-about">
   <div class="about-wrap">
     <div class="about-bg-num">1980</div>
@@ -219,10 +240,10 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   </div>
 </div>
 
-<!-- HOMES -->
+<!-- ══ HOMES ══ -->
 <div class="page" id="page-homes">
 
-  <!-- DESKTOP -->
+  <!-- Desktop split layout -->
   <div class="homes-map-wrap" id="desktopHomesWrap">
     <div class="homes-left" id="homesLeft">
       <div class="homes-left-header">
@@ -236,25 +257,12 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
     </div>
   </div>
 
-  <!-- MOBILE -->
-  <div id="mobileHomesWrap" style="display:none;padding-top:var(--nav-h)">
-    <div style="padding:24px 24px 0">
-      <div class="section-badge">Our Homes</div>
-      <h2 style="font-family:var(--serif);font-size:26px;font-weight:300;color:var(--fg);margin-bottom:16px">Every stay, a story.</h2>
-    </div>
-    <!-- Map strip -->
-    <div style="height:200px;position:relative;overflow:hidden;margin-bottom:8px">
-      <div id="map-mobile" style="width:100%;height:100%"></div>
-      <div style="position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,transparent 20%),linear-gradient(to top,var(--bg) 0%,transparent 20%)"></div>
-    </div>
-    <!-- Flat list -->
-    <div id="mobileHomesList" style="padding:0 24px"></div>
-    <div style="height:48px"></div>
-  </div>
+  <!-- Mobile layout — built by JS -->
+  <div id="mobileHomesWrap" style="display:none"></div>
 
 </div>
 
-<!-- CONTACT -->
+<!-- ══ CONTACT ══ -->
 <div class="page" id="page-contact">
   <div class="contact-wrap">
     <div class="section-badge">Contact</div>
@@ -270,30 +278,29 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ── DATA ──
 const homesData=[
-  {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631",   group:"Grigoriou Zaliki"},
-  {name:"Sir Paco's Place",   url:"https://www.airbnb.gr/rooms/1226060166288656930",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631",   group:"Grigoriou Zaliki"},
-  {name:"Polymnia",           url:"https://www.airbnb.gr/rooms/569412065052467206", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
-  {name:"Nostalgia",          url:"https://www.airbnb.gr/rooms/570191984863127237", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
-  {name:"Eunoia",             url:"https://www.airbnb.gr/rooms/1311403885145893744",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
-  {name:"Thimyses",           url:"https://www.airbnb.gr/rooms/1311378532743569141",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
-  {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633",     group:"Agiou Nikolaou"},
-  {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633",     group:"Agiou Nikolaou"},
-  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.63660,22.94970],addr:"Thessaloniki",                  group:"Summer House"},
-  {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.63520,22.94330],addr:"Sofokleous 5, 54633",           group:"Sofokleous"},
-  {name:"Poliorkitou",        url:"https://www.airbnb.gr/rooms/37857422",           coords:[40.63440,22.94480],addr:"Dimitriou Poliorkitou 17, 54633",group:"Poliorkitou"},
-  {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.63290,22.94390],addr:"Akropoleos 11, 54634",          group:"Akropoleos"},
-  {name:"J&A Home",           url:"https://www.airbnb.gr/rooms/42330015",           coords:[40.63380,22.94710],addr:"Varvaki 3, 54633",              group:"Varvaki"},
-  {name:"Boutique Egnatia A", url:"https://www.airbnb.gr/rooms/45278929",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
-  {name:"Boutique Egnatia B", url:"https://www.airbnb.gr/rooms/45247518",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
-  {name:"Boutique Egnatia C", url:"https://www.airbnb.gr/rooms/45228027",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
-  {name:"Boutique Egnatia D", url:"https://www.airbnb.gr/rooms/45216262",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
+  {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631"},
+  {name:"Sir Paco's Place",   url:"https://www.airbnb.gr/rooms/1226060166288656930",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631"},
+  {name:"Polymnia",           url:"https://www.airbnb.gr/rooms/569412065052467206", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Nostalgia",          url:"https://www.airbnb.gr/rooms/570191984863127237", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Eunoia",             url:"https://www.airbnb.gr/rooms/1311403885145893744",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Thimyses",           url:"https://www.airbnb.gr/rooms/1311378532743569141",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633"},
+  {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633"},
+  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.63660,22.94970],addr:"Thessaloniki"},
+  {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.63520,22.94330],addr:"Sofokleous 5, 54633"},
+  {name:"Poliorkitou",        url:"https://www.airbnb.gr/rooms/37857422",           coords:[40.63440,22.94480],addr:"Dimitriou Poliorkitou 17, 54633"},
+  {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.63290,22.94390],addr:"Akropoleos 11, 54634"},
+  {name:"J&A Home",           url:"https://www.airbnb.gr/rooms/42330015",           coords:[40.63380,22.94710],addr:"Varvaki 3, 54633"},
+  {name:"Boutique Egnatia A", url:"https://www.airbnb.gr/rooms/45278929",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia B", url:"https://www.airbnb.gr/rooms/45247518",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia C", url:"https://www.airbnb.gr/rooms/45228027",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia D", url:"https://www.airbnb.gr/rooms/45216262",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626"},
 ];
 
 const isMob=()=>window.innerWidth<=768;
 
-// ── BUILD DESKTOP LIST ──
+// ── DESKTOP LIST ──
 const homesList=document.getElementById('homesList');
 homesData.forEach((h,i)=>{
   const el=document.createElement('div');
@@ -302,36 +309,43 @@ homesData.forEach((h,i)=>{
   homesList.appendChild(el);
 });
 
-// ── BUILD MOBILE LIST ──
-function buildMobileList(){
-  const container=document.getElementById('mobileHomesList');
-  if(!container)return;
-  container.innerHTML='';
+// ── MOBILE HOMES HTML ──
+function buildMobileHomes(){
+  const wrap=document.getElementById('mobileHomesWrap');
+  wrap.innerHTML=`
+    <div class="mob-homes">
+      <div class="section-badge">Our Homes</div>
+      <h2 class="mob-homes-title">Every stay, a story.</h2>
+      <div class="mob-map">
+        <div class="mob-map-inner" id="map-mobile"></div>
+        <div class="mob-map-fade"></div>
+      </div>
+      <div class="mob-list" id="mobList"></div>
+    </div>`;
+  const list=document.getElementById('mobList');
   homesData.forEach((h,i)=>{
     const row=document.createElement('div');
-    row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);gap:12px';
+    row.className='mob-row';
     row.innerHTML=`
-      <div style="display:flex;align-items:center;gap:10px;min-width:0">
-        <span style="font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);flex-shrink:0">${String(i+1).padStart(2,'0')}</span>
-        <span style="font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.name}</span>
+      <div class="mob-row-left">
+        <span class="mob-row-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="mob-row-name">${h.name}</span>
       </div>
-      <a href="${h.url}" target="_blank" style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 8px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0">View ↗</a>`;
-    // tap to fly map
-    row.addEventListener('click',()=>{
-      if(window._mobileMap) window._mobileMap.flyTo(h.coords,15,{duration:.5});
-    });
-    container.appendChild(row);
+      <a class="mob-row-link" href="${h.url}" target="_blank">View ↗</a>`;
+    row.addEventListener('click',()=>{if(window._mmap)window._mmap.flyTo(h.coords,15,{duration:.5})});
+    list.appendChild(row);
   });
 }
 
-// ── SHOW CORRECT HOMES LAYOUT ──
-let desktopMapDone=false,mobileMapDone=false;
+// ── HOMES LAYOUT SWITCH ──
+let dMapDone=false,mMapDone=false;
 function showHomesLayout(){
   const mob=isMob();
   document.getElementById('desktopHomesWrap').style.display=mob?'none':'grid';
-  document.getElementById('mobileHomesWrap').style.display=mob?'block':'none';
-  if(mob&&!mobileMapDone){mobileMapDone=true;buildMobileList();setTimeout(initMobileMap,200)}
-  if(!mob&&!desktopMapDone){desktopMapDone=true;setTimeout(initDesktopMap,200)}
+  const mw=document.getElementById('mobileHomesWrap');
+  mw.style.display=mob?'block':'none';
+  if(mob&&!mMapDone){mMapDone=true;buildMobileHomes();setTimeout(initMobileMap,200)}
+  if(!mob&&!dMapDone){dMapDone=true;setTimeout(initDesktopMap,200)}
 }
 
 // ── PAGE SYSTEM ──
@@ -346,8 +360,7 @@ let cur=0,busy=false;
 for(let i=0;i<TOTAL;i++){
   const d=document.createElement('div');
   d.className='dot'+(i===0?' active':'');
-  d.onclick=()=>goTo(i);
-  dotsC.appendChild(d);
+  d.onclick=()=>goTo(i);dotsC.appendChild(d);
 }
 const dots=document.querySelectorAll('.dot');
 navItems[0]?.classList.add('active');
@@ -378,14 +391,9 @@ document.querySelectorAll('[data-page]').forEach(el=>{
 });
 hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileOverlay.classList.toggle('open')});
 
-// ── SCROLL / SWIPE LOGIC ──
-// For a page, get the scrollable element
-function getPageScroller(){
-  // homes page: desktop uses homesLeft, mobile uses the page itself
-  if(cur===2){
-    if(!isMob()) return document.getElementById('homesLeft');
-    return pages[cur]; // mobile homes page scrolls itself
-  }
+// ── SCROLL HELPERS ──
+function getScroller(){
+  if(cur===2&&!isMob())return document.getElementById('homesLeft')||pages[cur];
   return pages[cur];
 }
 function atTop(el){return el.scrollTop<=2}
@@ -395,51 +403,33 @@ function atBottom(el){return el.scrollTop+el.clientHeight>=el.scrollHeight-4}
 let wCool=false;
 window.addEventListener('wheel',e=>{
   if(isMob()||wCool||busy)return;
-  const el=getPageScroller();
+  const el=getScroller();
   if(e.deltaY>0){if(!atBottom(el))return;goTo(cur+1)}
   else{if(!atTop(el))return;goTo(cur-1)}
   wCool=true;setTimeout(()=>wCool=false,900);
 },{passive:true});
 
 // ── MOBILE SWIPE ──
-// We track touches on the page element directly to avoid conflicts with map/accordion
-let touchStartY=0,touchStartX=0,touchId=null;
-
-function onTouchStart(e){
-  if(busy)return;
-  const t=e.changedTouches[0];
-  touchStartY=t.clientY;touchStartX=t.clientX;touchId=t.identifier;
-}
-
-function onTouchEnd(e){
-  if(busy||touchId===null)return;
-  let t=null;
-  for(let i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===touchId){t=e.changedTouches[i];break}}
-  if(!t)return;
-  touchId=null;
-  const dy=touchStartY-t.clientY;
-  const dx=touchStartX-t.clientX;
-  // ignore horizontal-ish swipes (map panning)
-  if(Math.abs(dx)>Math.abs(dy))return;
-  if(Math.abs(dy)<55)return;
-
-  const scroller=getPageScroller();
-  if(dy>0){
-    if(!atBottom(scroller))return;
-    goTo(cur+1);
-  } else {
-    if(!atTop(scroller))return;
-    goTo(cur-1);
-  }
-}
-
-// attach to each page so map touches don't interfere with global swipe
+let tsY=0,tsX=0,tsId=null;
 pages.forEach(pg=>{
-  pg.addEventListener('touchstart',onTouchStart,{passive:true});
-  pg.addEventListener('touchend',onTouchEnd,{passive:true});
+  pg.addEventListener('touchstart',e=>{
+    if(busy)return;
+    const t=e.changedTouches[0];
+    tsY=t.clientY;tsX=t.clientX;tsId=t.identifier;
+  },{passive:true});
+  pg.addEventListener('touchend',e=>{
+    if(busy||tsId===null)return;
+    let t=null;
+    for(let i=0;i<e.changedTouches.length;i++)if(e.changedTouches[i].identifier===tsId){t=e.changedTouches[i];break}
+    if(!t)return; tsId=null;
+    const dy=tsY-t.clientY,dx=tsX-t.clientX;
+    if(Math.abs(dx)>Math.abs(dy)||Math.abs(dy)<55)return;
+    const el=getScroller();
+    if(dy>0){if(!atBottom(el))return;goTo(cur+1)}
+    else{if(!atTop(el))return;goTo(cur-1)}
+  },{passive:true});
 });
 
-// keyboard
 window.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'||e.key==='PageDown')goTo(cur+1);
   if(e.key==='ArrowUp'||e.key==='PageUp')goTo(cur-1);
@@ -454,7 +444,7 @@ function initDesktopMap(){
   const mkN=()=>L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.35)"></div>',iconSize:[9,9],iconAnchor:[4.5,4.5]});
   const mkA=()=>L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c9b98a;border-radius:50%;border:2px solid #f0ece4;box-shadow:0 0 14px rgba(201,185,138,.9)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
   const items=document.querySelectorAll('.h-item');
-  const markers=homesData.map((h)=>{
+  const markers=homesData.map(h=>{
     const m=L.marker(h.coords,{icon:mkN()}).addTo(map);
     m.bindTooltip(L.tooltip({permanent:false,direction:'top',offset:[0,-6],className:'home-tip'}).setContent(`<div class="tip-name">${h.name}</div><div class="tip-addr">${h.addr}</div>`));
     return m;
@@ -477,16 +467,12 @@ function initDesktopMap(){
 // ── MOBILE MAP ──
 function initMobileMap(){
   const el=document.getElementById('map-mobile');if(!el)return;
-  window._mobileMap=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6375,22.9460],14);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(window._mobileMap);
-  const mkN=()=>L.divIcon({className:'',html:'<div style="width:8px;height:8px;background:#c9b98a;border-radius:50%;opacity:.7"></div>',iconSize:[8,8],iconAnchor:[4,4]});
-  // deduplicate coords
+  window._mmap=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6375,22.9460],14);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(window._mmap);
+  const mkN=()=>L.divIcon({className:'',html:'<div style="width:8px;height:8px;background:#c9b98a;border-radius:50%;opacity:.75"></div>',iconSize:[8,8],iconAnchor:[4,4]});
   const seen=new Set();
-  homesData.forEach(h=>{
-    const key=h.coords.join(',');
-    if(!seen.has(key)){seen.add(key);L.marker(h.coords,{icon:mkN()}).addTo(window._mobileMap)}
-  });
-  window._mobileMap.invalidateSize();
+  homesData.forEach(h=>{const k=h.coords.join(',');if(!seen.has(k)){seen.add(k);L.marker(h.coords,{icon:mkN()}).addTo(window._mmap)}});
+  window._mmap.invalidateSize();
 }
 
 window.addEventListener('resize',()=>{if(cur===2)showHomesLayout()});
