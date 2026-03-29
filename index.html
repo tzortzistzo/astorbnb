@@ -26,8 +26,6 @@ nav{
   padding:0 clamp(20px,5vw,60px);z-index:500;
   background:linear-gradient(to bottom,rgba(8,8,10,.98) 60%,transparent);
 }
-.logo{font-family:var(--serif);font-size:19px;font-weight:300;letter-spacing:.22em;color:var(--fg);text-transform:uppercase}
-.logo em{font-style:normal;color:var(--gold)}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links li{font-family:var(--sans);font-size:11px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .25s}
 .nav-links li:hover,.nav-links li.active{color:var(--fg)}
@@ -50,7 +48,7 @@ nav{
 .page.active{opacity:1;pointer-events:all}
 
 /* ═ HOME ═ */
-#page-home{display:flex;align-items:center;justify-content:center}
+#page-home{display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero-wrap{
   width:100%;min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -69,10 +67,7 @@ nav{
 }
 @keyframes ringPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.015)}}
 .hero-eyebrow{font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:32px}
-.hero-title{
-  font-family:var(--serif);font-size:clamp(72px,14vw,160px);
-  font-weight:300;line-height:.88;letter-spacing:-.01em;color:var(--fg);
-}
+.hero-title{font-family:var(--serif);font-size:clamp(72px,14vw,160px);font-weight:300;line-height:.88;letter-spacing:-.01em;color:var(--fg)}
 .hero-title em{font-style:italic;color:var(--gold)}
 .hero-rule{width:1px;height:56px;background:linear-gradient(to bottom,var(--gold),transparent);margin:32px auto 28px}
 .hero-sub{font-family:var(--sans);font-size:clamp(11px,1.4vw,13px);font-weight:200;letter-spacing:.2em;text-transform:uppercase;color:var(--bright);max-width:340px;line-height:2}
@@ -108,30 +103,54 @@ nav{
 .stat-num{font-family:var(--serif);font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--fg);line-height:1}
 .stat-label{font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
-/* ═ HOMES ═ */
-#page-homes{background:var(--bg)}
-.homes-wrap{min-height:100vh;padding:calc(var(--nav-h) + 36px) clamp(20px,6vw,80px) 60px}
-.homes-title-row{margin-bottom:32px}
-.homes-title{font-family:var(--serif);font-size:clamp(26px,3.5vw,48px);font-weight:300;color:var(--fg);margin-top:8px}
-.homes-table{width:100%;border-collapse:collapse}
-.homes-table tr{border-bottom:1px solid rgba(255,255,255,.055);transition:background .2s}
-.homes-table tr:first-child{border-top:1px solid rgba(255,255,255,.055)}
-.homes-table tr:hover{background:rgba(201,185,138,.04)}
-.homes-table td{padding:13px 0;vertical-align:middle}
-.td-num{font-family:var(--serif);font-size:11px;font-weight:300;color:rgba(201,185,138,.35);width:36px;padding-right:4px}
-.td-dot{width:8px}.td-dot span{display:block;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .2s}
-.homes-table tr:hover .td-dot span{opacity:1}
-.td-name{font-family:var(--serif);font-size:clamp(16px,2vw,22px);font-weight:300;color:var(--fg);padding-right:12px}
-.td-link{text-align:right;white-space:nowrap}
-.td-link a{font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid rgba(255,255,255,.1);transition:color .2s,border-color .2s}
-.td-link a:hover{color:var(--gold);border-color:rgba(201,185,138,.4)}
-.td-soon{font-family:var(--sans);font-size:10px;font-weight:200;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.12);text-align:right}
+/* ═ HOMES + MAP (split) ═ */
+#page-homes{background:var(--bg);overflow:hidden}
+.homes-map-wrap{
+  width:100%;height:100%;
+  display:grid;grid-template-columns:1fr 1.5fr;
+  padding-top:var(--nav-h);
+}
+.homes-left{
+  display:flex;flex-direction:column;
+  padding:32px clamp(16px,3vw,40px) 32px clamp(20px,6vw,80px);
+  border-right:1px solid rgba(201,185,138,.1);
+  overflow-y:auto;
+}
+.homes-left-header{margin-bottom:24px;flex-shrink:0}
+.homes-left-title{font-family:var(--serif);font-size:clamp(22px,2.5vw,38px);font-weight:300;color:var(--fg);margin-top:4px}
+.homes-list-inner{display:flex;flex-direction:column}
+.h-item{
+  display:flex;align-items:center;gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer;position:relative;
+  transition:background .2s;
+}
+.h-item::before{
+  content:'';position:absolute;left:-clamp(20px,6vw,80px);width:3px;height:0;
+  background:var(--gold);transition:height .3s ease;top:50%;transform:translateY(-50%);
+}
+.h-item:hover::before,.h-item.map-active::before{height:70%}
+.h-item:hover .h-dot,.h-item.map-active .h-dot{background:var(--gold);box-shadow:0 0 8px rgba(201,185,138,.5)}
+.h-item:hover .h-name,.h-item.map-active .h-name{color:var(--gold)}
+.h-dot{width:5px;height:5px;border-radius:50%;background:#3a3530;border:1px solid rgba(201,185,138,.3);flex-shrink:0;transition:background .2s,box-shadow .2s}
+.h-num{font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);width:20px;flex-shrink:0}
+.h-name{font-family:var(--serif);font-size:clamp(13px,1.3vw,16px);font-weight:300;color:var(--bright);transition:color .2s;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h-link{font-family:var(--sans);font-size:9px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:3px 8px;border:1px solid rgba(255,255,255,.08);white-space:nowrap;flex-shrink:0;transition:color .2s,border-color .2s}
+.h-link:hover{color:var(--gold);border-color:rgba(201,185,138,.4)}
+.h-soon{font-family:var(--sans);font-size:9px;color:rgba(255,255,255,.1);letter-spacing:.1em;text-transform:uppercase;flex-shrink:0}
 
-/* ═ LOCATIONS ═ */
-#page-locations{background:var(--bg)}
-.locations-wrap{min-height:100vh;padding:calc(var(--nav-h)+36px) clamp(20px,6vw,80px) 60px}
-.locations-title{font-family:var(--serif);font-size:clamp(26px,3.5vw,48px);font-weight:300;color:var(--fg);margin-top:8px;margin-bottom:24px}
-#map{width:100%;height:clamp(300px,50vh,520px);border:1px solid rgba(201,185,138,.13)}
+/* map side */
+.homes-right{position:relative;overflow:hidden}
+.homes-right::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(to right,var(--bg) 0%,transparent 8%),
+    linear-gradient(to left,var(--bg) 0%,transparent 3%),
+    linear-gradient(to bottom,var(--bg) 0%,transparent 6%),
+    linear-gradient(to top,var(--bg) 0%,transparent 4%);
+}
+#map{width:100%;height:100%;border:none}
 
 /* ═ CONTACT ═ */
 #page-contact{display:flex;align-items:center;justify-content:flex-start}
@@ -152,29 +171,39 @@ nav{
 .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:background .3s,transform .3s}
 .dot.active{background:var(--gold);transform:scale(1.5)}
 
+/* ═ MOBILE ═ */
 @media(max-width:768px){
   .nav-links{display:none}.hamburger{display:flex}.scroll-dots{display:none}
   .about-stats{flex-direction:column;gap:10px}.stat{padding:14px 18px}
   .hero-year{display:none}
+  .homes-map-wrap{grid-template-columns:1fr;grid-template-rows:1fr 45vh}
+  .homes-left{padding:20px 20px 16px 20px;border-right:none;border-bottom:1px solid rgba(201,185,138,.1)}
+  .homes-right{min-height:45vh}
+  #map{min-height:45vh}
+  #page-homes{overflow-y:auto}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="logo-img-wrap" onclick="goTo(0)" style="cursor:pointer;display:flex;align-items:center;">
-    <img src="https://i.postimg.cc/8zpDBbdh/Copy-of-Untitled-Design-(3)-(1).png" alt="ASTOR BNB" style="height:72px;width:auto;object-fit:contain;display:block;filter:brightness(1.05);">
+  <a onclick="goTo(0)" style="cursor:pointer;display:flex;align-items:center;">
+    <img src="https://i.postimg.cc/8zpDBbdh/Copy-of-Untitled-Design-(3)-(1).png" alt="ASTOR BNB" style="height:72px;width:auto;object-fit:contain;display:block;">
   </a>
   <ul class="nav-links" id="navLinks">
-    <li data-page="0">Home</li><li data-page="1">About</li>
-    <li data-page="2">Homes</li><li data-page="3">Locations</li><li data-page="4">Contact</li>
+    <li data-page="0">Home</li>
+    <li data-page="1">About</li>
+    <li data-page="2">Homes</li>
+    <li data-page="3">Contact</li>
   </ul>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
 <ul class="mobile-overlay" id="mobileOverlay">
-  <li data-page="0">Home</li><li data-page="1">About</li>
-  <li data-page="2">Homes</li><li data-page="3">Locations</li><li data-page="4">Contact</li>
+  <li data-page="0">Home</li>
+  <li data-page="1">About</li>
+  <li data-page="2">Homes</li>
+  <li data-page="3">Contact</li>
 </ul>
 
 <div class="scroll-dots" id="scrollDots"></div>
@@ -209,23 +238,19 @@ nav{
   </div>
 </div>
 
-<!-- HOMES -->
+<!-- HOMES + MAP -->
 <div class="page" id="page-homes">
-  <div class="homes-wrap">
-    <div class="homes-title-row">
-      <div class="section-badge">Our Homes</div>
-      <h2 class="homes-title">Every stay, a story.</h2>
+  <div class="homes-map-wrap">
+    <div class="homes-left">
+      <div class="homes-left-header">
+        <div class="section-badge">Our Homes</div>
+        <h2 class="homes-left-title">Every stay, a story.</h2>
+      </div>
+      <div class="homes-list-inner" id="homesList"></div>
     </div>
-    <table class="homes-table"><tbody id="homesTbody"></tbody></table>
-  </div>
-</div>
-
-<!-- LOCATIONS -->
-<div class="page" id="page-locations">
-  <div class="locations-wrap">
-    <div class="section-badge">Locations</div>
-    <h2 class="locations-title">Find us in Thessaloniki.</h2>
-    <div id="map"></div>
+    <div class="homes-right">
+      <div id="map"></div>
+    </div>
   </div>
 </div>
 
@@ -245,33 +270,40 @@ nav{
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// ── DATA: all 17 homes with coords where known ──
 const homesData=[
-  {name:"Sir Dip's Place",url:"https://www.airbnb.gr/rooms/1226788389256832640"},
-  {name:"Sir Paco's Place",url:"https://www.airbnb.gr/rooms/1226060166288656930"},
-  {name:"Polymnia",url:"https://www.airbnb.gr/rooms/569412065052467206"},
-  {name:"Nostalgia",url:"https://www.airbnb.gr/rooms/570191984863127237"},
-  {name:"Tzortzis's Home",url:"https://www.airbnb.gr/rooms/39220220"},
-  {name:"Demi's Home",url:"https://www.airbnb.gr/rooms/39206525"},
-  {name:"ASTOR Summer House",url:"https://www.airbnb.gr/rooms/32984281"},
-  {name:"Eunoia",url:"https://www.airbnb.gr/rooms/1311403885145893744"},
-  {name:"Thimyses",url:"https://www.airbnb.gr/rooms/1311378532743569141"},
-  {name:"Sofokleous",url:"https://www.airbnb.gr/rooms/35709594"},
-  {name:"Poliorkitou",url:"https://www.airbnb.gr/rooms/37857422"},
-  {name:"Akropoleos",url:"https://www.airbnb.gr/rooms/35071057"},
-  {name:"J&A Home",url:"https://www.airbnb.gr/rooms/42330015"},
-  {name:"ASTOR Boutique Egnatia A",url:null},
-  {name:"ASTOR Boutique Egnatia B",url:null},
-  {name:"ASTOR Boutique Egnatia C",url:null},
-  {name:"ASTOR Boutique Egnatia D",url:null},
+  {name:"Sir Dip's Place",       url:"https://www.airbnb.gr/rooms/1226788389256832640", coords:[40.6354,22.9432]},
+  {name:"Sir Paco's Place",      url:"https://www.airbnb.gr/rooms/1226060166288656930", coords:[40.6328,22.9555]},
+  {name:"Polymnia",              url:"https://www.airbnb.gr/rooms/569412065052467206",  coords:[40.6400,22.9481]},
+  {name:"Nostalgia",             url:"https://www.airbnb.gr/rooms/570191984863127237",  coords:[40.6387,22.9415]},
+  {name:"Tzortzis's Home",       url:"https://www.airbnb.gr/rooms/39220220",            coords:[40.6409,22.9475]},
+  {name:"Demi's Home",           url:"https://www.airbnb.gr/rooms/39206525",            coords:[40.6395,22.9450]},
+  {name:"ASTOR Summer House",    url:"https://www.airbnb.gr/rooms/32984281",            coords:[40.6366,22.9497]},
+  {name:"Eunoia",                url:"https://www.airbnb.gr/rooms/1311403885145893744", coords:[40.6362,22.9420]},
+  {name:"Thimyses",              url:"https://www.airbnb.gr/rooms/1311378532743569141", coords:[40.6346,22.9416]},
+  {name:"Sofokleous",            url:"https://www.airbnb.gr/rooms/35709594",            coords:[40.6370,22.9438]},
+  {name:"Poliorkitou",           url:"https://www.airbnb.gr/rooms/37857422",            coords:[40.6358,22.9462]},
+  {name:"Akropoleos",            url:"https://www.airbnb.gr/rooms/35071057",            coords:[40.6380,22.9505]},
+  {name:"J&A Home",              url:"https://www.airbnb.gr/rooms/42330015",            coords:[40.6342,22.9490]},
+  {name:"Boutique Egnatia A",    url:"https://www.airbnb.gr/rooms/45278929",            coords:[40.6335,22.9445]},
+  {name:"Boutique Egnatia B",    url:"https://www.airbnb.gr/rooms/45247518",            coords:[40.6337,22.9448]},
+  {name:"Boutique Egnatia C",    url:"https://www.airbnb.gr/rooms/45228027",            coords:[40.6339,22.9451]},
+  {name:"Boutique Egnatia D",    url:"https://www.airbnb.gr/rooms/45216262",            coords:[40.6341,22.9454]},
 ];
-const tbody=document.getElementById('homesTbody');
+
+// ── BUILD LIST ──
+const homesList=document.getElementById('homesList');
 homesData.forEach((h,i)=>{
-  const tr=document.createElement('tr');
-  const n=String(i+1).padStart(2,'0');
-  tr.innerHTML=`<td class="td-num">${n}</td><td class="td-dot"><span></span></td><td class="td-name">${h.name}</td><td class="${h.url?'td-link':'td-soon'}">${h.url?`<a href="${h.url}" target="_blank">View ↗</a>`:'Coming Soon'}</td>`;
-  tbody.appendChild(tr);
+  const el=document.createElement('div');
+  el.className='h-item';
+  const linkHtml=h.url
+    ?`<a class="h-link" href="${h.url}" target="_blank" onclick="event.stopPropagation()">View ↗</a>`
+    :`<span class="h-soon">Soon</span>`;
+  el.innerHTML=`<span class="h-num">${String(i+1).padStart(2,'0')}</span><span class="h-dot"></span><span class="h-name">${h.name}</span>${linkHtml}`;
+  homesList.appendChild(el);
 });
 
+// ── PAGE SYSTEM ──
 const pages=document.querySelectorAll('.page');
 const navItems=document.querySelectorAll('.nav-links li');
 const dotsC=document.getElementById('scrollDots');
@@ -281,8 +313,10 @@ const TOTAL=pages.length;
 let cur=0,busy=false,mapDone=false;
 
 for(let i=0;i<TOTAL;i++){
-  const d=document.createElement('div');d.className='dot'+(i===0?' active':'');
-  d.onclick=()=>goTo(i);dotsC.appendChild(d);
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goTo(i);
+  dotsC.appendChild(d);
 }
 const dots=document.querySelectorAll('.dot');
 
@@ -297,7 +331,7 @@ function goTo(idx){
     pages[cur].classList.add('active');
     navItems[cur]?.classList.add('active');
     dots[cur]?.classList.add('active');
-    if(cur===3&&!mapDone)initMap();
+    if(cur===2&&!mapDone)initMap();
     busy=false;
   },320);
 }
@@ -309,16 +343,28 @@ document.querySelectorAll('[data-page]').forEach(el=>{
     hamburger.classList.remove('open');
   });
 });
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileOverlay.classList.toggle('open')});
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileOverlay.classList.toggle('open');
+});
 navItems[0]?.classList.add('active');
 
 function canScrollDown(pg){return pg.scrollHeight>pg.clientHeight&&pg.scrollTop+pg.clientHeight<pg.scrollHeight-2}
 function canScrollUp(pg){return pg.scrollTop>2}
 
+// For homes page, only allow page-change from the LEFT panel scroll
+function getScrollEl(){
+  if(cur===2){
+    const left=document.querySelector('.homes-left');
+    return left||pages[cur];
+  }
+  return pages[cur];
+}
+
 let wCool=false;
 window.addEventListener('wheel',e=>{
   if(wCool||busy)return;
-  const pg=pages[cur];
+  const pg=getScrollEl();
   if(e.deltaY>0){if(canScrollDown(pg))return;goTo(cur+1)}
   else{if(canScrollUp(pg))return;goTo(cur-1)}
   wCool=true;setTimeout(()=>wCool=false,950);
@@ -331,7 +377,7 @@ window.addEventListener('touchend',()=>{
   if(busy)return;
   const dy=ty0-ty1;
   if(Math.abs(dy)<45)return;
-  const pg=pages[cur];
+  const pg=getScrollEl();
   if(dy>0){if(canScrollDown(pg))return;goTo(cur+1)}
   else{if(canScrollUp(pg))return;goTo(cur-1)}
 },{passive:true});
@@ -341,13 +387,32 @@ window.addEventListener('keydown',e=>{
   if(e.key==='ArrowUp'||e.key==='PageUp')goTo(cur-1);
 });
 
+// ── MAP ──
 function initMap(){
   mapDone=true;
+  const items=document.querySelectorAll('.h-item');
+
   setTimeout(()=>{
-    const map=L.map('map').setView([40.6355,22.9444],14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO'}).addTo(map);
-    const icon=L.divIcon({className:'',html:'<div style="width:10px;height:10px;background:#c9b98a;border-radius:50%;border:1.5px solid #f0ece4;box-shadow:0 0 8px rgba(201,185,138,.7)"></div>',iconSize:[10,10],iconAnchor:[5,5]});
-    [[40.6354,22.9432],[40.6328,22.9555],[40.6400,22.9481],[40.6387,22.9415],[40.6409,22.9475],[40.6395,22.9450],[40.6366,22.9497],[40.6362,22.9420],[40.6346,22.9416]].forEach(c=>L.marker(c,{icon}).addTo(map));
+    const map=L.map('map',{zoomControl:false,attributionControl:false}).setView([40.6375,22.9460],14);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+
+    const mkNormal=()=>L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.35)"></div>',iconSize:[9,9],iconAnchor:[4.5,4.5]});
+    const mkActive=()=>L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c9b98a;border-radius:50%;border:2px solid #f0ece4;box-shadow:0 0 14px rgba(201,185,138,.9)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+
+    const markers=homesData.map(h=>L.marker(h.coords,{icon:mkNormal()}).addTo(map));
+
+    function activate(i){
+      items.forEach(el=>el.classList.remove('map-active'));
+      markers.forEach((m,j)=>m.setIcon(j===i?mkActive():mkNormal()));
+      items[i].classList.add('map-active');
+      // scroll item into view in the left panel
+      items[i].scrollIntoView({behavior:'smooth',block:'nearest'});
+      map.flyTo(homesData[i].coords,15,{duration:.7});
+    }
+
+    items.forEach((el,i)=>el.addEventListener('click',()=>activate(i)));
+    markers.forEach((m,i)=>m.on('click',()=>activate(i)));
+
     map.invalidateSize();
   },400);
 }
