@@ -151,14 +151,14 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
   /* ABOUT mobile — single column, no illustration */
   #page-about{display:block}
-  .about-wrap{display:flex;flex-direction:column;grid-template-columns:unset;min-height:unset;justify-content:flex-start;padding:90px 28px 52px 28px}
+  .about-wrap{display:flex!important;flex-direction:column!important;grid-template-columns:unset!important;min-height:0!important;height:auto!important;justify-content:flex-start;padding:90px 28px 48px 28px!important}
   .about-bg-num,.about-illustration{display:none!important}
+  .about-content,.contact-content{padding:0!important;margin:0!important;width:100%!important}
   .section-badge{margin-bottom:16px;padding-left:0;margin-left:0}
-  .about-content,.contact-content{padding:0;margin:0}
-  .about-headline{font-size:28px;line-height:1.25;margin-bottom:16px;max-width:100%}
-  .about-body{font-size:13px;line-height:1.75;margin-bottom:10px;max-width:100%}
+  .about-headline{font-size:26px!important;line-height:1.25;margin-bottom:16px;max-width:100%}
+  .about-body{font-size:13px!important;line-height:1.75;margin-bottom:10px;max-width:100%}
   .about-divider{margin:16px 0}
-  .about-sister{font-size:13px;max-width:100%}
+  .about-sister{font-size:13px!important;max-width:100%}
   .about-stats{gap:8px;margin-top:20px}
   .stat{padding:10px 14px;flex:1;min-width:70px}
   .stat-num{font-size:26px}
@@ -168,30 +168,28 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   #page-homes{overflow-y:auto}
   .homes-map-wrap{display:none !important}
 
-  /* CONTACT mobile — show contact info, hide SVG phone drawing */
+  /* CONTACT mobile — show contact info, hide SVG */
   #page-contact{display:block}
-  .contact-wrap{display:flex;flex-direction:column;grid-template-columns:unset;min-height:unset;justify-content:flex-start;padding:90px 28px 52px 28px}
-  .contact-illustration{display:flex!important;flex-direction:column;align-items:center;width:100%!important;margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,185,138,.12)}
+  .contact-wrap{display:flex!important;flex-direction:column!important;grid-template-columns:unset!important;min-height:0!important;height:auto!important;justify-content:flex-start;padding:90px 28px 48px 28px!important}
+  .contact-illustration{display:flex!important;flex-direction:column;align-items:center;width:100%!important;margin-top:28px;padding-top:24px;border-top:1px solid rgba(201,185,138,.12)}
   .contact-illustration>svg{display:none!important}
   .cinfo{flex-direction:row;flex-wrap:wrap;gap:20px 32px;justify-content:center;width:100%}
   .cinfo-item{min-width:130px;text-align:center;align-items:center;display:flex;flex-direction:column}
-  .cinfo-value{font-size:14px}
+  .cinfo-value{font-size:14px!important}
   .contact-form{max-width:100%}
-  .contact-title{font-size:28px;max-width:100%;margin-bottom:24px}
+  .contact-title{font-size:26px!important;max-width:100%;margin-bottom:24px}
 
   /* HOMES mobile card grid */
-  .mob-homes{padding:90px 28px 52px 28px}
-  .mob-homes-title{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--fg);margin-bottom:20px}
+  .mob-homes{padding:90px 28px 48px 28px}
+  .mob-homes-title{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--fg);margin-bottom:20px}
   .mob-map{height:200px;position:relative;overflow:hidden;margin:0 -28px 24px -28px}
   .mob-map-inner{width:100%;height:100%}
   .mob-map-fade{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,transparent 22%),linear-gradient(to top,var(--bg) 0%,transparent 22%)}
-  .mob-list{}
   .mob-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
   .mob-row-left{display:flex;align-items:center;gap:9px;min-width:0}
   .mob-row-num{font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);flex-shrink:0;width:18px}
   .mob-row-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .mob-row-link{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 8px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0;transition:color .2s}
-  .mob-row-link:hover{color:var(--gold)}
+  .mob-row-link{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 8px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0}
 }
 </style>
 </head>
@@ -729,41 +727,25 @@ if(contactForm){
 }
 </script>
 <!-- ══ COOKIE BANNER ══ -->
-<div id="cookieBanner" style="
-  position:fixed;bottom:0;left:0;right:0;z-index:10000;
-  background:rgba(10,10,10,.97);
-  backdrop-filter:blur(12px);
-  border-top:1px solid rgba(201,185,138,.15);
-  padding:18px clamp(20px,5vw,60px);
-  display:flex;align-items:center;justify-content:space-between;
-  gap:20px;flex-wrap:wrap;
-  transform:translateY(100%);
-  transition:transform .5s cubic-bezier(.77,0,.18,1);
-">
-  <p style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:300;color:rgba(240,236,228,.65);margin:0;max-width:640px;line-height:1.6">
-    We use cookies to enhance your experience. By continuing to browse, you agree to our use of cookies.
-  </p>
-  <button id="cookieAccept" style="
-    background:transparent;
-    border:1px solid rgba(201,185,138,.4);
-    color:#c9b98a;
-    font-family:'Outfit',sans-serif;
-    font-size:10px;font-weight:300;
-    letter-spacing:.22em;text-transform:uppercase;
-    padding:10px 28px;cursor:pointer;
-    white-space:nowrap;
-    transition:background .2s,border-color .2s;
-  "
-  onmouseover="this.style.background='rgba(201,185,138,.1)';this.style.borderColor='rgba(201,185,138,.7)'"
-  onmouseout="this.style.background='transparent';this.style.borderColor='rgba(201,185,138,.4)'"
-  >Accept</button>
+<style>
+#cookieBanner{position:fixed;bottom:0;left:0;right:0;z-index:10000;background:rgba(10,10,10,.97);backdrop-filter:blur(12px);border-top:1px solid rgba(201,185,138,.15);padding:18px clamp(20px,5vw,60px);display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(100%);transition:transform .5s cubic-bezier(.77,0,.18,1)}
+#cookieBanner p{font-family:'Outfit',sans-serif;font-size:13px;font-weight:300;color:rgba(240,236,228,.65);margin:0;line-height:1.6;flex:1}
+#cookieAccept{background:transparent;border:1px solid rgba(201,185,138,.4);color:#c9b98a;font-family:'Outfit',sans-serif;font-size:10px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;padding:10px 28px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .2s,border-color .2s}
+#cookieAccept:hover{background:rgba(201,185,138,.1);border-color:rgba(201,185,138,.7)}
+@media(max-width:768px){
+  #cookieBanner{flex-direction:column;align-items:stretch;padding:20px 24px;gap:14px}
+  #cookieBanner p{font-size:12px}
+  #cookieAccept{text-align:center;padding:12px;letter-spacing:.15em}
+}
+</style>
+<div id="cookieBanner">
+  <p>We use cookies to enhance your experience. By continuing to browse, you agree to our use of cookies.</p>
+  <button id="cookieAccept">Accept</button>
 </div>
 <script>
 (function(){
   if(!localStorage.getItem('cookiesAccepted')){
-    setTimeout(()=>{
-      document.getElementById('cookieBanner').style.transform='translateY(0)';
-    },800);
+    setTimeout(()=>{document.getElementById('cookieBanner').style.transform='translateY(0)'},800);
   }
   document.getElementById('cookieAccept').addEventListener('click',function(){
     localStorage.setItem('cookiesAccepted','1');
