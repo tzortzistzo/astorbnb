@@ -153,7 +153,8 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   #page-about{display:block}
   .about-wrap{display:flex;flex-direction:column;grid-template-columns:unset;min-height:unset;justify-content:flex-start;padding:90px 28px 52px 28px}
   .about-bg-num,.about-illustration{display:none!important}
-  .section-badge{margin-bottom:16px}
+  .section-badge{margin-bottom:16px;padding-left:0;margin-left:0}
+  .about-content,.contact-content{padding:0;margin:0}
   .about-headline{font-size:28px;line-height:1.25;margin-bottom:16px;max-width:100%}
   .about-body{font-size:13px;line-height:1.75;margin-bottom:10px;max-width:100%}
   .about-divider{margin:16px 0}
@@ -170,10 +171,10 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   /* CONTACT mobile — show contact info, hide SVG phone drawing */
   #page-contact{display:block}
   .contact-wrap{display:flex;flex-direction:column;grid-template-columns:unset;min-height:unset;justify-content:flex-start;padding:90px 28px 52px 28px}
-  .contact-illustration{display:flex!important;flex-direction:column;width:100%!important;margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,185,138,.12)}
+  .contact-illustration{display:flex!important;flex-direction:column;align-items:center;width:100%!important;margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,185,138,.12)}
   .contact-illustration>svg{display:none!important}
-  .cinfo{flex-direction:row;flex-wrap:wrap;gap:20px 32px}
-  .cinfo-item{min-width:130px}
+  .cinfo{flex-direction:row;flex-wrap:wrap;gap:20px 32px;justify-content:center;width:100%}
+  .cinfo-item{min-width:130px;text-align:center;align-items:center;display:flex;flex-direction:column}
   .cinfo-value{font-size:14px}
   .contact-form{max-width:100%}
   .contact-title{font-size:28px;max-width:100%;margin-bottom:24px}
@@ -403,14 +404,14 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
         </div>
         <div class="cinfo-item">
           <div class="cinfo-label">Email</div>
-          <div class="cinfo-value">ts@astortravel.gr</div>
+          <div class="cinfo-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acd8dfeccddfd8c3ded8decddac9c082cbde">[email&#160;protected]</a></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const homesData=[
   {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.638457,22.942452],addr:"Grigoriou Zaliki 4, 54631"},
@@ -716,16 +717,4 @@ if(contactForm){
       });
       if(res.ok){
         contactForm.reset();
-        btn.style.display='none';
-        msg.style.display='block';
-      } else {
-        btn.textContent='Try again';btn.disabled=false;
-      }
-    } catch(err){
-      btn.textContent='Try again';btn.disabled=false;
-    }
-  });
-}
-</script>
-</body>
-</html>
+        btn.style.display='none'
