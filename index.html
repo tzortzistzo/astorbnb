@@ -61,10 +61,7 @@ nav{
   top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
   animation:ringPulse 6s ease-in-out infinite;
 }
-.hero-ring::before{
-  content:'';position:absolute;inset:22px;border-radius:50%;
-  border:1px solid rgba(201,185,138,.05);
-}
+.hero-ring::before{content:'';position:absolute;inset:22px;border-radius:50%;border:1px solid rgba(201,185,138,.05)}
 @keyframes ringPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.015)}}
 .hero-eyebrow{font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:32px}
 .hero-title{font-family:var(--serif);font-size:clamp(72px,14vw,160px);font-weight:300;line-height:.88;letter-spacing:-.01em;color:var(--fg)}
@@ -74,10 +71,10 @@ nav{
 .hero-year{position:absolute;bottom:clamp(20px,4vh,40px);right:clamp(20px,5vw,60px);font-family:var(--serif);font-size:11px;font-weight:300;letter-spacing:.2em;color:var(--muted)}
 
 /* ═ ABOUT ═ */
-#page-about{display:flex;align-items:center;justify-content:flex-start}
+#page-about{display:flex;align-items:center;justify-content:flex-start;overflow-y:auto}
 .about-wrap{
   width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  padding:var(--nav-h) clamp(24px,10vw,140px) 48px;position:relative;overflow:hidden;
+  padding:calc(var(--nav-h) + 20px) clamp(24px,10vw,140px) 60px;position:relative;overflow:hidden;
 }
 .about-bg-num{
   position:absolute;right:-1vw;top:50%;transform:translateY(-50%);
@@ -91,19 +88,30 @@ nav{
 }
 .section-badge::before{content:'';display:block;width:40px;height:1px;background:var(--gold)}
 .about-headline{
-  font-family:var(--serif);font-size:clamp(28px,5vw,64px);
-  font-weight:300;line-height:1.25;max-width:820px;margin-bottom:52px;color:var(--fg);
+  font-family:var(--serif);font-size:clamp(28px,4.5vw,58px);
+  font-weight:300;line-height:1.25;max-width:820px;margin-bottom:36px;color:var(--fg);
 }
 .about-headline strong{font-weight:600;color:var(--fg)}
 .about-headline em{font-style:italic;color:var(--gold)}
-.about-stats{display:flex;gap:clamp(12px,3vw,40px);flex-wrap:wrap}
+.about-body{
+  font-family:var(--sans);font-size:clamp(13px,1.3vw,15px);font-weight:300;
+  line-height:1.9;color:var(--bright);max-width:680px;margin-bottom:16px;
+}
+.about-body strong{color:var(--fg);font-weight:400}
+.about-divider{width:48px;height:1px;background:rgba(201,185,138,.3);margin:28px 0}
+.about-sister{
+  font-family:var(--serif);font-size:clamp(15px,1.6vw,19px);font-style:italic;
+  font-weight:300;color:var(--muted);
+}
+.about-sister strong{font-style:normal;font-weight:400;color:var(--gold)}
+.about-stats{display:flex;gap:clamp(12px,3vw,40px);flex-wrap:wrap;margin-top:40px}
 .stat{display:flex;flex-direction:column;gap:6px;padding:20px 28px;border:1px solid rgba(201,185,138,.15);position:relative;overflow:hidden}
 .stat::before{content:'';position:absolute;top:0;left:0;width:0;height:1px;background:var(--gold);transition:width .7s ease .15s}
 .page.active .stat::before{width:100%}
 .stat-num{font-family:var(--serif);font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--fg);line-height:1}
 .stat-label{font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
-/* ═ HOMES + MAP (split) ═ */
+/* ═ HOMES + MAP (desktop split) ═ */
 #page-homes{background:var(--bg);overflow:hidden}
 .homes-map-wrap{
   width:100%;height:100%;
@@ -115,8 +123,10 @@ nav{
   padding:32px clamp(16px,3vw,40px) 32px clamp(20px,6vw,80px);
   border-right:1px solid rgba(201,185,138,.1);
   overflow-y:auto;
+  scrollbar-width:none;
 }
-.homes-left-header{margin-bottom:24px;flex-shrink:0}
+.homes-left::-webkit-scrollbar{display:none}
+.homes-left-header{margin-bottom:20px;flex-shrink:0}
 .homes-left-title{font-family:var(--serif);font-size:clamp(22px,2.5vw,38px);font-weight:300;color:var(--fg);margin-top:4px}
 .homes-list-inner{display:flex;flex-direction:column}
 .h-item{
@@ -124,7 +134,6 @@ nav{
   padding:9px 0;
   border-bottom:1px solid rgba(255,255,255,.05);
   cursor:pointer;position:relative;
-  transition:background .2s;
 }
 .h-item::before{
   content:'';position:absolute;left:-clamp(20px,6vw,80px);width:3px;height:0;
@@ -152,6 +161,23 @@ nav{
 }
 #map{width:100%;height:100%;border:none}
 
+/* custom leaflet tooltip */
+.leaflet-tooltip.home-tip{
+  background:rgba(8,8,10,.92);
+  border:1px solid rgba(201,185,138,.3);
+  color:var(--fg);
+  font-family:var(--serif);
+  font-size:14px;
+  font-weight:300;
+  padding:8px 14px;
+  border-radius:0;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+  white-space:nowrap;
+}
+.leaflet-tooltip.home-tip::before{display:none}
+.tip-name{color:var(--fg);font-size:15px}
+.tip-addr{color:var(--muted);font-size:11px;font-family:var(--sans);font-weight:300;letter-spacing:.06em;margin-top:3px}
+
 /* ═ CONTACT ═ */
 #page-contact{display:flex;align-items:center;justify-content:flex-start}
 .contact-wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:var(--nav-h) clamp(24px,8vw,120px) 48px}
@@ -176,11 +202,43 @@ nav{
   .nav-links{display:none}.hamburger{display:flex}.scroll-dots{display:none}
   .about-stats{flex-direction:column;gap:10px}.stat{padding:14px 18px}
   .hero-year{display:none}
-  .homes-map-wrap{grid-template-columns:1fr;grid-template-rows:1fr 45vh}
-  .homes-left{padding:20px 20px 16px 20px;border-right:none;border-bottom:1px solid rgba(201,185,138,.1)}
-  .homes-right{min-height:45vh}
-  #map{min-height:45vh}
+
+  /* Mobile homes: full list, map hidden behind a toggle */
   #page-homes{overflow-y:auto}
+  .homes-map-wrap{
+    display:block;
+    padding-top:var(--nav-h);
+    min-height:100vh;
+  }
+  .homes-left{
+    border-right:none;
+    padding:24px 20px 20px 20px;
+    overflow-y:visible;
+  }
+  .homes-right{
+    height:260px;
+    margin:0 20px 40px;
+    border:1px solid rgba(201,185,138,.15);
+  }
+  #map{height:260px}
+  .homes-right::before{display:none}
+  .h-item::before{left:-20px}
+
+  /* map toggle button */
+  .map-toggle{
+    display:flex;align-items:center;gap:10px;
+    margin:16px 0 20px;
+    font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);cursor:pointer;background:none;border:none;padding:0;
+  }
+  .map-toggle svg{transition:transform .3s}
+  .map-toggle.open svg{transform:rotate(180deg)}
+  .map-section{overflow:hidden;max-height:0;transition:max-height .45s ease}
+  .map-section.open{max-height:320px}
+}
+@media(min-width:769px){
+  .map-toggle{display:none}
+  .map-section{display:contents}
 }
 </style>
 </head>
@@ -224,12 +282,25 @@ nav{
 <div class="page" id="page-about">
   <div class="about-wrap">
     <div class="about-bg-num">1980</div>
-    <div class="section-badge">About</div>
+    <div class="section-badge">Our Story</div>
     <h2 class="about-headline">
-      <strong>Family-run</strong> hospitality<br>
-      with <em>care</em> and intention.<br>
-      Sister company of <strong>ASTOR TRAVEL</strong>.
+      <strong>Built on heritage.</strong><br>
+      Crafted with <em>love.</em>
     </h2>
+    <p class="about-body">
+      Since 1980, the Astor family has been devoted to a single pursuit: transforming forgotten spaces into <strong>homes worthy of remembrance</strong>. We are not developers — we are craftsmen. Each property we acquire is approached as a labour of love, carefully restored with intention, and brought to life with a character entirely its own.
+    </p>
+    <p class="about-body">
+      We believe that a great stay begins long before a guest arrives. It begins in the <strong>choice of materials</strong>, in the light that falls through a restored window, in the quiet detail that makes a space feel lived-in and deeply human. Every home in our collection carries a story — and we consider it our duty to tell it well.
+    </p>
+    <p class="about-body">
+      Four decades of hospitality have taught us that <strong>people remember how a place made them feel</strong>. That understanding guides everything we do — from the first brick laid to the final flourish of a furnished room.
+    </p>
+    <div class="about-divider"></div>
+    <p class="about-sister">
+      Astor BnB is the proud sister company of <strong>Astor Travel Agency</strong> —<br>
+      together, we offer a complete journey from the moment you book to the moment you arrive home.
+    </p>
     <div class="about-stats">
       <div class="stat"><span class="stat-num">17</span><span class="stat-label">Unique Homes</span></div>
       <div class="stat"><span class="stat-num">45+</span><span class="stat-label">Years of Hospitality</span></div>
@@ -247,9 +318,20 @@ nav{
         <h2 class="homes-left-title">Every stay, a story.</h2>
       </div>
       <div class="homes-list-inner" id="homesList"></div>
+      <!-- mobile map toggle -->
+      <button class="map-toggle" id="mapToggle" onclick="toggleMap()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 4l6 6 6-6" stroke="currentColor" stroke-width="1.2"/></svg>
+        View on map
+      </button>
+      <div class="map-section" id="mapSection">
+        <div class="homes-right" style="margin:0 0 0 0;border:none">
+          <div id="map"></div>
+        </div>
+      </div>
     </div>
-    <div class="homes-right">
-      <div id="map"></div>
+    <!-- desktop map -->
+    <div class="homes-right" id="desktopMap">
+      <div id="map-desktop"></div>
     </div>
   </div>
 </div>
@@ -270,25 +352,25 @@ nav{
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ── DATA: all 17 homes with coords where known ──
+// ── DATA ──
 const homesData=[
-  {name:"Sir Dip's Place",       url:"https://www.airbnb.gr/rooms/1226788389256832640", coords:[40.6354,22.9432]},
-  {name:"Sir Paco's Place",      url:"https://www.airbnb.gr/rooms/1226060166288656930", coords:[40.6328,22.9555]},
-  {name:"Polymnia",              url:"https://www.airbnb.gr/rooms/569412065052467206",  coords:[40.6400,22.9481]},
-  {name:"Nostalgia",             url:"https://www.airbnb.gr/rooms/570191984863127237",  coords:[40.6387,22.9415]},
-  {name:"Tzortzis's Home",       url:"https://www.airbnb.gr/rooms/39220220",            coords:[40.6409,22.9475]},
-  {name:"Demi's Home",           url:"https://www.airbnb.gr/rooms/39206525",            coords:[40.6395,22.9450]},
-  {name:"ASTOR Summer House",    url:"https://www.airbnb.gr/rooms/32984281",            coords:[40.6366,22.9497]},
-  {name:"Eunoia",                url:"https://www.airbnb.gr/rooms/1311403885145893744", coords:[40.6362,22.9420]},
-  {name:"Thimyses",              url:"https://www.airbnb.gr/rooms/1311378532743569141", coords:[40.6346,22.9416]},
-  {name:"Sofokleous",            url:"https://www.airbnb.gr/rooms/35709594",            coords:[40.6370,22.9438]},
-  {name:"Poliorkitou",           url:"https://www.airbnb.gr/rooms/37857422",            coords:[40.6358,22.9462]},
-  {name:"Akropoleos",            url:"https://www.airbnb.gr/rooms/35071057",            coords:[40.6380,22.9505]},
-  {name:"J&A Home",              url:"https://www.airbnb.gr/rooms/42330015",            coords:[40.6342,22.9490]},
-  {name:"Boutique Egnatia A",    url:"https://www.airbnb.gr/rooms/45278929",            coords:[40.6335,22.9445]},
-  {name:"Boutique Egnatia B",    url:"https://www.airbnb.gr/rooms/45247518",            coords:[40.6337,22.9448]},
-  {name:"Boutique Egnatia C",    url:"https://www.airbnb.gr/rooms/45228027",            coords:[40.6339,22.9451]},
-  {name:"Boutique Egnatia D",    url:"https://www.airbnb.gr/rooms/45216262",            coords:[40.6341,22.9454]},
+  {name:"Sir Dip's Place",     url:"https://www.airbnb.gr/rooms/1226788389256832640", coords:[40.63612,22.94971], addr:"Grigoriou Zaliki 4, 54631"},
+  {name:"Sir Paco's Place",    url:"https://www.airbnb.gr/rooms/1226060166288656930", coords:[40.63612,22.94971], addr:"Grigoriou Zaliki 4, 54631"},
+  {name:"Polymnia",            url:"https://www.airbnb.gr/rooms/569412065052467206",  coords:[40.63480,22.94620], addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Nostalgia",           url:"https://www.airbnb.gr/rooms/570191984863127237",  coords:[40.63480,22.94620], addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Tzortzis's Home",     url:"https://www.airbnb.gr/rooms/39220220",            coords:[40.63750,22.94550], addr:"Agiou Nikolaou 22, 54633"},
+  {name:"Demi's Home",         url:"https://www.airbnb.gr/rooms/39206525",            coords:[40.63750,22.94550], addr:"Agiou Nikolaou 22, 54633"},
+  {name:"ASTOR Summer House",  url:"https://www.airbnb.gr/rooms/32984281",            coords:[40.63660,22.94970], addr:"Thessaloniki"},
+  {name:"Eunoia",              url:"https://www.airbnb.gr/rooms/1311403885145893744", coords:[40.63480,22.94620], addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Thimyses",            url:"https://www.airbnb.gr/rooms/1311378532743569141", coords:[40.63480,22.94620], addr:"Stratigou Doumpiotou 1, 54632"},
+  {name:"Sofokleous",          url:"https://www.airbnb.gr/rooms/35709594",            coords:[40.63520,22.94330], addr:"Sofokleous 5, 54633"},
+  {name:"Poliorkitou",         url:"https://www.airbnb.gr/rooms/37857422",            coords:[40.63440,22.94480], addr:"Dimitriou Poliorkitou 17, 54633"},
+  {name:"Akropoleos",          url:"https://www.airbnb.gr/rooms/35071057",            coords:[40.63290,22.94390], addr:"Akropoleos 11, 54634"},
+  {name:"J&A Home",            url:"https://www.airbnb.gr/rooms/42330015",            coords:[40.63380,22.94710], addr:"Varvaki 3, 54633"},
+  {name:"Boutique Egnatia A",  url:"https://www.airbnb.gr/rooms/45278929",            coords:[40.63180,22.94520], addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia B",  url:"https://www.airbnb.gr/rooms/45247518",            coords:[40.63180,22.94520], addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia C",  url:"https://www.airbnb.gr/rooms/45228027",            coords:[40.63180,22.94520], addr:"Egnatia 10, 54626"},
+  {name:"Boutique Egnatia D",  url:"https://www.airbnb.gr/rooms/45216262",            coords:[40.63180,22.94520], addr:"Egnatia 10, 54626"},
 ];
 
 // ── BUILD LIST ──
@@ -296,9 +378,8 @@ const homesList=document.getElementById('homesList');
 homesData.forEach((h,i)=>{
   const el=document.createElement('div');
   el.className='h-item';
-  const linkHtml=h.url
-    ?`<a class="h-link" href="${h.url}" target="_blank" onclick="event.stopPropagation()">View ↗</a>`
-    :`<span class="h-soon">Soon</span>`;
+  el.dataset.idx=i;
+  const linkHtml=`<a class="h-link" href="${h.url}" target="_blank" onclick="event.stopPropagation()">View ↗</a>`;
   el.innerHTML=`<span class="h-num">${String(i+1).padStart(2,'0')}</span><span class="h-dot"></span><span class="h-name">${h.name}</span>${linkHtml}`;
   homesList.appendChild(el);
 });
@@ -352,12 +433,8 @@ navItems[0]?.classList.add('active');
 function canScrollDown(pg){return pg.scrollHeight>pg.clientHeight&&pg.scrollTop+pg.clientHeight<pg.scrollHeight-2}
 function canScrollUp(pg){return pg.scrollTop>2}
 
-// For homes page, only allow page-change from the LEFT panel scroll
 function getScrollEl(){
-  if(cur===2){
-    const left=document.querySelector('.homes-left');
-    return left||pages[cur];
-  }
+  if(cur===2){return document.querySelector('.homes-left')||pages[cur]}
   return pages[cur];
 }
 
@@ -387,30 +464,65 @@ window.addEventListener('keydown',e=>{
   if(e.key==='ArrowUp'||e.key==='PageUp')goTo(cur-1);
 });
 
+// ── MOBILE MAP TOGGLE ──
+function toggleMap(){
+  const sec=document.getElementById('mapSection');
+  const btn=document.getElementById('mapToggle');
+  const isOpen=sec.classList.toggle('open');
+  btn.classList.toggle('open',isOpen);
+  btn.querySelector('span')||0;
+  if(isOpen&&!mapDone){initMap()}
+  else if(isOpen&&window._mobileMap){window._mobileMap.invalidateSize()}
+}
+
 // ── MAP ──
 function initMap(){
   mapDone=true;
+  const isMobile=window.innerWidth<=768;
+  const mapId=isMobile?'map':'map-desktop';
   const items=document.querySelectorAll('.h-item');
 
+  // fix desktop map div — it lives inside #desktopMap which has the gradient overlay
+  if(!isMobile){
+    const dm=document.getElementById('desktopMap');
+    const md=document.getElementById('map-desktop');
+    if(md)md.style.height='100%';
+  }
+
   setTimeout(()=>{
-    const map=L.map('map',{zoomControl:false,attributionControl:false}).setView([40.6375,22.9460],14);
+    const mapEl=document.getElementById(mapId);
+    if(!mapEl)return;
+    const map=L.map(mapEl,{zoomControl:false,attributionControl:false}).setView([40.6355,22.9460],14);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+    if(isMobile)window._mobileMap=map;
 
     const mkNormal=()=>L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.35)"></div>',iconSize:[9,9],iconAnchor:[4.5,4.5]});
     const mkActive=()=>L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c9b98a;border-radius:50%;border:2px solid #f0ece4;box-shadow:0 0 14px rgba(201,185,138,.9)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
 
-    const markers=homesData.map(h=>L.marker(h.coords,{icon:mkNormal()}).addTo(map));
+    const markers=homesData.map((h,i)=>{
+      const m=L.marker(h.coords,{icon:mkNormal()}).addTo(map);
+      // tooltip shown on desktop hover
+      const tip=L.tooltip({permanent:false,direction:'top',offset:[0,-6],className:'home-tip'});
+      tip.setContent(`<div class="tip-name">${h.name}</div><div class="tip-addr">${h.addr}</div>`);
+      m.bindTooltip(tip);
+      return m;
+    });
 
     function activate(i){
       items.forEach(el=>el.classList.remove('map-active'));
       markers.forEach((m,j)=>m.setIcon(j===i?mkActive():mkNormal()));
-      items[i].classList.add('map-active');
-      // scroll item into view in the left panel
-      items[i].scrollIntoView({behavior:'smooth',block:'nearest'});
+      items[i]?.classList.add('map-active');
+      items[i]?.scrollIntoView({behavior:'smooth',block:'nearest'});
       map.flyTo(homesData[i].coords,15,{duration:.7});
     }
 
-    items.forEach((el,i)=>el.addEventListener('click',()=>activate(i)));
+    items.forEach((el,i)=>{
+      el.addEventListener('click',()=>activate(i));
+      // desktop: hover triggers map highlight
+      el.addEventListener('mouseenter',()=>{
+        if(window.innerWidth>768) activate(i);
+      });
+    });
     markers.forEach((m,i)=>m.on('click',()=>activate(i)));
 
     map.invalidateSize();
