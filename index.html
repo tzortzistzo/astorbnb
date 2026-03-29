@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASTOR BNB</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -14,10 +14,10 @@
   --serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;
   --pad:clamp(28px,7vw,100px);
 }
-html,body{width:100%;height:100%;background:var(--bg);color:var(--fg);font-family:var(--sans)}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--fg);font-family:var(--sans);overflow:hidden}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
 
-/* ═══ NAV ═══ */
+/* ══ NAV ══ */
 nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);z-index:600;background:rgba(8,8,10,.95);backdrop-filter:blur(10px)}
 nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(201,185,138,.1)}
 .nav-links{display:flex;gap:32px;list-style:none}
@@ -28,41 +28,28 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-
-/* mobile full-screen menu */
 .mobile-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;transform:translateX(100%);transition:transform .5s cubic-bezier(.77,0,.18,1);z-index:590}
 .mobile-overlay.open{transform:none}
 .mobile-overlay li{list-style:none;font-family:var(--serif);font-size:clamp(28px,9vw,52px);font-weight:300;font-style:italic;color:var(--muted);cursor:pointer;transition:color .2s}
 .mobile-overlay li:hover{color:var(--fg)}
 
-/* ═══ DESKTOP PAGE SYSTEM ═══ */
-@media(min-width:769px){
-  html,body{overflow:hidden}
-  .page{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transition:opacity .65s ease}
-  .page.active{opacity:1;pointer-events:all}
-  .scroll-dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:400}
-  .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:background .3s,transform .3s}
-  .dot.active{background:var(--gold);transform:scale(1.5)}
-}
+/* ══ PAGE SYSTEM (shared) ══ */
+.page{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .6s ease;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.page.active{opacity:1;pointer-events:all}
 
-/* ═══ MOBILE PAGE SYSTEM ═══ */
-@media(max-width:768px){
-  html,body{overflow:hidden}
-  .page{position:fixed;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;pointer-events:none;transition:opacity .5s ease}
-  .page.active{opacity:1;pointer-events:all}
-  .scroll-dots{display:none}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-}
+/* ══ DOTS (desktop only) ══ */
+.scroll-dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:400}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:background .3s,transform .3s}
+.dot.active{background:var(--gold);transform:scale(1.5)}
 
-/* ═══ SECTION BADGE ═══ */
-.section-badge{display:inline-flex;align-items:center;gap:14px;margin-bottom:32px;font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+/* ══ BADGE ══ */
+.section-badge{display:inline-flex;align-items:center;gap:14px;margin-bottom:28px;font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .section-badge::before{content:'';display:block;width:36px;height:1px;background:var(--gold)}
 
-/* ═══════════════════════════════
+/* ══════════════════════════
    HOME
-═══════════════════════════════ */
-#page-home{display:flex;align-items:center;justify-content:center;overflow:hidden!important}
+══════════════════════════ */
+#page-home{display:flex;align-items:center;justify-content:center}
 .hero-wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--nav-h) var(--pad) 40px;position:relative}
 .hero-ring{position:absolute;width:min(65vmin,480px);height:min(65vmin,480px);border-radius:50%;border:1px solid rgba(201,185,138,.1);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ringPulse 6s ease-in-out infinite}
 .hero-ring::before{content:'';position:absolute;inset:20px;border-radius:50%;border:1px solid rgba(201,185,138,.05)}
@@ -72,114 +59,66 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .hero-title em{font-style:italic;color:var(--gold)}
 .hero-rule{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);margin:28px auto 24px}
 .hero-sub{font-size:clamp(10px,2.5vw,13px);font-weight:200;letter-spacing:.18em;text-transform:uppercase;color:var(--bright);max-width:300px;line-height:2.1}
-.hero-year{position:absolute;bottom:clamp(16px,4vh,36px);right:clamp(16px,4vw,52px);font-family:var(--serif);font-size:11px;font-weight:300;letter-spacing:.2em;color:var(--muted)}
+.hero-year{position:absolute;bottom:clamp(16px,4vh,36px);right:var(--pad);font-family:var(--serif);font-size:11px;font-weight:300;letter-spacing:.2em;color:var(--muted)}
 
-/* ═══════════════════════════════
-   ABOUT — desktop
-═══════════════════════════════ */
-#page-about{display:flex;align-items:flex-start;justify-content:center}
-.about-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+32px) var(--pad) 60px;position:relative;overflow:hidden}
-.about-bg-num{position:absolute;right:-2vw;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(120px,22vw,300px);font-weight:300;color:rgba(201,185,138,.03);pointer-events:none;line-height:1;user-select:none}
-.about-headline{font-family:var(--serif);font-size:clamp(26px,4vw,54px);font-weight:300;line-height:1.25;max-width:760px;margin-bottom:28px;color:var(--fg)}
+/* ══════════════════════════
+   ABOUT
+══════════════════════════ */
+#page-about{display:flex;justify-content:center}
+.about-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+40px) var(--pad) 60px;position:relative}
+.about-bg-num{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(120px,22vw,300px);font-weight:300;color:rgba(201,185,138,.03);pointer-events:none;line-height:1;user-select:none}
+.about-headline{font-family:var(--serif);font-size:clamp(26px,4vw,54px);font-weight:300;line-height:1.25;max-width:760px;margin-bottom:24px;color:var(--fg)}
 .about-headline strong{font-weight:600}
 .about-headline em{font-style:italic;color:var(--gold)}
-.about-body{font-size:clamp(13px,1.2vw,15px);font-weight:300;line-height:1.85;color:var(--bright);max-width:640px;margin-bottom:14px}
+.about-body{font-size:clamp(13px,1.2vw,15px);font-weight:300;line-height:1.85;color:var(--bright);max-width:640px;margin-bottom:12px}
 .about-body strong{color:var(--fg);font-weight:400}
-.about-divider{width:40px;height:1px;background:rgba(201,185,138,.3);margin:22px 0}
+.about-divider{width:40px;height:1px;background:rgba(201,185,138,.3);margin:20px 0}
 .about-sister{font-family:var(--serif);font-size:clamp(14px,1.5vw,18px);font-style:italic;font-weight:300;color:var(--muted);max-width:600px}
 .about-sister strong{font-style:normal;font-weight:400;color:var(--gold)}
-.about-stats{display:flex;gap:clamp(10px,2.5vw,36px);flex-wrap:wrap;margin-top:32px}
-.stat{display:flex;flex-direction:column;gap:4px;padding:16px 24px;border:1px solid rgba(201,185,138,.15);position:relative;overflow:hidden}
+.about-stats{display:flex;gap:clamp(10px,2.5vw,32px);flex-wrap:wrap;margin-top:28px}
+.stat{display:flex;flex-direction:column;gap:4px;padding:14px 22px;border:1px solid rgba(201,185,138,.15);position:relative;overflow:hidden}
 .stat::before{content:'';position:absolute;top:0;left:0;width:0;height:1px;background:var(--gold);transition:width .7s ease .1s}
 .page.active .stat::before{width:100%}
-.stat-num{font-family:var(--serif);font-size:clamp(28px,3.5vw,46px);font-weight:300;color:var(--fg);line-height:1}
+.stat-num{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--fg);line-height:1}
 .stat-label{font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 
-/* ABOUT mobile overrides */
-@media(max-width:768px){
-  .about-wrap{padding:calc(var(--nav-h)+20px) 22px 48px;justify-content:flex-start;overflow-y:auto}
-  .about-bg-num{display:none}
-  .section-badge{margin-bottom:20px}
-  .about-headline{font-size:clamp(24px,7vw,36px);margin-bottom:20px}
-  .about-body{font-size:13px;margin-bottom:12px}
-  .about-divider{margin:18px 0}
-  .about-sister{font-size:14px}
-  .about-stats{gap:8px;margin-top:24px}
-  .stat{padding:12px 16px;flex:1;min-width:80px}
-  .stat-num{font-size:28px}
-  .stat-label{font-size:9px}
-}
-
-/* ═══════════════════════════════
+/* ══════════════════════════
    HOMES — desktop split
-═══════════════════════════════ */
-#page-homes{background:var(--bg);overflow:hidden}
-.homes-map-wrap{width:100%;height:100%;display:grid;grid-template-columns:1fr 1.5fr;padding-top:var(--nav-h)}
-.homes-left{display:flex;flex-direction:column;padding:28px clamp(14px,2.5vw,36px) 28px var(--pad);border-right:1px solid rgba(201,185,138,.1);overflow-y:auto;scrollbar-width:none}
+══════════════════════════ */
+#page-homes{overflow:hidden}
+.homes-map-wrap{width:100%;height:100%;display:grid;grid-template-columns:1fr 1.6fr;padding-top:var(--nav-h)}
+.homes-left{display:flex;flex-direction:column;padding:24px 32px 24px var(--pad);border-right:1px solid rgba(201,185,138,.1);overflow-y:auto;scrollbar-width:none;height:100%}
 .homes-left::-webkit-scrollbar{display:none}
-.homes-left-header{margin-bottom:16px;flex-shrink:0}
-.homes-left-title{font-family:var(--serif);font-size:clamp(20px,2.2vw,34px);font-weight:300;color:var(--fg);margin-top:4px}
-.homes-list-inner{display:flex;flex-direction:column}
-.h-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;position:relative}
+.homes-left-header{margin-bottom:12px;flex-shrink:0}
+.homes-left-title{font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);font-weight:300;color:var(--fg);margin-top:4px}
+.homes-list-inner{display:flex;flex-direction:column;flex:1}
+.h-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.055);cursor:pointer;position:relative;flex:1}
 .h-item::before{content:'';position:absolute;left:calc(-1 * var(--pad));width:3px;height:0;background:var(--gold);transition:height .3s;top:50%;transform:translateY(-50%)}
 .h-item:hover::before,.h-item.map-active::before{height:70%}
 .h-item:hover .h-dot,.h-item.map-active .h-dot{background:var(--gold);box-shadow:0 0 8px rgba(201,185,138,.5)}
 .h-item:hover .h-name,.h-item.map-active .h-name{color:var(--gold)}
 .h-dot{width:5px;height:5px;border-radius:50%;background:#3a3530;border:1px solid rgba(201,185,138,.3);flex-shrink:0;transition:background .2s,box-shadow .2s}
 .h-num{font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);width:18px;flex-shrink:0}
-.h-name{font-family:var(--serif);font-size:clamp(12px,1.2vw,15px);font-weight:300;color:var(--bright);transition:color .2s;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h-name{font-family:var(--serif);font-size:clamp(13px,1.1vw,16px);font-weight:300;color:var(--bright);transition:color .2s;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .h-link{font-size:9px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:3px 7px;border:1px solid rgba(255,255,255,.08);white-space:nowrap;flex-shrink:0;transition:color .2s,border-color .2s}
 .h-link:hover{color:var(--gold);border-color:rgba(201,185,138,.4)}
 .homes-right{position:relative;overflow:hidden}
-.homes-right::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,transparent 8%),linear-gradient(to left,var(--bg) 0%,transparent 3%),linear-gradient(to bottom,var(--bg) 0%,transparent 6%),linear-gradient(to top,var(--bg) 0%,transparent 4%)}
+.homes-right::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,transparent 8%),linear-gradient(to left,var(--bg) 0%,transparent 3%),linear-gradient(to bottom,var(--bg) 0%,transparent 5%),linear-gradient(to top,var(--bg) 0%,transparent 4%)}
 #map-desktop{width:100%;height:100%}
 
-/* leaflet tooltip */
+/* tooltip */
 .leaflet-tooltip.home-tip{background:rgba(8,8,10,.92);border:1px solid rgba(201,185,138,.3);color:var(--fg);font-family:var(--serif);font-size:14px;font-weight:300;padding:8px 14px;border-radius:0;box-shadow:0 4px 20px rgba(0,0,0,.5);white-space:nowrap}
 .leaflet-tooltip.home-tip::before{display:none}
 .tip-name{color:var(--fg);font-size:15px}
 .tip-addr{color:var(--muted);font-size:11px;font-family:var(--sans);font-weight:300;letter-spacing:.06em;margin-top:3px}
 
-/* ═══════════════════════════════
-   HOMES — mobile accordion + map
-═══════════════════════════════ */
-@media(max-width:768px){
-  #page-homes{overflow-y:auto}
-  .homes-map-wrap{display:block;padding-top:var(--nav-h)}
-  .homes-left{border-right:none;padding:20px 20px 0 20px;overflow-y:visible}
-  .homes-right{display:none}/* desktop map hidden */
-
-  /* map strip */
-  .mob-map-strip{height:220px;margin:0;position:relative;overflow:hidden}
-  .mob-map-strip::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 0%,transparent 18%),linear-gradient(to top,var(--bg) 0%,transparent 18%)}
-  #map-mobile{width:100%;height:100%}
-
-  /* accordion groups */
-  .acc-group{border-bottom:1px solid rgba(255,255,255,.06)}
-  .acc-header{display:flex;align-items:center;justify-content:space-between;padding:13px 0;cursor:pointer}
-  .acc-header-left{display:flex;align-items:center;gap:10px}
-  .acc-icon{width:6px;height:6px;border-radius:50%;background:#3a3530;border:1px solid rgba(201,185,138,.35);flex-shrink:0}
-  .acc-label{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--bright)}
-  .acc-addr{font-size:10px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
-  .acc-arrow{font-size:12px;color:var(--gold-dim,#7a6540);transition:transform .3s;line-height:1}
-  .acc-group.open .acc-arrow{transform:rotate(180deg)}
-  .acc-group.open .acc-icon{background:var(--gold)}
-  .acc-group.open .acc-label{color:var(--gold)}
-  .acc-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-  .acc-group.open .acc-body{max-height:400px}
-  .acc-unit{display:flex;align-items:center;justify-content:space-between;padding:9px 0 9px 22px;border-top:1px solid rgba(255,255,255,.04)}
-  .acc-unit-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright)}
-  .acc-unit-link{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 9px;border:1px solid rgba(255,255,255,.08)}
-  .mob-homes-footer{padding:32px 0 48px;text-align:center;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.12)}
-}
-
-/* ═══════════════════════════════
+/* ══════════════════════════
    CONTACT
-═══════════════════════════════ */
-#page-contact{display:flex;align-items:center;justify-content:center}
+══════════════════════════ */
+#page-contact{display:flex;justify-content:center}
 .contact-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+20px) var(--pad) 48px}
-.contact-title{font-family:var(--serif);font-size:clamp(24px,4vw,52px);font-weight:300;color:var(--fg);margin-top:8px;margin-bottom:36px;max-width:480px}
-.contact-form{display:flex;flex-direction:column;max-width:500px}
+.contact-title{font-family:var(--serif);font-size:clamp(24px,4vw,52px);font-weight:300;color:var(--fg);margin-top:8px;margin-bottom:32px;max-width:480px}
+.contact-form{display:flex;flex-direction:column;max-width:480px}
 .field{border-bottom:1px solid rgba(255,255,255,.1);position:relative}
 .field input,.field textarea{width:100%;background:transparent;border:none;outline:none;font-family:var(--sans);font-size:14px;font-weight:300;color:var(--fg);padding:16px 0 12px;resize:none}
 .field input::placeholder,.field textarea::placeholder{color:rgba(240,236,228,.2);letter-spacing:.04em}
@@ -188,9 +127,52 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .field:focus-within::after{width:100%}
 .btn-send{margin-top:28px;align-self:flex-start;background:transparent;border:1px solid rgba(201,185,138,.35);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;padding:13px 36px;cursor:pointer;transition:background .25s,border-color .25s}
 .btn-send:hover{background:rgba(201,185,138,.07);border-color:var(--gold)}
+
+/* ══════════════════════════
+   MOBILE OVERRIDES
+══════════════════════════ */
 @media(max-width:768px){
-  #page-contact{align-items:flex-start}
-  .contact-wrap{padding:calc(var(--nav-h)+20px) 22px 48px;justify-content:flex-start}
+  :root{--pad:22px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .scroll-dots{display:none}
+  .hero-year{display:none}
+
+  /* About: scrollable, compact */
+  .about-wrap{padding:calc(var(--nav-h)+24px) var(--pad) 48px;justify-content:flex-start}
+  .about-bg-num{display:none}
+  .about-headline{font-size:clamp(22px,7vw,32px);margin-bottom:16px}
+  .about-body{font-size:13px;line-height:1.75;margin-bottom:10px}
+  .about-divider{margin:16px 0}
+  .about-sister{font-size:13px}
+  .about-stats{gap:8px;margin-top:20px}
+  .stat{padding:10px 14px;flex:1;min-width:70px}
+  .stat-num{font-size:26px}
+  .stat-label{font-size:9px}
+  .section-badge{margin-bottom:16px}
+
+  /* Homes: mobile layout */
+  #page-homes{overflow-y:auto}
+  .homes-map-wrap{display:none}  /* hide desktop layout */
+
+  /* Contact */
+  .contact-wrap{padding:calc(var(--nav-h)+24px) var(--pad) 48px;justify-content:flex-start;min-height:auto}
+
+  /* Accordion */
+  .acc-group{border-bottom:1px solid rgba(255,255,255,.06)}
+  .acc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0;cursor:pointer}
+  .acc-left{display:flex;align-items:center;gap:12px}
+  .acc-icon{width:6px;height:6px;border-radius:50%;background:#3a3530;border:1px solid rgba(201,185,138,.35);flex-shrink:0;transition:background .2s}
+  .acc-label{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--bright);transition:color .2s}
+  .acc-arrow{font-size:11px;color:rgba(201,185,138,.5);transition:transform .3s;line-height:1}
+  .acc-group.open .acc-arrow{transform:rotate(180deg)}
+  .acc-group.open .acc-icon{background:var(--gold)}
+  .acc-group.open .acc-label{color:var(--gold)}
+  .acc-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+  .acc-group.open .acc-body{max-height:500px}
+  .acc-unit{display:flex;align-items:center;justify-content:space-between;padding:10px 0 10px 20px;border-top:1px solid rgba(255,255,255,.04)}
+  .acc-unit-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright)}
+  .acc-unit-link{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 9px;border:1px solid rgba(255,255,255,.1)}
 }
 </style>
 </head>
@@ -218,7 +200,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
 <div class="scroll-dots" id="scrollDots"></div>
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div class="page active" id="page-home">
   <div class="hero-wrap">
     <div class="hero-ring"></div>
@@ -230,15 +212,12 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   </div>
 </div>
 
-<!-- ══ ABOUT ══ -->
+<!-- ABOUT -->
 <div class="page" id="page-about">
   <div class="about-wrap">
     <div class="about-bg-num">1980</div>
     <div class="section-badge">Our Story</div>
-    <h2 class="about-headline">
-      <strong>Built on heritage.</strong><br>
-      Crafted with <em>love.</em>
-    </h2>
+    <h2 class="about-headline"><strong>Built on heritage.</strong><br>Crafted with <em>love.</em></h2>
     <p class="about-body">Since 1980, the Astor family has been devoted to a single pursuit: transforming forgotten spaces into <strong>homes worthy of remembrance</strong>. We are not developers — we are craftsmen. Each property we acquire is restored with intention and brought to life with a character entirely its own.</p>
     <p class="about-body">We believe a great stay begins long before a guest arrives — in the <strong>choice of materials</strong>, in the light through a restored window, in the quiet detail that makes a space feel deeply human. Every home in our collection carries a story, and we consider it our duty to tell it well.</p>
     <p class="about-body"><strong>People remember how a place made them feel.</strong> That understanding guides everything we do — from the first brick laid to the final flourish of a furnished room.</p>
@@ -252,11 +231,11 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   </div>
 </div>
 
-<!-- ══ HOMES ══ -->
+<!-- HOMES -->
 <div class="page" id="page-homes">
-  <div class="homes-map-wrap">
 
-    <!-- desktop list -->
+  <!-- DESKTOP -->
+  <div class="homes-map-wrap" id="desktopHomesWrap">
     <div class="homes-left" id="homesLeft">
       <div class="homes-left-header">
         <div class="section-badge">Our Homes</div>
@@ -264,32 +243,30 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
       </div>
       <div class="homes-list-inner" id="homesList"></div>
     </div>
-
-    <!-- desktop map -->
     <div class="homes-right">
       <div id="map-desktop"></div>
     </div>
+  </div>
 
-  </div><!-- end homes-map-wrap -->
-
-  <!-- ── MOBILE ONLY ── -->
-  <div id="mobileHomesWrap" style="display:none">
-    <div style="padding:calc(var(--nav-h)+20px) 20px 0">
+  <!-- MOBILE -->
+  <div id="mobileHomesWrap" style="display:none;padding-top:var(--nav-h)">
+    <div style="padding:24px var(--pad) 0">
       <div class="section-badge">Our Homes</div>
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:300;color:var(--fg);margin-bottom:20px">Every stay, a story.</h2>
+      <h2 style="font-family:var(--serif);font-size:26px;font-weight:300;color:var(--fg);margin-bottom:20px">Every stay, a story.</h2>
     </div>
-    <!-- map strip -->
-    <div class="mob-map-strip">
-      <div id="map-mobile"></div>
+    <!-- Map strip -->
+    <div style="height:200px;position:relative;overflow:hidden;margin-bottom:4px">
+      <div id="map-mobile" style="width:100%;height:100%"></div>
+      <div style="position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,transparent 20%),linear-gradient(to top,var(--bg) 0%,transparent 20%)"></div>
     </div>
-    <!-- accordion list -->
-    <div id="accordionList" style="padding:0 20px"></div>
-    <div class="mob-homes-footer">17 properties · Thessaloniki</div>
+    <!-- Accordion -->
+    <div id="accordionList" style="padding:0 var(--pad)"></div>
+    <div style="height:48px"></div>
   </div>
 
 </div>
 
-<!-- ══ CONTACT ══ -->
+<!-- CONTACT -->
 <div class="page" id="page-contact">
   <div class="contact-wrap">
     <div class="section-badge">Contact</div>
@@ -305,30 +282,30 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ══ DATA ══
+// ── DATA ──
 const homesData=[
-  {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631",group:"Grigoriou Zaliki"},
-  {name:"Sir Paco's Place",   url:"https://www.airbnb.gr/rooms/1226060166288656930",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631",group:"Grigoriou Zaliki"},
+  {name:"Sir Dip's Place",    url:"https://www.airbnb.gr/rooms/1226788389256832640",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631",   group:"Grigoriou Zaliki"},
+  {name:"Sir Paco's Place",   url:"https://www.airbnb.gr/rooms/1226060166288656930",coords:[40.63612,22.94971],addr:"Grigoriou Zaliki 4, 54631",   group:"Grigoriou Zaliki"},
   {name:"Polymnia",           url:"https://www.airbnb.gr/rooms/569412065052467206", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
   {name:"Nostalgia",          url:"https://www.airbnb.gr/rooms/570191984863127237", coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
   {name:"Eunoia",             url:"https://www.airbnb.gr/rooms/1311403885145893744",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
   {name:"Thimyses",           url:"https://www.airbnb.gr/rooms/1311378532743569141",coords:[40.63480,22.94620],addr:"Stratigou Doumpiotou 1, 54632",group:"Stratigou Doumpiotou"},
-  {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633",group:"Agiou Nikolaou"},
-  {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633",group:"Agiou Nikolaou"},
-  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.63660,22.94970],addr:"Thessaloniki",group:"Summer House"},
-  {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.63520,22.94330],addr:"Sofokleous 5, 54633",group:"Sofokleous"},
+  {name:"Tzortzis's Home",    url:"https://www.airbnb.gr/rooms/39220220",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633",     group:"Agiou Nikolaou"},
+  {name:"Demi's Home",        url:"https://www.airbnb.gr/rooms/39206525",           coords:[40.63750,22.94550],addr:"Agiou Nikolaou 22, 54633",     group:"Agiou Nikolaou"},
+  {name:"ASTOR Summer House", url:"https://www.airbnb.gr/rooms/32984281",           coords:[40.63660,22.94970],addr:"Thessaloniki",                  group:"Summer House"},
+  {name:"Sofokleous",         url:"https://www.airbnb.gr/rooms/35709594",           coords:[40.63520,22.94330],addr:"Sofokleous 5, 54633",           group:"Sofokleous"},
   {name:"Poliorkitou",        url:"https://www.airbnb.gr/rooms/37857422",           coords:[40.63440,22.94480],addr:"Dimitriou Poliorkitou 17, 54633",group:"Poliorkitou"},
-  {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.63290,22.94390],addr:"Akropoleos 11, 54634",group:"Akropoleos"},
-  {name:"J&A Home",           url:"https://www.airbnb.gr/rooms/42330015",           coords:[40.63380,22.94710],addr:"Varvaki 3, 54633",group:"Varvaki"},
-  {name:"Boutique Egnatia A", url:"https://www.airbnb.gr/rooms/45278929",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",group:"Egnatia"},
-  {name:"Boutique Egnatia B", url:"https://www.airbnb.gr/rooms/45247518",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",group:"Egnatia"},
-  {name:"Boutique Egnatia C", url:"https://www.airbnb.gr/rooms/45228027",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",group:"Egnatia"},
-  {name:"Boutique Egnatia D", url:"https://www.airbnb.gr/rooms/45216262",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",group:"Egnatia"},
+  {name:"Akropoleos",         url:"https://www.airbnb.gr/rooms/35071057",           coords:[40.63290,22.94390],addr:"Akropoleos 11, 54634",          group:"Akropoleos"},
+  {name:"J&A Home",           url:"https://www.airbnb.gr/rooms/42330015",           coords:[40.63380,22.94710],addr:"Varvaki 3, 54633",              group:"Varvaki"},
+  {name:"Boutique Egnatia A", url:"https://www.airbnb.gr/rooms/45278929",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
+  {name:"Boutique Egnatia B", url:"https://www.airbnb.gr/rooms/45247518",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
+  {name:"Boutique Egnatia C", url:"https://www.airbnb.gr/rooms/45228027",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
+  {name:"Boutique Egnatia D", url:"https://www.airbnb.gr/rooms/45216262",           coords:[40.63180,22.94520],addr:"Egnatia 10, 54626",             group:"Egnatia"},
 ];
 
-const isMobile=()=>window.innerWidth<=768;
+const isMob=()=>window.innerWidth<=768;
 
-// ══ BUILD DESKTOP LIST ══
+// ── BUILD DESKTOP LIST ──
 const homesList=document.getElementById('homesList');
 homesData.forEach((h,i)=>{
   const el=document.createElement('div');
@@ -337,38 +314,32 @@ homesData.forEach((h,i)=>{
   homesList.appendChild(el);
 });
 
-// ══ BUILD MOBILE ACCORDION ══
+// ── BUILD MOBILE ACCORDION ──
 function buildAccordion(){
   const container=document.getElementById('accordionList');
   container.innerHTML='';
-  // group by address
   const groups={};
-  homesData.forEach((h,i)=>{
-    if(!groups[h.group])groups[h.group]={addr:h.addr,items:[]};
-    groups[h.group].items.push({...h,idx:i});
+  homesData.forEach((h)=>{
+    if(!groups[h.group])groups[h.group]={coords:h.coords,items:[]};
+    groups[h.group].items.push(h);
   });
-  Object.entries(groups).forEach(([groupName,g])=>{
+  Object.entries(groups).forEach(([gName,g])=>{
     const div=document.createElement('div');
     div.className='acc-group';
-    const multi=g.items.length>1;
-    // if single item, show name; if multi show street
-    const label=multi?g.addr.split(',')[0]:g.items[0].name;
+    const label=g.items.length>1?gName:g.items[0].name;
     div.innerHTML=`
       <div class="acc-header" onclick="toggleAcc(this)">
-        <div class="acc-header-left">
+        <div class="acc-left">
           <span class="acc-icon"></span>
-          <div>
-            <div class="acc-label">${label}</div>
-            <div class="acc-addr">${g.addr}</div>
-          </div>
+          <span class="acc-label">${label}</span>
         </div>
         <span class="acc-arrow">▾</span>
       </div>
       <div class="acc-body">
         ${g.items.map(h=>`
-          <div class="acc-unit" data-coords='${JSON.stringify(h.coords)}' onclick="flyToMobile(${h.coords[0]},${h.coords[1]})">
+          <div class="acc-unit">
             <span class="acc-unit-name">${h.name}</span>
-            <a class="acc-unit-link" href="${h.url}" target="_blank" onclick="event.stopPropagation()">View ↗</a>
+            <a class="acc-unit-link" href="${h.url}" target="_blank">View ↗</a>
           </div>`).join('')}
       </div>`;
     container.appendChild(div);
@@ -381,41 +352,46 @@ function toggleAcc(header){
   document.querySelectorAll('.acc-group.open').forEach(g=>g.classList.remove('open'));
   if(!wasOpen){
     group.classList.add('open');
-    // fly map to first item in group
-    const firstCoords=JSON.parse(group.querySelector('.acc-unit').dataset.coords);
-    flyToMobile(firstCoords[0],firstCoords[1]);
+    if(window._mobileMap){
+      const gName=group.querySelector('.acc-label').textContent;
+      const found=Object.entries(buildGroupsCache()).find(([k])=>k===gName);
+      if(found)window._mobileMap.flyTo(found[1].coords,15,{duration:.6});
+    }
   }
 }
-
-let mobileMap=null;
-function flyToMobile(lat,lng){
-  if(mobileMap)mobileMap.flyTo([lat,lng],15,{duration:.6});
+function buildGroupsCache(){
+  const g={};
+  homesData.forEach(h=>{if(!g[h.group])g[h.group]={coords:h.coords};});
+  return g;
 }
 
-// ══ PAGE SYSTEM ══
+// ── SHOW CORRECT HOMES LAYOUT ──
+let desktopMapDone=false,mobileMapDone=false;
+function showHomesLayout(){
+  const mob=isMob();
+  document.getElementById('desktopHomesWrap').style.display=mob?'none':'grid';
+  document.getElementById('mobileHomesWrap').style.display=mob?'block':'none';
+  if(mob&&!mobileMapDone){mobileMapDone=true;buildAccordion();setTimeout(initMobileMap,200)}
+  if(!mob&&!desktopMapDone){desktopMapDone=true;setTimeout(initDesktopMap,200)}
+}
+
+// ── PAGE SYSTEM ──
 const pages=document.querySelectorAll('.page');
 const navItems=document.querySelectorAll('.nav-links li');
 const dotsC=document.getElementById('scrollDots');
 const hamburger=document.getElementById('hamburger');
 const mobileOverlay=document.getElementById('mobileOverlay');
 const TOTAL=pages.length;
-let cur=0,busy=false,desktopMapDone=false,mobileMapDone=false;
+let cur=0,busy=false;
 
 for(let i=0;i<TOTAL;i++){
-  const d=document.createElement('div');d.className='dot'+(i===0?' active':'');
-  d.onclick=()=>goTo(i);dotsC.appendChild(d);
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goTo(i);
+  dotsC.appendChild(d);
 }
 const dots=document.querySelectorAll('.dot');
-
-function showCorrectHomesLayout(){
-  const mob=isMobile();
-  document.getElementById('homesLeft').style.display=mob?'none':'flex';
-  document.querySelector('.homes-right').style.display=mob?'none':'block';
-  const mw=document.getElementById('mobileHomesWrap');
-  mw.style.display=mob?'block':'none';
-  if(mob&&!mobileMapDone){mobileMapDone=true;buildAccordion();initMobileMap()}
-  if(!mob&&!desktopMapDone){desktopMapDone=true;initDesktopMap()}
-}
+navItems[0]?.classList.add('active');
 
 function goTo(idx){
   if(idx===cur||busy||idx<0||idx>=TOTAL)return;
@@ -425,14 +401,13 @@ function goTo(idx){
   dots.forEach(d=>d.classList.remove('active'));
   setTimeout(()=>{
     cur=idx;
-    // reset scroll
     pages[cur].scrollTop=0;
     pages[cur].classList.add('active');
     navItems[cur]?.classList.add('active');
     dots[cur]?.classList.add('active');
-    if(cur===2)showCorrectHomesLayout();
+    if(cur===2)showHomesLayout();
     busy=false;
-  },320);
+  },300);
 }
 
 document.querySelectorAll('[data-page]').forEach(el=>{
@@ -443,94 +418,119 @@ document.querySelectorAll('[data-page]').forEach(el=>{
   });
 });
 hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileOverlay.classList.toggle('open')});
-navItems[0]?.classList.add('active');
 
-// ══ SCROLL / SWIPE ══
-function getScrollEl(){
+// ── SCROLL / SWIPE LOGIC ──
+// For a page, get the scrollable element
+function getPageScroller(){
+  // homes page: desktop uses homesLeft, mobile uses the page itself
   if(cur===2){
-    if(isMobile()){
-      const mw=document.getElementById('mobileHomesWrap');
-      return mw.scrollHeight>mw.clientHeight?mw:pages[cur];
-    }
-    return document.getElementById('homesLeft')||pages[cur];
+    if(!isMob()) return document.getElementById('homesLeft');
+    return pages[cur]; // mobile homes page scrolls itself
   }
   return pages[cur];
 }
-function canScrollDown(el){return el.scrollHeight>el.clientHeight&&el.scrollTop+el.clientHeight<el.scrollHeight-4}
-function canScrollUp(el){return el.scrollTop>4}
+function atTop(el){return el.scrollTop<=2}
+function atBottom(el){return el.scrollTop+el.clientHeight>=el.scrollHeight-4}
 
+// ── DESKTOP WHEEL ──
 let wCool=false;
 window.addEventListener('wheel',e=>{
-  if(wCool||busy)return;
-  const el=getScrollEl();
-  if(e.deltaY>0){if(canScrollDown(el))return;goTo(cur+1)}
-  else{if(canScrollUp(el))return;goTo(cur-1)}
-  wCool=true;setTimeout(()=>wCool=false,950);
+  if(isMob()||wCool||busy)return;
+  const el=getPageScroller();
+  if(e.deltaY>0){if(!atBottom(el))return;goTo(cur+1)}
+  else{if(!atTop(el))return;goTo(cur-1)}
+  wCool=true;setTimeout(()=>wCool=false,900);
 },{passive:true});
 
-let ty0=0,ty1=0;
-window.addEventListener('touchstart',e=>{ty0=ty1=e.touches[0].clientY},{passive:true});
-window.addEventListener('touchmove',e=>{ty1=e.touches[0].clientY},{passive:true});
-window.addEventListener('touchend',()=>{
+// ── MOBILE SWIPE ──
+// We track touches on the page element directly to avoid conflicts with map/accordion
+let touchStartY=0,touchStartX=0,touchId=null;
+
+function onTouchStart(e){
   if(busy)return;
-  const dy=ty0-ty1;if(Math.abs(dy)<50)return;
-  const el=getScrollEl();
-  if(dy>0){if(canScrollDown(el))return;goTo(cur+1)}
-  else{if(canScrollUp(el))return;goTo(cur-1)}
-},{passive:true});
+  const t=e.changedTouches[0];
+  touchStartY=t.clientY;touchStartX=t.clientX;touchId=t.identifier;
+}
 
+function onTouchEnd(e){
+  if(busy||touchId===null)return;
+  let t=null;
+  for(let i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===touchId){t=e.changedTouches[i];break}}
+  if(!t)return;
+  touchId=null;
+  const dy=touchStartY-t.clientY;
+  const dx=touchStartX-t.clientX;
+  // ignore horizontal-ish swipes (map panning)
+  if(Math.abs(dx)>Math.abs(dy))return;
+  if(Math.abs(dy)<55)return;
+
+  const scroller=getPageScroller();
+  if(dy>0){
+    if(!atBottom(scroller))return;
+    goTo(cur+1);
+  } else {
+    if(!atTop(scroller))return;
+    goTo(cur-1);
+  }
+}
+
+// attach to each page so map touches don't interfere with global swipe
+pages.forEach(pg=>{
+  pg.addEventListener('touchstart',onTouchStart,{passive:true});
+  pg.addEventListener('touchend',onTouchEnd,{passive:true});
+});
+
+// keyboard
 window.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'||e.key==='PageDown')goTo(cur+1);
   if(e.key==='ArrowUp'||e.key==='PageUp')goTo(cur-1);
 });
 
-// ══ DESKTOP MAP ══
+// ── DESKTOP MAP ──
 function initDesktopMap(){
-  setTimeout(()=>{
-    const el=document.getElementById('map-desktop');if(!el)return;
-    el.style.height='100%';
-    const map=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6355,22.9460],14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
-    const mkN=()=>L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.35)"></div>',iconSize:[9,9],iconAnchor:[4.5,4.5]});
-    const mkA=()=>L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c9b98a;border-radius:50%;border:2px solid #f0ece4;box-shadow:0 0 14px rgba(201,185,138,.9)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
-    const items=document.querySelectorAll('.h-item');
-    const markers=homesData.map((h,i)=>{
-      const m=L.marker(h.coords,{icon:mkN()}).addTo(map);
-      m.bindTooltip(L.tooltip({permanent:false,direction:'top',offset:[0,-6],className:'home-tip'}).setContent(`<div class="tip-name">${h.name}</div><div class="tip-addr">${h.addr}</div>`));
-      return m;
-    });
-    function activate(i){
-      items.forEach(el=>el.classList.remove('map-active'));
-      markers.forEach((m,j)=>m.setIcon(j===i?mkA():mkN()));
-      items[i]?.classList.add('map-active');
-      items[i]?.scrollIntoView({behavior:'smooth',block:'nearest'});
-      map.flyTo(homesData[i].coords,15,{duration:.7});
-    }
-    items.forEach((el,i)=>{
-      el.addEventListener('click',()=>activate(i));
-      el.addEventListener('mouseenter',()=>activate(i));
-    });
-    markers.forEach((m,i)=>m.on('click',()=>activate(i)));
-    map.invalidateSize();
-  },400);
+  const el=document.getElementById('map-desktop');if(!el)return;
+  el.style.height='100%';
+  const map=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6355,22.9460],14);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+  const mkN=()=>L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.35)"></div>',iconSize:[9,9],iconAnchor:[4.5,4.5]});
+  const mkA=()=>L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c9b98a;border-radius:50%;border:2px solid #f0ece4;box-shadow:0 0 14px rgba(201,185,138,.9)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+  const items=document.querySelectorAll('.h-item');
+  const markers=homesData.map((h)=>{
+    const m=L.marker(h.coords,{icon:mkN()}).addTo(map);
+    m.bindTooltip(L.tooltip({permanent:false,direction:'top',offset:[0,-6],className:'home-tip'}).setContent(`<div class="tip-name">${h.name}</div><div class="tip-addr">${h.addr}</div>`));
+    return m;
+  });
+  function activate(i){
+    items.forEach(el=>el.classList.remove('map-active'));
+    markers.forEach((m,j)=>m.setIcon(j===i?mkA():mkN()));
+    items[i]?.classList.add('map-active');
+    items[i]?.scrollIntoView({behavior:'smooth',block:'nearest'});
+    map.flyTo(homesData[i].coords,15,{duration:.7});
+  }
+  items.forEach((el,i)=>{
+    el.addEventListener('click',()=>activate(i));
+    el.addEventListener('mouseenter',()=>activate(i));
+  });
+  markers.forEach((m,i)=>m.on('click',()=>activate(i)));
+  map.invalidateSize();
 }
 
-// ══ MOBILE MAP ══
+// ── MOBILE MAP ──
 function initMobileMap(){
-  setTimeout(()=>{
-    const el=document.getElementById('map-mobile');if(!el)return;
-    mobileMap=L.map(el,{zoomControl:false,attributionControl:false,dragging:true}).setView([40.6355,22.9460],14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(mobileMap);
-    const mkN=()=>L.divIcon({className:'',html:'<div style="width:8px;height:8px;background:#4a4030;border-radius:50%;border:1.5px solid rgba(201,185,138,.4)"></div>',iconSize:[8,8],iconAnchor:[4,4]});
-    homesData.forEach(h=>L.marker(h.coords,{icon:mkN()}).addTo(mobileMap));
-    mobileMap.invalidateSize();
-  },300);
+  const el=document.getElementById('map-mobile');if(!el)return;
+  window._mobileMap=L.map(el,{zoomControl:false,attributionControl:false}).setView([40.6375,22.9460],14);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(window._mobileMap);
+  const mkN=()=>L.divIcon({className:'',html:'<div style="width:8px;height:8px;background:#c9b98a;border-radius:50%;opacity:.7"></div>',iconSize:[8,8],iconAnchor:[4,4]});
+  // deduplicate coords
+  const seen=new Set();
+  homesData.forEach(h=>{
+    const key=h.coords.join(',');
+    if(!seen.has(key)){seen.add(key);L.marker(h.coords,{icon:mkN()}).addTo(window._mobileMap)}
+  });
+  window._mobileMap.invalidateSize();
 }
 
-// handle resize (e.g. orientation change)
-window.addEventListener('resize',()=>{
-  if(cur===2)showCorrectHomesLayout();
-});
+window.addEventListener('resize',()=>{if(cur===2)showHomesLayout()});
 </script>
 </body>
 </html>
