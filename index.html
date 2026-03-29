@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASTOR BNB</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/Fsv9Wvg4/A-(1).png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
@@ -64,7 +65,8 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 ════════════════════════════════ */
 #page-about{display:flex;justify-content:center}
 .about-wrap{width:100%;max-width:1200px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+40px) clamp(28px,7vw,100px) 60px;position:relative}
-.about-bg-num{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(120px,22vw,300px);font-weight:300;color:rgba(201,185,138,.03);pointer-events:none;line-height:1;user-select:none}
+.about-bg-num{display:none}
+.about-illustration{position:absolute;right:clamp(20px,6vw,80px);bottom:clamp(40px,8vh,80px);width:min(400px,42vw);pointer-events:none;opacity:.6}
 .about-headline{font-family:var(--serif);font-size:clamp(26px,4vw,54px);font-weight:300;line-height:1.25;max-width:760px;margin-bottom:24px;color:var(--fg)}
 .about-headline strong{font-weight:600}
 .about-headline em{font-style:italic;color:var(--gold)}
@@ -155,6 +157,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   .stat-label{font-size:9px}
 
   /* HOMES mobile */
+  .about-illustration,.hero-year{display:none!important}
   #page-homes{overflow-y:auto}
   .homes-map-wrap{display:none !important}
 
@@ -246,14 +249,50 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
     <h1 class="hero-title">ASTOR<br><em>BNB</em></h1>
     <div class="hero-rule"></div>
     <p class="hero-sub">Minimal hospitality.<br>Thoughtfully restored homes.</p>
-    <div class="hero-year">Est. 1980</div>
   </div>
 </div>
 
 <!-- ══ ABOUT ══ -->
 <div class="page" id="page-about">
   <div class="about-wrap">
-    <div class="about-bg-num">1980</div>
+    <div class="about-bg-num"></div>
+    <div class="about-illustration">
+      <svg viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <!-- floor -->
+        <line x1="10" y1="172" x2="370" y2="172" stroke="rgba(201,185,138,.16)" stroke-width="1"/>
+        <!-- bed frame -->
+        <rect x="60" y="110" width="220" height="62" rx="3" stroke="rgba(201,185,138,.2)" stroke-width="1" fill="none"/>
+        <!-- headboard -->
+        <rect x="60" y="82" width="220" height="32" rx="4" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="none"/>
+        <!-- headboard inner panel -->
+        <rect x="72" y="88" width="196" height="20" rx="2" stroke="rgba(201,185,138,.1)" stroke-width="1" fill="none"/>
+        <!-- mattress / duvet line -->
+        <rect x="68" y="116" width="204" height="50" rx="2" stroke="rgba(201,185,138,.12)" stroke-width="1" fill="rgba(201,185,138,.025)"/>
+        <!-- pillow left -->
+        <rect x="74" y="120" width="72" height="32" rx="3" stroke="rgba(201,185,138,.18)" stroke-width="1" fill="rgba(201,185,138,.03)"/>
+        <!-- pillow right -->
+        <rect x="194" y="120" width="72" height="32" rx="3" stroke="rgba(201,185,138,.18)" stroke-width="1" fill="rgba(201,185,138,.03)"/>
+        <!-- bed legs -->
+        <line x1="75" y1="172" x2="75" y2="180" stroke="rgba(201,185,138,.18)" stroke-width="1"/>
+        <line x1="265" y1="172" x2="265" y2="180" stroke="rgba(201,185,138,.18)" stroke-width="1"/>
+        <!-- bedside table left -->
+        <rect x="16" y="128" width="36" height="44" rx="2" stroke="rgba(201,185,138,.15)" stroke-width="1" fill="none"/>
+        <line x1="16" y1="148" x2="52" y2="148" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <!-- bedside lamp left — pole -->
+        <line x1="34" y1="128" x2="34" y2="100" stroke="rgba(201,185,138,.2)" stroke-width="1"/>
+        <!-- bedside lamp shade -->
+        <path d="M20 100 Q34 90 48 100 L43 114 Q34 118 25 114Z" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="rgba(201,185,138,.04)"/>
+        <!-- lamp glow -->
+        <ellipse cx="34" cy="114" rx="18" ry="10" fill="rgba(201,185,138,.03)"/>
+        <!-- bedside table right -->
+        <rect x="288" y="128" width="36" height="44" rx="2" stroke="rgba(201,185,138,.15)" stroke-width="1" fill="none"/>
+        <line x1="288" y1="148" x2="324" y2="148" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <!-- bedside lamp right -->
+        <line x1="306" y1="128" x2="306" y2="100" stroke="rgba(201,185,138,.2)" stroke-width="1"/>
+        <path d="M292 100 Q306 90 320 100 L315 114 Q306 118 297 114Z" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="rgba(201,185,138,.04)"/>
+        <ellipse cx="306" cy="114" rx="18" ry="10" fill="rgba(201,185,138,.03)"/>
+      </svg>
+    </div>
     <div class="section-badge">Our Story</div>
     <h2 class="about-headline"><strong>Built on heritage.</strong><br>Crafted with <em>love.</em></h2>
     <p class="about-body">Since 1980, the Astor family has been devoted to a single pursuit: transforming forgotten spaces into <strong>homes worthy of remembrance</strong>. We are not developers — we are craftsmen. Each property we acquire is restored with intention and brought to life with a character entirely its own.</p>
@@ -292,7 +331,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
 <!-- ══ CONTACT ══ -->
 <div class="page" id="page-contact">
-  <div class="contact-wrap">
+  <div class="contact-wrap" style="position:relative">
     <div class="section-badge">Contact</div>
     <h2 class="contact-title">Let's find your perfect stay.</h2>
     <div class="contact-form">
@@ -300,6 +339,36 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
       <div class="field"><input type="email" placeholder="Email"></div>
       <div class="field"><textarea placeholder="Message" rows="3"></textarea></div>
       <button class="btn-send">Send Message</button>
+    </div>
+    <!-- door illustration -->
+    <div style="position:absolute;right:clamp(20px,6vw,80px);bottom:clamp(40px,8vh,80px);width:min(260px,30vw);pointer-events:none;opacity:.55">
+      <svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <!-- floor line -->
+        <line x1="10" y1="268" x2="190" y2="268" stroke="rgba(201,185,138,.18)" stroke-width="1"/>
+        <!-- door frame outer -->
+        <rect x="42" y="28" width="116" height="240" rx="2" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="none"/>
+        <!-- door frame inner -->
+        <rect x="48" y="34" width="104" height="234" rx="1" stroke="rgba(201,185,138,.1)" stroke-width="1" fill="rgba(201,185,138,.02)"/>
+        <!-- door arch top -->
+        <path d="M48 68 Q100 34 152 68" stroke="rgba(201,185,138,.15)" stroke-width="1" fill="none"/>
+        <!-- upper panel -->
+        <rect x="56" y="74" width="88" height="70" rx="2" stroke="rgba(201,185,138,.14)" stroke-width="1" fill="none"/>
+        <!-- lower panel -->
+        <rect x="56" y="154" width="88" height="94" rx="2" stroke="rgba(201,185,138,.14)" stroke-width="1" fill="none"/>
+        <!-- door handle -->
+        <circle cx="136" cy="204" r="3" stroke="rgba(201,185,138,.35)" stroke-width="1" fill="none"/>
+        <line x1="136" y1="207" x2="136" y2="218" stroke="rgba(201,185,138,.3)" stroke-width="1"/>
+        <!-- transom window above door -->
+        <rect x="42" y="8" width="116" height="22" rx="2" stroke="rgba(201,185,138,.15)" stroke-width="1" fill="none"/>
+        <line x1="100" y1="8" x2="100" y2="30" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <!-- wall lines suggesting door frame in wall -->
+        <line x1="10" y1="28" x2="42" y2="28" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <line x1="158" y1="28" x2="190" y2="28" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <line x1="10" y1="28" x2="10" y2="268" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <line x1="190" y1="28" x2="190" y2="268" stroke="rgba(201,185,138,.1)" stroke-width="1"/>
+        <!-- wall texture hint -->
+        <line x1="10" y1="8" x2="190" y2="8" stroke="rgba(201,185,138,.08)" stroke-width="1"/>
+      </svg>
     </div>
   </div>
 </div>
