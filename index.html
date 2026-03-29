@@ -1,132 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ASTOR BNB</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg: #0b0b0b;
+    --fg: #fff;
+    --muted: #aaa;
+    --accent: #e8e0d0;
+    --nav-h: 64px;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: rgba(11,11,11,.95);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    z-index: 1000;
+    border-bottom: 1px solid #1f1f1f;
+  }
+  .logo {
+    font-size: 15px; font-weight: 600; letter-spacing: .18em;
+    color: var(--accent);
+  }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links li {
+    font-size: 13px; font-weight: 400; letter-spacing: .1em;
+    color: var(--muted); cursor: pointer; transition: color .2s;
+    text-transform: uppercase;
+  }
+  .nav-links li:hover, .nav-links li.active { color: var(--fg); }
+
+  /* hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+  }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: #fff; transition: .3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* mobile menu */
+  .mobile-menu {
+    position: fixed; inset: 0;
+    background: #0b0b0b;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 36px;
+    transform: translateY(-100%);
+    transition: transform .45s cubic-bezier(.77,0,.18,1);
+    z-index: 999;
+  }
+  .mobile-menu.open { transform: translateY(0); }
+  .mobile-menu li {
+    list-style: none; font-size: 28px; font-weight: 300; letter-spacing: .08em;
+    cursor: pointer; color: var(--muted); transition: color .2s; text-transform: uppercase;
+  }
+  .mobile-menu li:hover { color: var(--fg); }
+
+  /* ── SECTIONS ── */
+  .page {
+    position: fixed; inset: 0;
+    padding: var(--nav-h) 0 0 0;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .55s ease;
+    display: flex; flex-direction: column;
+  }
+  .page.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .page-inner {
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 40px clamp(24px, 8vw, 100px);
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  /* ── HERO ── */
+  #page-home .page-inner {
+    justify-content: flex-end;
+    padding-bottom: clamp(40px, 8vh, 80px);
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(52px, 10vw, 120px);
+    font-weight: 600; line-height: .95;
+    letter-spacing: -.02em;
+    color: var(--accent);
+  }
+  .hero-sub {
+    margin-top: 20px;
+    font-size: clamp(14px, 1.8vw, 18px);
+    font-weight: 300; color: var(--muted);
+    max-width: 460px;
+  }
+  .hero-divider {
+    width: 48px; height: 1px; background: #444; margin-top: 32px;
+  }
+
+  /* ── ABOUT ── */
+  .section-label {
+    font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+    color: #555; margin-bottom: 24px;
+  }
+  .about-text {
+    font-size: clamp(22px, 3.5vw, 42px);
+    font-weight: 300; line-height: 1.4;
+    max-width: 800px;
+    color: var(--fg);
+  }
+  .about-text strong { font-weight: 600; color: var(--accent); }
+
+  /* ── HOMES ── */
+  .homes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    margin-top: 8px;
+    border: 1px solid #1a1a1a;
+  }
+  .home-item {
+    padding: 18px 20px;
+    border: 1px solid #1a1a1a;
+    font-size: 13px; font-weight: 400;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    transition: background .2s;
+  }
+  .home-item:hover { background: #111; }
+  .home-item a {
+    color: #555; font-size: 11px; letter-spacing: .1em;
+    text-decoration: none; text-transform: uppercase; white-space: nowrap;
+    transition: color .2s;
+  }
+  .home-item a:hover { color: var(--accent); }
+  .home-name { color: var(--fg); }
+  .no-link { color: #333; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+
+  /* scrollable homes on small screens */
+  #page-homes .page-inner { justify-content: flex-start; padding-top: clamp(28px, 5vh, 60px); }
+
+  /* ── MAP ── */
+  #page-locations .page-inner { justify-content: flex-start; padding-top: clamp(28px, 5vh, 60px); }
+  #map {
+    width: 100%; height: clamp(280px, 50vh, 520px);
+    margin-top: 16px;
+    border: 1px solid #1a1a1a;
+    filter: grayscale(1) invert(1) brightness(.85) contrast(.9);
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid; gap: 16px;
+    max-width: 560px; margin-top: 8px;
+  }
+  .contact-grid input,
+  .contact-grid textarea {
+    width: 100%;
+    background: #0e0e0e;
+    border: 1px solid #1f1f1f;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color .2s;
+    resize: none;
+  }
+  .contact-grid input:focus,
+  .contact-grid textarea:focus { border-color: #444; }
+  .contact-grid textarea { min-height: 120px; }
+  .btn-send {
+    width: fit-content;
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid #3a3a3a;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+    cursor: pointer; transition: background .2s, border-color .2s;
+  }
+  .btn-send:hover { background: #151515; border-color: #666; }
+
+  /* scroll indicator dots */
+  .scroll-dots {
+    position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px;
+    z-index: 900;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #333; cursor: pointer; transition: background .25s, transform .25s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.4); }
+
+  /* responsive */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .scroll-dots { display: none; }
+  }
+</style>
 </head>
-
 <body>
 
-<div class="rail">
-<div class="rail-line"></div>
-<div class="section-number" id="sectionNumber">01</div>
-</div>
-
 <nav>
-
-<div class="logo">ASTOR BNB</div>
-
-<div class="hamburger" id="hamburger">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
-<ul id="menu">
-<li class="active">Home</li>
-<li>About</li>
-<li>Homes</li>
-<li>Locations</li>
-<li>Contact</li>
-</ul>
-
+  <div class="logo">ASTOR BNB</div>
+  <ul class="nav-links" id="navLinks">
+    <li data-page="0">Home</li>
+    <li data-page="1">About</li>
+    <li data-page="2">Homes</li>
+    <li data-page="3">Locations</li>
+    <li data-page="4">Contact</li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
-<section class="section hero active">
+<ul class="mobile-menu" id="mobileMenu">
+  <li data-page="0">Home</li>
+  <li data-page="1">About</li>
+  <li data-page="2">Homes</li>
+  <li data-page="3">Locations</li>
+  <li data-page="4">Contact</li>
+</ul>
 
-<h1>ASTOR BNB</h1>
+<!-- DOTS -->
+<div class="scroll-dots" id="scrollDots"></div>
 
-<p>
-We craft thoughtfully designed spaces that create memorable stays.
-</p>
-
-<div class="scroll-indicator">SCROLL ↓</div>
-
-</section>
-
-<section class="section about">
-
-<h2>About</h2>
-
-<p>
-Astor BNB is a curated collection of design-driven short-term rentals.
-Each property is thoughtfully crafted creating spaces that feel intentional,
-minimal and welcoming.
-</p>
-
-</section>
-
-<section class="section homes-section">
-
-<h2>Homes</h2>
-
-<div class="homes-scroll">
-
-<div class="homes-grid">
-
-<!-- βάλε όσα σπίτια θέλεις -->
-
-<div class="home-card"><span class="home-number">01</span><span class="home-name">Sir Dip's Place</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">02</span><span class="home-name">Sir Paco's Place</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">03</span><span class="home-name">Polymnia</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">04</span><span class="home-name">Nostalgia</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">05</span><span class="home-name">Tzortzis's Home</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">06</span><span class="home-name">Demi's Home</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">07</span><span class="home-name">ASTOR Summer House</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">08</span><span class="home-name">Eunoia</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
-<div class="home-card"><span class="home-number">09</span><span class="home-name">Thimyses</span><div class="home-separator"></div><a class="home-link" href="#">Airbnb</a></div>
-
+<!-- PAGE 0: HOME -->
+<div class="page active" id="page-home">
+  <div class="page-inner">
+    <div class="hero-eyebrow">Thessaloniki · Greece</div>
+    <h1 class="hero-title">ASTOR<br>BNB</h1>
+    <p class="hero-sub">Minimal hospitality experience. Unique stays, thoughtfully restored.</p>
+    <div class="hero-divider"></div>
+  </div>
 </div>
 
+<!-- PAGE 1: ABOUT -->
+<div class="page" id="page-about">
+  <div class="page-inner">
+    <div class="section-label">About</div>
+    <p class="about-text">
+      <strong>Family-run hospitality</strong> since 1980. We renovate homes with care and create unique stays.<br><br>
+      Sister company of <strong>ASTOR TRAVEL</strong>.
+    </p>
+  </div>
 </div>
 
-</section>
-
-<section class="section">
-
-<h2>Locations</h2>
-
-<div id="map"></div>
-
-</section>
-
-<section class="section">
-
-<h2>Contact</h2>
-
-<div class="contact">
-
-<input type="text" placeholder="Name">
-<input type="email" placeholder="Email">
-<textarea rows="5" placeholder="Message"></textarea>
-
-<button>Send Message</button>
-
+<!-- PAGE 2: HOMES -->
+<div class="page" id="page-homes">
+  <div class="page-inner">
+    <div class="section-label">Homes</div>
+    <div class="homes-grid">
+      <div class="home-item"><span class="home-name">Sir Dip's Place</span><a href="https://www.airbnb.gr/rooms/1226788389256832640" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Sir Paco's Place</span><a href="https://www.airbnb.gr/rooms/1226060166288656930" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Polymnia</span><a href="https://www.airbnb.gr/rooms/569412065052467206" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Nostalgia</span><a href="https://www.airbnb.gr/rooms/570191984863127237" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Tzortzis's Home</span><a href="https://www.airbnb.gr/rooms/39220220" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Demi's Home</span><a href="https://www.airbnb.gr/rooms/39206525" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">ASTOR Summer House</span><a href="https://www.airbnb.gr/rooms/32984281" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Eunoia</span><a href="https://www.airbnb.gr/rooms/1311403885145893744" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Thimyses</span><a href="https://www.airbnb.gr/rooms/1311378532743569141" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Sofokleous</span><a href="https://www.airbnb.gr/rooms/35709594" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Poliorkitou</span><a href="https://www.airbnb.gr/rooms/37857422" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Akropoleos</span><a href="https://www.airbnb.gr/rooms/35071057" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">J&amp;A Home</span><a href="https://www.airbnb.gr/rooms/42330015" target="_blank">Airbnb ↗</a></div>
+      <div class="home-item"><span class="home-name">Boutique Egnatia A</span><span class="no-link">Soon</span></div>
+      <div class="home-item"><span class="home-name">Boutique Egnatia B</span><span class="no-link">Soon</span></div>
+      <div class="home-item"><span class="home-name">Boutique Egnatia C</span><span class="no-link">Soon</span></div>
+      <div class="home-item"><span class="home-name">Boutique Egnatia D</span><span class="no-link">Soon</span></div>
+    </div>
+  </div>
 </div>
 
-</section>
+<!-- PAGE 3: LOCATIONS -->
+<div class="page" id="page-locations">
+  <div class="page-inner">
+    <div class="section-label">Locations</div>
+    <div id="map"></div>
+  </div>
+</div>
+
+<!-- PAGE 4: CONTACT -->
+<div class="page" id="page-contact">
+  <div class="page-inner">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+      <input type="text" placeholder="Name">
+      <input type="email" placeholder="Email">
+      <textarea placeholder="Message"></textarea>
+      <button class="btn-send">Send Message</button>
+    </div>
+  </div>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="script.js"></script>
+<script>
+  const pages = document.querySelectorAll('.page');
+  const navItems = document.querySelectorAll('.nav-links li');
+  const dotsContainer = document.getElementById('scrollDots');
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const TOTAL = pages.length;
 
+  let current = 0;
+  let transitioning = false;
+  let mapInit = false;
+
+  // build dots
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(d);
+  }
+  const dots = document.querySelectorAll('.dot');
+
+  function goTo(idx) {
+    if (idx === current || transitioning || idx < 0 || idx >= TOTAL) return;
+    transitioning = true;
+
+    pages[current].classList.remove('active');
+    navItems.forEach(n => n.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+
+    setTimeout(() => {
+      current = idx;
+      pages[current].classList.add('active');
+      navItems[current]?.classList.add('active');
+      dots[current]?.classList.add('active');
+
+      if (current === 3 && !mapInit) initMap();
+
+      transitioning = false;
+    }, 300); // half of CSS transition for crossfade feel
+  }
+
+  // nav click
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', () => {
+      goTo(parseInt(el.dataset.page));
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  // hamburger
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  // scroll / swipe
+  let wheelCooldown = false;
+  window.addEventListener('wheel', e => {
+    if (wheelCooldown || transitioning) return;
+
+    // if on homes/locations page and user is scrolling inside, let them
+    const pg = pages[current];
+    const inner = pg.querySelector('.page-inner');
+    const atTop = inner.scrollTop === 0;
+    const atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2;
+
+    if (e.deltaY > 0) {
+      if (current < TOTAL - 1) {
+        if (current !== 2 && current !== 3) { goTo(current + 1); }
+        else if (atBottom) { goTo(current + 1); } else { return; }
+      }
+    } else {
+      if (current > 0) {
+        if (current !== 2 && current !== 3) { goTo(current - 1); }
+        else if (atTop) { goTo(current - 1); } else { return; }
+      }
+    }
+
+    wheelCooldown = true;
+    setTimeout(() => wheelCooldown = false, 800);
+  }, { passive: true });
+
+  // touch swipe
+  let touchStartY = 0;
+  window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchend', e => {
+    if (transitioning) return;
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) < 40) return;
+
+    const pg = pages[current];
+    const inner = pg.querySelector('.page-inner');
+    const atTop = inner.scrollTop === 0;
+    const atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2;
+
+    if (dy > 0 && current < TOTAL - 1) {
+      if (current !== 2 && current !== 3) goTo(current + 1);
+      else if (atBottom) goTo(current + 1);
+    } else if (dy < 0 && current > 0) {
+      if (current !== 2 && current !== 3) goTo(current - 1);
+      else if (atTop) goTo(current - 1);
+    }
+  }, { passive: true });
+
+  // keyboard
+  window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(current + 1);
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(current - 1);
+  });
+
+  // init active nav
+  navItems[0]?.classList.add('active');
+
+  // map
+  function initMap() {
+    mapInit = true;
+    setTimeout(() => {
+      var map = L.map('map').setView([40.6355, 22.9444], 14);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap © CARTO'
+      }).addTo(map);
+
+      const coords = [
+        [40.6354,22.9432],[40.6328,22.9555],[40.6400,22.9481],
+        [40.6387,22.9415],[40.6409,22.9475],[40.6395,22.9450],
+        [40.6366,22.9497],[40.6362,22.9420],[40.6346,22.9416]
+      ];
+
+      const icon = L.divIcon({
+        className: '',
+        html: '<div style="width:10px;height:10px;background:#e8e0d0;border-radius:50%;border:1px solid #fff;"></div>',
+        iconSize: [10,10], iconAnchor: [5,5]
+      });
+
+      coords.forEach(c => L.marker(c, { icon }).addTo(map));
+      map.invalidateSize();
+    }, 400);
+  }
+</script>
 </body>
 </html>
