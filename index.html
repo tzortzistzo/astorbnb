@@ -139,7 +139,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   .hero-year{display:none}
 
   /* About: scrollable, compact */
-  .about-wrap{padding:calc(var(--nav-h)+24px) var(--pad) 48px;justify-content:flex-start}
+  .about-wrap{padding:calc(var(--nav-h)+24px) 24px 48px;justify-content:flex-start;min-height:unset}
   .about-bg-num{display:none}
   .about-headline{font-size:clamp(22px,7vw,32px);margin-bottom:16px}
   .about-body{font-size:13px;line-height:1.75;margin-bottom:10px}
@@ -156,23 +156,11 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
   .homes-map-wrap{display:none}  /* hide desktop layout */
 
   /* Contact */
-  .contact-wrap{padding:calc(var(--nav-h)+24px) var(--pad) 48px;justify-content:flex-start;min-height:auto}
+  .contact-wrap{padding:calc(var(--nav-h)+24px) 24px 48px;justify-content:flex-start;min-height:auto}
 
-  /* Accordion */
-  .acc-group{border-bottom:1px solid rgba(255,255,255,.06)}
-  .acc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0;cursor:pointer}
-  .acc-left{display:flex;align-items:center;gap:12px}
-  .acc-icon{width:6px;height:6px;border-radius:50%;background:#3a3530;border:1px solid rgba(201,185,138,.35);flex-shrink:0;transition:background .2s}
-  .acc-label{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--bright);transition:color .2s}
-  .acc-arrow{font-size:11px;color:rgba(201,185,138,.5);transition:transform .3s;line-height:1}
-  .acc-group.open .acc-arrow{transform:rotate(180deg)}
-  .acc-group.open .acc-icon{background:var(--gold)}
-  .acc-group.open .acc-label{color:var(--gold)}
-  .acc-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-  .acc-group.open .acc-body{max-height:500px}
-  .acc-unit{display:flex;align-items:center;justify-content:space-between;padding:10px 0 10px 20px;border-top:1px solid rgba(255,255,255,.04)}
-  .acc-unit-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright)}
-  .acc-unit-link{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 9px;border:1px solid rgba(255,255,255,.1)}
+  /* homes mobile list */
+  #page-homes{overflow-y:auto}
+  .homes-map-wrap{display:none}
 }
 </style>
 </head>
@@ -250,17 +238,17 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 
   <!-- MOBILE -->
   <div id="mobileHomesWrap" style="display:none;padding-top:var(--nav-h)">
-    <div style="padding:24px var(--pad) 0">
+    <div style="padding:24px 24px 0">
       <div class="section-badge">Our Homes</div>
-      <h2 style="font-family:var(--serif);font-size:26px;font-weight:300;color:var(--fg);margin-bottom:20px">Every stay, a story.</h2>
+      <h2 style="font-family:var(--serif);font-size:26px;font-weight:300;color:var(--fg);margin-bottom:16px">Every stay, a story.</h2>
     </div>
     <!-- Map strip -->
-    <div style="height:200px;position:relative;overflow:hidden;margin-bottom:4px">
+    <div style="height:200px;position:relative;overflow:hidden;margin-bottom:8px">
       <div id="map-mobile" style="width:100%;height:100%"></div>
       <div style="position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--bg) 0%,transparent 20%),linear-gradient(to top,var(--bg) 0%,transparent 20%)"></div>
     </div>
-    <!-- Accordion -->
-    <div id="accordionList" style="padding:0 var(--pad)"></div>
+    <!-- Flat list -->
+    <div id="mobileHomesList" style="padding:0 24px"></div>
     <div style="height:48px"></div>
   </div>
 
@@ -314,55 +302,26 @@ homesData.forEach((h,i)=>{
   homesList.appendChild(el);
 });
 
-// ── BUILD MOBILE ACCORDION ──
-function buildAccordion(){
-  const container=document.getElementById('accordionList');
+// ── BUILD MOBILE LIST ──
+function buildMobileList(){
+  const container=document.getElementById('mobileHomesList');
+  if(!container)return;
   container.innerHTML='';
-  const groups={};
-  homesData.forEach((h)=>{
-    if(!groups[h.group])groups[h.group]={coords:h.coords,items:[]};
-    groups[h.group].items.push(h);
-  });
-  Object.entries(groups).forEach(([gName,g])=>{
-    const div=document.createElement('div');
-    div.className='acc-group';
-    const label=g.items.length>1?gName:g.items[0].name;
-    div.innerHTML=`
-      <div class="acc-header" onclick="toggleAcc(this)">
-        <div class="acc-left">
-          <span class="acc-icon"></span>
-          <span class="acc-label">${label}</span>
-        </div>
-        <span class="acc-arrow">▾</span>
+  homesData.forEach((h,i)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);gap:12px';
+    row.innerHTML=`
+      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+        <span style="font-family:var(--serif);font-size:10px;color:rgba(201,185,138,.3);flex-shrink:0">${String(i+1).padStart(2,'0')}</span>
+        <span style="font-family:var(--serif);font-size:15px;font-weight:300;color:var(--bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.name}</span>
       </div>
-      <div class="acc-body">
-        ${g.items.map(h=>`
-          <div class="acc-unit">
-            <span class="acc-unit-name">${h.name}</span>
-            <a class="acc-unit-link" href="${h.url}" target="_blank">View ↗</a>
-          </div>`).join('')}
-      </div>`;
-    container.appendChild(div);
+      <a href="${h.url}" target="_blank" style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:4px 8px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0">View ↗</a>`;
+    // tap to fly map
+    row.addEventListener('click',()=>{
+      if(window._mobileMap) window._mobileMap.flyTo(h.coords,15,{duration:.5});
+    });
+    container.appendChild(row);
   });
-}
-
-function toggleAcc(header){
-  const group=header.parentElement;
-  const wasOpen=group.classList.contains('open');
-  document.querySelectorAll('.acc-group.open').forEach(g=>g.classList.remove('open'));
-  if(!wasOpen){
-    group.classList.add('open');
-    if(window._mobileMap){
-      const gName=group.querySelector('.acc-label').textContent;
-      const found=Object.entries(buildGroupsCache()).find(([k])=>k===gName);
-      if(found)window._mobileMap.flyTo(found[1].coords,15,{duration:.6});
-    }
-  }
-}
-function buildGroupsCache(){
-  const g={};
-  homesData.forEach(h=>{if(!g[h.group])g[h.group]={coords:h.coords};});
-  return g;
 }
 
 // ── SHOW CORRECT HOMES LAYOUT ──
@@ -371,7 +330,7 @@ function showHomesLayout(){
   const mob=isMob();
   document.getElementById('desktopHomesWrap').style.display=mob?'none':'grid';
   document.getElementById('mobileHomesWrap').style.display=mob?'block':'none';
-  if(mob&&!mobileMapDone){mobileMapDone=true;buildAccordion();setTimeout(initMobileMap,200)}
+  if(mob&&!mobileMapDone){mobileMapDone=true;buildMobileList();setTimeout(initMobileMap,200)}
   if(!mob&&!desktopMapDone){desktopMapDone=true;setTimeout(initDesktopMap,200)}
 }
 
