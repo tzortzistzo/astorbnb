@@ -837,7 +837,7 @@ if(contactForm){
     // SVG is centered: left edge in screen = svgRect.left
     const svgRect = svg.getBoundingClientRect();
     const scale   = 420 / svgRect.width; // viewBox units per pixel
-    const startX  = 420 + (window.innerWidth - svgRect.right + 20) * scale; // fully off right
+    const startX  = 440; // just off the right edge of the SVG viewBox (420 wide + small margin)
     const endX    = -(svgRect.left + 20) * scale; // fully off left
 
     const STOP_X = 310;
