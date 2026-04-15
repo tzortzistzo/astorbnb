@@ -808,7 +808,7 @@ if(contactForm){
 <script>
 // ── HERO PERSON ANIMATION ──
 (function(){
-  setTimeout(startHeroAnim, 1500);
+  setTimeout(startHeroAnim, 600);
 
   function startHeroAnim(){
     const person = document.getElementById('hPerson');
@@ -846,8 +846,8 @@ if(contactForm){
     person.setAttribute('transform', `translate(${startX},0)`);
 
     // Walk duration: slow walking pace — 3.5s to cross from right to lamp
-    const WALK_IN_DUR  = 3.5;
-    const WALK_OUT_DUR = 3.5;
+    const WALK_IN_DUR  = 2.0;
+    const WALK_OUT_DUR = 2.0;
     let t0 = null;
 
     function frame(ts){
