@@ -51,7 +51,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 ════════════════════════════════ */
 #page-home{display:flex;align-items:center;justify-content:center}
 .hero-wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--nav-h) clamp(28px,7vw,100px) 40px;position:relative}
-.hero-illustration{position:absolute;bottom:clamp(40px,8vh,90px);left:50%;transform:translateX(-50%);width:min(440px,80vw);pointer-events:none;opacity:1;z-index:0}
+.hero-illustration{position:absolute;bottom:clamp(40px,8vh,90px);left:50%;transform:translateX(-50%);width:min(440px,80vw);pointer-events:none;opacity:1;z-index:0;overflow:hidden}
 .hero-eyebrow,.hero-title,.hero-rule,.hero-sub{position:relative;z-index:1}
 .hero-svg{width:100%;height:auto}
 .hero-eyebrow{font-size:11px;font-weight:300;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
@@ -226,6 +226,8 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 </head>
 <body>
 
+
+
 <nav>
   <a onclick="goTo(0)" style="cursor:pointer;display:flex;align-items:center;">
     <img src="https://i.postimg.cc/8zpDBbdh/Copy-of-Untitled-Design-(3)-(1).png" alt="ASTOR BNB" style="height:80px;width:auto;object-fit:contain;display:block;">
@@ -256,8 +258,10 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
     <div class="hero-rule"></div>
     <p class="hero-sub" data-i18n="heroSub">Minimal hospitality.<br>Thoughtfully restored homes.</p>
     <div class="hero-illustration">
-      <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+      <svg id="heroSvg" viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-svg" style="overflow:visible">
+        <!-- floor -->
         <line x1="20" y1="158" x2="400" y2="158" stroke="rgba(201,185,138,.24)" stroke-width="1"/>
+        <!-- sofa -->
         <rect x="80" y="112" width="200" height="46" rx="6" stroke="rgba(201,185,138,.32)" stroke-width="1" fill="none"/>
         <rect x="80" y="88" width="200" height="28" rx="5" stroke="rgba(201,185,138,.32)" stroke-width="1" fill="none"/>
         <rect x="68" y="100" width="18" height="48" rx="4" stroke="rgba(201,185,138,.28)" stroke-width="1" fill="none"/>
@@ -265,13 +269,30 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
         <line x1="180" y1="112" x2="180" y2="158" stroke="rgba(201,185,138,.2)" stroke-width="1"/>
         <line x1="100" y1="158" x2="100" y2="168" stroke="rgba(201,185,138,.28)" stroke-width="1"/>
         <line x1="260" y1="158" x2="260" y2="168" stroke="rgba(201,185,138,.28)" stroke-width="1"/>
-        <line x1="336" y1="158" x2="336" y2="52" stroke="rgba(201,185,138,.34)" stroke-width="1"/>
-        <line x1="316" y1="158" x2="356" y2="158" stroke="rgba(201,185,138,.32)" stroke-width="1.5"/>
-        <path d="M316 52 Q336 36 356 52 L348 72 Q336 78 324 72 Z" stroke="rgba(201,185,138,.38)" stroke-width="1" fill="rgba(201,185,138,.06)"/>
-        <ellipse cx="336" cy="80" rx="28" ry="18" fill="rgba(201,185,138,.05)"/>
+        <!-- side table -->
         <rect x="300" y="138" width="28" height="20" rx="2" stroke="rgba(201,185,138,.22)" stroke-width="1" fill="none"/>
         <line x1="306" y1="158" x2="306" y2="164" stroke="rgba(201,185,138,.22)" stroke-width="1"/>
         <line x1="322" y1="158" x2="322" y2="164" stroke="rgba(201,185,138,.22)" stroke-width="1"/>
+        <!-- lamp pole & base -->
+        <line x1="336" y1="158" x2="336" y2="52" stroke="rgba(201,185,138,.34)" stroke-width="1"/>
+        <line x1="316" y1="158" x2="356" y2="158" stroke="rgba(201,185,138,.32)" stroke-width="1.5"/>
+        <!-- lamp shade (id for animation) -->
+        <path id="hShade" d="M316 52 Q336 36 356 52 L348 72 Q336 78 324 72 Z" stroke="rgba(201,185,138,.38)" stroke-width="1" fill="rgba(201,185,138,.06)"/>
+        <!-- glow (starts invisible) -->
+        <ellipse id="hGlow1" cx="336" cy="72" rx="0" ry="0" fill="rgba(201,185,138,0)"/>
+        <ellipse id="hGlow2" cx="336" cy="110" rx="0" ry="0" fill="rgba(201,185,138,0)"/>
+        <!-- cord hanging from shade -->
+        <line id="hCord" x1="336" y1="72" x2="336" y2="115" stroke="rgba(201,185,138,.35)" stroke-width="1" stroke-dasharray="2 2"/>
+        <circle id="hRing" cx="336" cy="117" r="3" stroke="rgba(201,185,138,.45)" stroke-width="1" fill="none"/>
+        <!-- person (starts off right edge, feet at y=158) -->
+        <g id="hPerson" transform="translate(9999,0)">
+          <circle id="hHead" cx="0" cy="112" r="7" stroke="rgba(201,185,138,.7)" stroke-width="1.2" fill="none"/>
+          <line id="hTorso" x1="0" y1="119" x2="0" y2="140" stroke="rgba(201,185,138,.72)" stroke-width="1.4" stroke-linecap="round"/>
+          <line id="hArmL" x1="-5" y1="126" x2="-13" y2="137" stroke="rgba(201,185,138,.65)" stroke-width="1.2" stroke-linecap="round"/>
+          <line id="hArmR" x1="5"  y1="126" x2="13"  y2="137" stroke="rgba(201,185,138,.65)" stroke-width="1.2" stroke-linecap="round"/>
+          <line id="hLegL" x1="-3" y1="140" x2="-8"  y2="158" stroke="rgba(201,185,138,.65)" stroke-width="1.2" stroke-linecap="round"/>
+          <line id="hLegR" x1="3"  y1="140" x2="8"   y2="158" stroke="rgba(201,185,138,.65)" stroke-width="1.2" stroke-linecap="round"/>
+        </g>
       </svg>
     </div>
   </div>
@@ -783,6 +804,144 @@ if(contactForm){
     document.getElementById('cookieBanner').style.transform='translateY(100%)';
   });
 })();
+</script>
+<script>
+// ── HERO PERSON ANIMATION ──
+(function(){
+  setTimeout(startHeroAnim, 1500);
+
+  function startHeroAnim(){
+    const person = document.getElementById('hPerson');
+    if(!person) return;
+
+    const hHead  = document.getElementById('hHead');
+    const hTorso = document.getElementById('hTorso');
+    const hArmL  = document.getElementById('hArmL');
+    const hArmR  = document.getElementById('hArmR');
+    const hLegL  = document.getElementById('hLegL');
+    const hLegR  = document.getElementById('hLegR');
+    const hCord  = document.getElementById('hCord');
+    const hRing  = document.getElementById('hRing');
+    const hShade = document.getElementById('hShade');
+    const hGlow1 = document.getElementById('hGlow1');
+    const hGlow2 = document.getElementById('hGlow2');
+    const svg    = document.getElementById('heroSvg');
+
+    const easeOut   = t => 1 - Math.pow(1-t,3);
+    const easeInOut = t => t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+    const lerp      = (a,b,t) => a+(b-a)*t;
+    const clamp     = t => Math.max(0,Math.min(1,t));
+
+    // Calculate how many viewBox units fit off-screen to the right and left
+    // SVG viewBox = 420 wide, rendered width = svg.getBoundingClientRect().width
+    // SVG is centered: left edge in screen = svgRect.left
+    const svgRect = svg.getBoundingClientRect();
+    const scale   = 420 / svgRect.width; // viewBox units per pixel
+    const startX  = 420 + (window.innerWidth - svgRect.right + 20) * scale; // fully off right
+    const endX    = -(svgRect.left + 20) * scale; // fully off left
+
+    const STOP_X = 310;
+
+    // Set initial position off-screen
+    person.setAttribute('transform', `translate(${startX},0)`);
+
+    // Walk duration: slow walking pace — 3.5s to cross from right to lamp
+    const WALK_IN_DUR  = 3.5;
+    const WALK_OUT_DUR = 3.5;
+    let t0 = null;
+
+    function frame(ts){
+      if(!t0) t0 = ts;
+      const e = (ts - t0) / 1000;
+
+      // ── 1: Walk in slowly from right (0 → WALK_IN_DUR) ──
+      if(e < WALK_IN_DUR){
+        const t  = clamp(e / WALK_IN_DUR);
+        const x  = lerp(startX, STOP_X, easeInOut(t));
+        person.setAttribute('transform', `translate(${x},0)`);
+        // swing based on distance traveled, not time — 1 full step every 28 units
+        const dist = startX - x;
+        const sw = Math.sin(dist / 9) * 7;
+        const sa = Math.sin(dist / 9) * 5;
+        hLegL.setAttribute('x2', -8 + sw);  hLegL.setAttribute('y2', 158);
+        hLegR.setAttribute('x2',  8 - sw);  hLegR.setAttribute('y2', 158);
+        hArmL.setAttribute('x2', -13 - sa); hArmL.setAttribute('y2', 137);
+        hArmR.setAttribute('x2',  13 + sa); hArmR.setAttribute('y2', 137);
+      }
+
+      // ── 2: Stop, reach arm up to cord (WALK_IN_DUR → +1.0s) ──
+      const T2S = WALK_IN_DUR, T2E = T2S + 1.0;
+      if(e >= T2S && e < T2E){
+        const t  = clamp((e-T2S)/(T2E-T2S));
+        const te = easeInOut(t);
+        person.setAttribute('transform', `translate(${STOP_X},0)`);
+        hLegL.setAttribute('x2', -8); hLegL.setAttribute('y2', 158);
+        hLegR.setAttribute('x2',  8); hLegR.setAttribute('y2', 158);
+        hArmL.setAttribute('x2', -12); hArmL.setAttribute('y2', 138);
+        hArmR.setAttribute('x2', lerp(13, 26, te));
+        hArmR.setAttribute('y2', lerp(137, 117, te));
+      }
+
+      // ── 3: Pull cord down (+1.0 → +1.8s) ──
+      const T3S = T2E, T3E = T3S + 0.8;
+      if(e >= T3S && e < T3E){
+        const t  = clamp((e-T3S)/(T3E-T3S));
+        const te = easeInOut(t);
+        const cy = lerp(117, 142, te);
+        hCord.setAttribute('y2', cy);
+        hRing.setAttribute('cy', cy+2);
+        hArmR.setAttribute('x2', lerp(26, 22, te));
+        hArmR.setAttribute('y2', cy);
+        hTorso.setAttribute('x2', lerp(0, 3, te));
+        hHead.setAttribute('cx',  lerp(0, 2, te));
+      }
+
+      // ── 4: Light ON (+1.8 → +2.8s) ──
+      const T4S = T3E, T4E = T4S + 1.0;
+      if(e >= T4S && e < T4E){
+        const t  = clamp((e-T4S)/(T4E-T4S));
+        const te = easeOut(t);
+        hGlow1.setAttribute('rx',    lerp(0, 48, te));
+        hGlow1.setAttribute('ry',    lerp(0, 28, te));
+        hGlow1.setAttribute('fill',  `rgba(201,185,138,${lerp(0,.22,te).toFixed(3)})`);
+        hGlow2.setAttribute('rx',    lerp(0, 75, te));
+        hGlow2.setAttribute('ry',    lerp(0, 48, te));
+        hGlow2.setAttribute('fill',  `rgba(201,185,138,${lerp(0,.08,te).toFixed(3)})`);
+        hShade.setAttribute('fill',  `rgba(201,185,138,${lerp(.06,.55,te).toFixed(3)})`);
+        hShade.setAttribute('stroke',`rgba(201,185,138,${lerp(.38,1.0,te).toFixed(2)})`);
+        if(t > 0.4){
+          const t2 = clamp((t-0.4)/0.6);
+          const te2 = easeOut(t2);
+          hCord.setAttribute('y2', lerp(142, 115, te2));
+          hRing.setAttribute('cy', lerp(144, 117, te2));
+          hArmR.setAttribute('y2', lerp(142, 130, te2));
+        }
+      }
+
+      // ── 5: Walk off slowly to left (+2.8 → +2.8+WALK_OUT_DUR) ──
+      const T5S = T4E, T5E = T5S + WALK_OUT_DUR;
+      if(e >= T5S && e < T5E){
+        const t  = clamp((e-T5S)/WALK_OUT_DUR);
+        const x  = lerp(STOP_X, endX, easeInOut(t));
+        person.setAttribute('transform', `translate(${x},0)`);
+        // swing based on distance traveled from STOP_X
+        const dist = STOP_X - x;
+        const sw = Math.sin(dist / 9) * 7;
+        const sa = Math.sin(dist / 9) * 5;
+        hLegL.setAttribute('x2', -8 + sw);  hLegL.setAttribute('y2', 158);
+        hLegR.setAttribute('x2',  8 - sw);  hLegR.setAttribute('y2', 158);
+        hArmL.setAttribute('x2', -13 - sa); hArmL.setAttribute('y2', 137);
+        hArmR.setAttribute('x2',  13 + sa); hArmR.setAttribute('y2', 137);
+        hTorso.setAttribute('x2', 0); hHead.setAttribute('cx', 0);
+      }
+
+      if(e < T5E) requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
 </script>
 </body>
 </html>
