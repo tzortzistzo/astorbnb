@@ -857,7 +857,7 @@ if(contactForm){
       // ── 1: Walk in slowly from right (0 → WALK_IN_DUR) ──
       if(e < WALK_IN_DUR){
         const t  = clamp(e / WALK_IN_DUR);
-        const x  = lerp(startX, STOP_X, easeInOut(t));
+        const x  = lerp(startX, STOP_X, t);
         person.setAttribute('transform', `translate(${x},0)`);
         // swing based on distance traveled, not time — 1 full step every 28 units
         const dist = startX - x;
@@ -922,7 +922,7 @@ if(contactForm){
       const T5S = T4E, T5E = T5S + WALK_OUT_DUR;
       if(e >= T5S && e < T5E){
         const t  = clamp((e-T5S)/WALK_OUT_DUR);
-        const x  = lerp(STOP_X, endX, easeInOut(t));
+        const x  = lerp(STOP_X, endX, t);
         person.setAttribute('transform', `translate(${x},0)`);
         // swing based on distance traveled from STOP_X
         const dist = STOP_X - x;
